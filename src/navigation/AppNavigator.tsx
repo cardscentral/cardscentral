@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import { RootStackParamList, MainTabParamList } from '../types';
 import { CardsListScreen } from '../screens/CardsListScreen';
 import { CardDetailScreen } from '../screens/CardDetailScreen';
@@ -36,7 +37,7 @@ function MainTabs() {
         options={{
           title: 'My Cards',
           tabBarIcon: ({ color, size }) => (
-            <Text style={{ fontSize: size, color }}>🏷️</Text>
+            <MaterialIcons name="loyalty" size={size} color={color} />
           ),
         }}
       />
@@ -46,7 +47,7 @@ function MainTabs() {
         options={{
           title: 'Settings',
           tabBarIcon: ({ color, size }) => (
-            <Text style={{ fontSize: size, color }}>☰</Text>
+            <MaterialIcons name="settings" size={size} color={color} />
           ),
         }}
       />

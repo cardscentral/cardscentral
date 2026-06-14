@@ -1,0 +1,44 @@
+appId: com.cardscentral.app
+---
+# Flow: Navigate to barcode scanner screen
+# Tests the scan workflow (camera permission screen on simulator)
+
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: "cards-list-screen"
+    timeout: 10000
+
+# Tap add card
+- tapOn:
+    id: "add-card-button"
+- extendedWaitUntil:
+    visible: "Select Shop"
+    timeout: 5000
+
+# Select Tesco shop
+- scrollUntilVisible:
+    element:
+      id: "shop-select-tesco"
+    direction: DOWN
+- tapOn:
+    id: "shop-select-tesco"
+
+# Scroll to see scan button
+- scrollUntilVisible:
+    element:
+      id: "scan-barcode-button"
+    direction: DOWN
+
+# Tap scan button to navigate to scan screen
+- tapOn:
+    id: "scan-barcode-button"
+
+# On simulator, camera permission dialog or permission request screen shows
+- extendedWaitUntil:
+    visible:
+      text: ".*camera.*|.*Camera.*|.*permission.*|.*Permission.*"
+    timeout: 5000
+
+# Go back (permission dialog blocks actual scanning on simulator)
+- back

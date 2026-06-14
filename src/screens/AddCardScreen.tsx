@@ -16,6 +16,7 @@ import { addCard } from '../storage/cardStorage';
 import { getShopById, getShopsByCountry } from '../config/shops';
 import { getSelectedCountry } from '../storage/preferences';
 import { ShopIcon } from '../components/ShopIcon';
+import { MaterialIcons } from '@expo/vector-icons';
 
 type AddCardRouteProp = RouteProp<RootStackParamList, 'AddCard'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -133,7 +134,8 @@ export function AddCardScreen() {
           onPress={handleScan}
           testID="scan-barcode-button"
         >
-          <Text style={styles.scanButtonText}>📷 Scan</Text>
+          <MaterialIcons name="qr-code-scanner" size={18} color="#FFFFFF" />
+          <Text style={styles.scanButtonText}> Scan</Text>
         </TouchableOpacity>
       </View>
 
@@ -267,8 +269,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#007AFF',
     borderRadius: 12,
     paddingHorizontal: 16,
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    gap: 4,
   },
   scanButtonText: {
     color: '#FFFFFF',
