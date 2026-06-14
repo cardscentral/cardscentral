@@ -1,0 +1,10 @@
+id: repsol-es
+name: "Repsol"
+description: "Repsol Waylet Card"
+country: ES
+category: petrol
+barcode_type: qr
+brand:
+  primary_color: "#FF6600"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

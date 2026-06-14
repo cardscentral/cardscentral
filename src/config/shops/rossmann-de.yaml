@@ -1,0 +1,11 @@
+id: rossmann-de
+name: "Rossmann"
+description: "Rossmann Card"
+country: DE
+category: pharmacy
+barcode_type: ean13
+brand:
+  logo: siRossmann
+  primary_color: "#E30613"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

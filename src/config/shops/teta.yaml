@@ -1,0 +1,10 @@
+id: teta
+name: "Teta Drogerie"
+description: "Teta Club Card"
+country: SK
+category: pharmacy
+barcode_type: ean13
+brand:
+  primary_color: "#7AB51D"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

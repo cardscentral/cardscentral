@@ -1,0 +1,10 @@
+id: superdrug-gb
+name: "Superdrug"
+description: "Superdrug Health & Beautycard"
+country: GB
+category: pharmacy
+barcode_type: ean13
+brand:
+  primary_color: "#E4007C"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

@@ -1,0 +1,10 @@
+id: sephora-fr
+name: "Sephora"
+description: "Sephora Beauty Card"
+country: FR
+category: pharmacy
+barcode_type: ean13
+brand:
+  primary_color: "#000000"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

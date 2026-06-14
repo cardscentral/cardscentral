@@ -1,0 +1,10 @@
+id: stradivarius
+name: "Stradivarius"
+description: "Stradivarius Card"
+country: EU
+category: fashion
+barcode_type: qr
+brand:
+  primary_color: "#000000"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

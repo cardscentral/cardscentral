@@ -1,0 +1,12 @@
+# Tesco Loyalty Card Configuration
+id: tesco
+name: "Tesco"
+description: "Tesco Clubcard"
+country: SK
+category: groceries
+barcode_type: ean13
+brand:
+  logo: siTesco
+  primary_color: "#00539F"
+  secondary_color: "#EE1C2E"
+  text_color: "#FFFFFF"

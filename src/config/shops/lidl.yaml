@@ -1,0 +1,12 @@
+# Lidl Plus Loyalty Card Configuration
+id: lidl
+name: "Lidl"
+description: "Lidl Plus Card"
+country: SK
+category: groceries
+barcode_type: qr
+brand:
+  logo: siLidl
+  primary_color: "#0050AA"
+  secondary_color: "#FFF000"
+  text_color: "#FFFFFF"

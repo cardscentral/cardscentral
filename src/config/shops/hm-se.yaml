@@ -1,0 +1,11 @@
+id: hm-se
+name: "H&M"
+description: "H&M Member Card"
+country: SE
+category: fashion
+barcode_type: ean13
+brand:
+  logo: siHandm
+  primary_color: "#222222"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

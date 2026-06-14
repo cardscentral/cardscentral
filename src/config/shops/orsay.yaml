@@ -1,0 +1,10 @@
+id: orsay
+name: "Orsay"
+description: "Orsay Club Card"
+country: SK
+category: fashion
+barcode_type: ean13
+brand:
+  primary_color: "#C4007A"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

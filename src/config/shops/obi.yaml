@@ -1,0 +1,10 @@
+id: obi
+name: "OBI"
+description: "OBI Bonus Card"
+country: SK
+category: home
+barcode_type: ean13
+brand:
+  primary_color: "#F58220"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

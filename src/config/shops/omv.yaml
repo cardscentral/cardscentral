@@ -1,0 +1,10 @@
+id: omv
+name: "OMV"
+description: "OMV MaxxMotion Card"
+country: SK
+category: petrol
+barcode_type: ean13
+brand:
+  primary_color: "#003366"
+  secondary_color: "#0070BA"
+  text_color: "#FFFFFF"

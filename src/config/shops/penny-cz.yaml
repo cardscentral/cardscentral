@@ -1,0 +1,11 @@
+id: penny-cz
+name: "Penny"
+description: "Penny Card"
+country: CZ
+category: groceries
+barcode_type: ean13
+brand:
+  logo: siPenny
+  primary_color: "#CD1719"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

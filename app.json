@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "Cards Central",
+    "slug": "cardscentral",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#007AFF"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.cardscentral.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Cards Central needs camera access to scan barcodes on your loyalty cards."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#007AFF",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "package": "com.cardscentral.app",
+      "permissions": ["CAMERA"]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Cards Central needs camera access to scan barcodes on your loyalty cards."
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "cardscentral"
+      }
+    }
+  }
+}

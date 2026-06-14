@@ -1,0 +1,10 @@
+id: nay
+name: "NAY"
+description: "NAY Loyalty Card"
+country: SK
+category: electronics
+barcode_type: ean13
+brand:
+  primary_color: "#ED1C24"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

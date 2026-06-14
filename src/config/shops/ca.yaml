@@ -1,0 +1,11 @@
+# C&A Loyalty Card Configuration
+id: ca
+name: "C&A"
+description: "C&A More&More Card"
+country: SK
+category: fashion
+barcode_type: ean13
+brand:
+  primary_color: "#E31E24"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

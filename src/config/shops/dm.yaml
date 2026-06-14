@@ -1,0 +1,12 @@
+# dm drogerie markt Loyalty Card Configuration
+id: dm
+name: "dm drogerie markt"
+description: "dm active beauty Card"
+country: SK
+category: pharmacy
+barcode_type: ean13
+brand:
+  logo: siDm
+  primary_color: "#FFD700"
+  secondary_color: "#FFFFFF"
+  text_color: "#000000"

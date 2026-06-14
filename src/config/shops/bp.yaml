@@ -1,0 +1,10 @@
+id: bp
+name: "BP"
+description: "BP BPme Card"
+country: EU
+category: petrol
+barcode_type: ean13
+brand:
+  primary_color: "#009B3A"
+  secondary_color: "#FFD200"
+  text_color: "#FFFFFF"

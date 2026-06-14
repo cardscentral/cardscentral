@@ -1,0 +1,10 @@
+id: ccc
+name: "CCC"
+description: "CCC Club Card"
+country: SK
+category: fashion
+barcode_type: ean13
+brand:
+  primary_color: "#E30613"
+  secondary_color: "#000000"
+  text_color: "#FFFFFF"

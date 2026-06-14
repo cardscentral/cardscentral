@@ -1,0 +1,10 @@
+id: coop-se
+name: "Coop"
+description: "Coop Medlem Card"
+country: SE
+category: groceries
+barcode_type: ean13
+brand:
+  primary_color: "#009639"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

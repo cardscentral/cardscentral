@@ -1,0 +1,10 @@
+id: slovnaft
+name: "Slovnaft"
+description: "Slovnaft Bonus Card"
+country: SK
+category: petrol
+barcode_type: ean13
+brand:
+  primary_color: "#E30613"
+  secondary_color: "#FDB913"
+  text_color: "#FFFFFF"

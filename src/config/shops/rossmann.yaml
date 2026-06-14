@@ -1,0 +1,11 @@
+id: rossmann
+name: "Rossmann"
+description: "Rossmann Club Card"
+country: SK
+category: pharmacy
+barcode_type: ean13
+brand:
+  logo: siRossmann
+  primary_color: "#E30613"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

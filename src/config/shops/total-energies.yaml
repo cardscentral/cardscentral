@@ -1,0 +1,10 @@
+id: total-energies
+name: "TotalEnergies"
+description: "TotalEnergies Card"
+country: EU
+category: petrol
+barcode_type: ean13
+brand:
+  primary_color: "#ED1C24"
+  secondary_color: "#002B5C"
+  text_color: "#FFFFFF"

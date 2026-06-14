@@ -1,0 +1,17 @@
+appId: com.cardscentral.app
+---
+# Flow: Delete a card
+# Precondition: Card exists (run 02 first)
+
+# Tap on existing card
+- tapOn: "Family Tesco"
+
+# Tap delete button
+- tapOn:
+    id: "delete-card-button"
+
+# Confirm deletion
+- tapOn: "Delete"
+
+# Should return to empty state or cards list without the card
+- assertNotVisible: "Family Tesco"

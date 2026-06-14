@@ -1,0 +1,10 @@
+id: s-group-fi
+name: "S-ryhmä"
+description: "S-Etukortti Card"
+country: FI
+category: groceries
+barcode_type: ean13
+brand:
+  primary_color: "#009639"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

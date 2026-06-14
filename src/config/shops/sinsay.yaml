@@ -1,0 +1,10 @@
+id: sinsay
+name: "Sinsay"
+description: "Sinsay Club Card"
+country: SK
+category: fashion
+barcode_type: ean13
+brand:
+  primary_color: "#FF69B4"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

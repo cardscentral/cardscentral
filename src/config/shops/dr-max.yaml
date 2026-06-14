@@ -1,0 +1,10 @@
+id: dr-max
+name: "Dr.Max"
+description: "Dr.Max Loyalty Card"
+country: SK
+category: pharmacy
+barcode_type: ean13
+brand:
+  primary_color: "#00A651"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

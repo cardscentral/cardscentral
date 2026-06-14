@@ -1,0 +1,34 @@
+appId: com.cardscentral.app
+---
+# Flow: Add a new loyalty card
+# Precondition: Country already selected (run 01 first or app already set up)
+
+# Navigate to add card
+- tapOn: "Add Card"
+
+# Should see shop selection grouped by category
+- assertVisible: "Select Shop"
+- assertVisible: "GROCERIES"
+- assertVisible: "FASHION & SHOES"
+
+# Select a shop (Tesco)
+- tapOn:
+    id: "shop-select-tesco"
+
+# Enter card number manually
+- tapOn:
+    id: "card-number-input"
+- inputText: "1234567890123"
+
+# Add a nickname
+- tapOn:
+    id: "nickname-input"
+- inputText: "My Tesco Card"
+
+# Save the card
+- tapOn:
+    id: "save-card-button"
+
+# Should return to cards list and see the new card
+- assertVisible: "My Tesco Card"
+- assertVisible: "Tesco"

@@ -1,0 +1,10 @@
+id: mol-hu
+name: "MOL"
+description: "MOL Limitless Card"
+country: HU
+category: petrol
+barcode_type: ean13
+brand:
+  primary_color: "#003DA5"
+  secondary_color: "#FFD700"
+  text_color: "#FFFFFF"

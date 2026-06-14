@@ -1,0 +1,11 @@
+id: rewe-de
+name: "REWE"
+description: "REWE Bonus Card"
+country: DE
+category: groceries
+barcode_type: qr
+brand:
+  logo: siRewe
+  primary_color: "#CC0000"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

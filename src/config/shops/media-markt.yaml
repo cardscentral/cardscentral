@@ -1,0 +1,11 @@
+id: media-markt
+name: "MediaMarkt"
+description: "MediaMarkt Club Card"
+country: EU
+category: electronics
+barcode_type: ean13
+brand:
+  logo: siMediamarkt
+  primary_color: "#DF0000"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

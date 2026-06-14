@@ -1,0 +1,8 @@
+appId: com.cardscentral.app
+---
+# Flow: Country Selection (First Launch)
+- assertVisible: "Choose Your Country"
+- assertVisible: "🇸🇰"
+- tapOn: "Slovensko"
+# After selecting country, should see the main cards screen
+- assertVisible: "My Cards"

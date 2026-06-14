@@ -1,0 +1,10 @@
+id: hornbach
+name: "Hornbach"
+description: "Hornbach ProfiCard"
+country: SK
+category: home
+barcode_type: ean13
+brand:
+  primary_color: "#F47920"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

@@ -1,0 +1,10 @@
+id: mango
+name: "Mango"
+description: "Mango Likes You Card"
+country: EU
+category: fashion
+barcode_type: qr
+brand:
+  primary_color: "#2C2C2C"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

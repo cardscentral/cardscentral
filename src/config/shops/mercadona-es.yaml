@@ -1,0 +1,10 @@
+id: mercadona-es
+name: "Mercadona"
+description: "Mercadona Card"
+country: ES
+category: groceries
+barcode_type: ean13
+brand:
+  primary_color: "#009639"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

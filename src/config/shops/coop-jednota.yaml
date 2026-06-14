@@ -1,0 +1,10 @@
+id: coop-jednota
+name: "COOP Jednota"
+description: "COOP Jednota Card"
+country: SK
+category: groceries
+barcode_type: ean13
+brand:
+  primary_color: "#009A44"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

@@ -1,0 +1,10 @@
+id: payback-de
+name: "PAYBACK"
+description: "PAYBACK Card"
+country: DE
+category: other
+barcode_type: ean13
+brand:
+  primary_color: "#003399"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

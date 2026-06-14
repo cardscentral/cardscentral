@@ -1,0 +1,11 @@
+id: albert-heijn-nl
+name: "Albert Heijn"
+description: "Albert Heijn Bonus Card"
+country: NL
+category: groceries
+barcode_type: ean13
+brand:
+  logo: siAlbertheijn
+  primary_color: "#00A0E2"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

@@ -1,0 +1,14 @@
+appId: com.cardscentral.app
+---
+# Flow: View card detail with barcode display
+# Precondition: Card already added (run 02 first)
+
+# Tap on existing card to see detail
+- tapOn: "My Tesco Card"
+
+# Should see card detail with barcode
+- assertVisible: "Tesco"
+- assertVisible: "1234567890123"
+
+# Go back
+- back

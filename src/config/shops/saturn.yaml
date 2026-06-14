@@ -1,0 +1,10 @@
+id: saturn
+name: "Saturn"
+description: "Saturn Card"
+country: EU
+category: electronics
+barcode_type: ean13
+brand:
+  primary_color: "#F37A1F"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

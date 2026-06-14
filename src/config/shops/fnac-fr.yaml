@@ -1,0 +1,11 @@
+id: fnac-fr
+name: "Fnac"
+description: "Fnac+ Card"
+country: FR
+category: electronics
+barcode_type: ean13
+brand:
+  logo: siFnac
+  primary_color: "#6F4E37"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

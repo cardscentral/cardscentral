@@ -1,0 +1,10 @@
+id: leroy-merlin
+name: "Leroy Merlin"
+description: "Leroy Merlin Card"
+country: EU
+category: home
+barcode_type: ean13
+brand:
+  primary_color: "#78BE20"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

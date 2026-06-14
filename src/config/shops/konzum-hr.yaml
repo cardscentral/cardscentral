@@ -1,0 +1,10 @@
+id: konzum-hr
+name: "Konzum"
+description: "MultiPlusCard"
+country: HR
+category: groceries
+barcode_type: ean13
+brand:
+  primary_color: "#E30613"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

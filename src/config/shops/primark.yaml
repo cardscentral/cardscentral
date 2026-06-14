@@ -1,0 +1,10 @@
+id: primark
+name: "Primark"
+description: "Primark Card"
+country: EU
+category: fashion
+barcode_type: ean13
+brand:
+  primary_color: "#0A3D6B"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

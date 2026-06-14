@@ -1,0 +1,10 @@
+id: spar
+name: "SPAR"
+description: "SPAR Loyalty Card"
+country: EU
+category: groceries
+barcode_type: ean13
+brand:
+  primary_color: "#009639"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

@@ -1,0 +1,10 @@
+id: john-lewis-gb
+name: "John Lewis"
+description: "John Lewis Partnership Card"
+country: GB
+category: home
+barcode_type: ean13
+brand:
+  primary_color: "#00563B"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

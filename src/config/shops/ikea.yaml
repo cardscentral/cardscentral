@@ -1,0 +1,11 @@
+id: ikea
+name: "IKEA"
+description: "IKEA Family Card"
+country: SK
+category: home
+barcode_type: ean13
+brand:
+  logo: siIkea
+  primary_color: "#0051BA"
+  secondary_color: "#FFDA1A"
+  text_color: "#FFDA1A"

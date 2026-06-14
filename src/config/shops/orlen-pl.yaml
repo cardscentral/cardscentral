@@ -1,0 +1,10 @@
+id: orlen-pl
+name: "Orlen"
+description: "Orlen Vitay Card"
+country: PL
+category: petrol
+barcode_type: ean13
+brand:
+  primary_color: "#E30613"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

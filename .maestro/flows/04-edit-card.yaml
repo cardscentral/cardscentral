@@ -1,0 +1,28 @@
+appId: com.cardscentral.app
+---
+# Flow: Edit an existing card
+# Precondition: Card already added (run 02 first)
+
+# Tap on existing card
+- tapOn: "My Tesco Card"
+
+# Tap edit button
+- tapOn:
+    id: "edit-card-button"
+
+# Should see edit form with pre-filled values
+- assertVisible: "Edit Card"
+
+# Change nickname
+- clearText:
+    id: "nickname-input"
+- tapOn:
+    id: "nickname-input"
+- inputText: "Family Tesco"
+
+# Save changes
+- tapOn:
+    id: "save-card-button"
+
+# Should see updated card
+- assertVisible: "Family Tesco"

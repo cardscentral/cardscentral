@@ -1,0 +1,10 @@
+id: rohlik-cz
+name: "Rohlík"
+description: "Rohlík Premium Card"
+country: CZ
+category: groceries
+barcode_type: qr
+brand:
+  primary_color: "#8BC34A"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

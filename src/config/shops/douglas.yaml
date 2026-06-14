@@ -1,0 +1,10 @@
+id: douglas
+name: "Douglas"
+description: "Douglas Beauty Card"
+country: EU
+category: pharmacy
+barcode_type: ean13
+brand:
+  primary_color: "#1D1D1B"
+  secondary_color: "#A67C52"
+  text_color: "#A67C52"

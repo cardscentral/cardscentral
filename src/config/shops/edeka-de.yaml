@@ -1,0 +1,11 @@
+id: edeka-de
+name: "Edeka"
+description: "Edeka Genuss+ Card"
+country: DE
+category: groceries
+barcode_type: ean13
+brand:
+  logo: siEdeka
+  primary_color: "#FFD700"
+  secondary_color: "#003399"
+  text_color: "#003399"

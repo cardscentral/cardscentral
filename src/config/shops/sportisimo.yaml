@@ -1,0 +1,10 @@
+id: sportisimo
+name: "Sportisimo"
+description: "Sportisimo Club Card"
+country: SK
+category: sports
+barcode_type: ean13
+brand:
+  primary_color: "#009FE3"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

@@ -1,0 +1,10 @@
+id: house
+name: "House"
+description: "House Club Card"
+country: SK
+category: fashion
+barcode_type: ean13
+brand:
+  primary_color: "#333333"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

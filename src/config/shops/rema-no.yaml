@@ -1,0 +1,10 @@
+id: rema-no
+name: "REMA 1000"
+description: "REMA 1000 Æ Card"
+country: "NO"
+category: groceries
+barcode_type: ean13
+brand:
+  primary_color: "#003DA5"
+  secondary_color: "#FFD700"
+  text_color: "#FFD700"

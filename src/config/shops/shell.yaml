@@ -1,0 +1,11 @@
+id: shell
+name: "Shell"
+description: "Shell ClubSmart Card"
+country: SK
+category: petrol
+barcode_type: ean13
+brand:
+  logo: siShell
+  primary_color: "#FFD500"
+  secondary_color: "#DD1D21"
+  text_color: "#000000"

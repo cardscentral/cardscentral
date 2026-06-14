@@ -1,0 +1,11 @@
+id: dm-cz
+name: "dm drogerie"
+description: "dm active beauty Card"
+country: CZ
+category: pharmacy
+barcode_type: ean13
+brand:
+  logo: siDm
+  primary_color: "#FFD700"
+  secondary_color: "#FFFFFF"
+  text_color: "#000000"

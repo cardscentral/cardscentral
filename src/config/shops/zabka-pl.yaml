@@ -1,0 +1,10 @@
+id: zabka-pl
+name: "Żabka"
+description: "Żappka Card"
+country: PL
+category: groceries
+barcode_type: qr
+brand:
+  primary_color: "#009639"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

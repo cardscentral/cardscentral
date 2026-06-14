@@ -1,0 +1,11 @@
+id: aldi
+name: "Aldi"
+description: "Aldi Card"
+country: EU
+category: groceries
+barcode_type: qr
+brand:
+  logo: siAldinord
+  primary_color: "#00447C"
+  secondary_color: "#F58220"
+  text_color: "#FFFFFF"

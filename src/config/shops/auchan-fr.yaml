@@ -1,0 +1,11 @@
+id: auchan-fr
+name: "Auchan"
+description: "Auchan Loyalty Card"
+country: FR
+category: groceries
+barcode_type: ean13
+brand:
+  logo: siAuchan
+  primary_color: "#E30613"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

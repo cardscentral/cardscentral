@@ -1,0 +1,11 @@
+id: decathlon-fr
+name: "Décathlon"
+description: "Décathlon Card"
+country: FR
+category: sports
+barcode_type: ean13
+brand:
+  logo: siDecathlon
+  primary_color: "#0082C3"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

@@ -1,0 +1,10 @@
+id: kiwi-no
+name: "KIWI"
+description: "KIWI Trumf Card"
+country: "NO"
+category: groceries
+barcode_type: ean13
+brand:
+  primary_color: "#8BC34A"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

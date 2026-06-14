@@ -1,0 +1,11 @@
+id: dm-at
+name: "dm"
+description: "dm active beauty Card"
+country: AT
+category: pharmacy
+barcode_type: ean13
+brand:
+  logo: siDm
+  primary_color: "#FFD700"
+  secondary_color: "#FFFFFF"
+  text_color: "#000000"

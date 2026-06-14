@@ -1,0 +1,10 @@
+id: muller
+name: "Müller"
+description: "Müller Loyalty Card"
+country: EU
+category: pharmacy
+barcode_type: ean13
+brand:
+  primary_color: "#E30613"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

@@ -1,0 +1,10 @@
+id: biedronka-pl
+name: "Biedronka"
+description: "Biedronka Moja Biedronka Card"
+country: PL
+category: groceries
+barcode_type: ean13
+brand:
+  primary_color: "#FFD700"
+  secondary_color: "#E30613"
+  text_color: "#E30613"

@@ -1,0 +1,10 @@
+id: intersport
+name: "Intersport"
+description: "Intersport Club Card"
+country: EU
+category: sports
+barcode_type: ean13
+brand:
+  primary_color: "#E30613"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"
