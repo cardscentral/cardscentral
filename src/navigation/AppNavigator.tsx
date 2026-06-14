@@ -36,7 +36,7 @@ function MainTabs() {
         options={{
           title: 'My Cards',
           tabBarIcon: ({ color, size }) => (
-            <Text style={{ fontSize: size, color }}>💳</Text>
+            <Text style={{ fontSize: size, color }}>🏷️</Text>
           ),
         }}
       />
@@ -46,7 +46,7 @@ function MainTabs() {
         options={{
           title: 'Settings',
           tabBarIcon: ({ color, size }) => (
-            <Text style={{ fontSize: size, color }}>⚙️</Text>
+            <Text style={{ fontSize: size, color }}>☰</Text>
           ),
         }}
       />

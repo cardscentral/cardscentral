@@ -30,7 +30,7 @@ export interface ShopBrand {
 }
 
 /**
- * Shop category
+ * Shop category (optional, kept for backward compatibility with YAML files)
  */
 export type ShopCategory = 'fashion' | 'groceries' | 'electronics' | 'petrol' | 'pharmacy' | 'home' | 'sports' | 'other';
 

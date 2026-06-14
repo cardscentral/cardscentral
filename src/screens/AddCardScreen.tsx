@@ -10,26 +10,15 @@ import {
 } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList, ShopConfig, ShopCategory } from '../types';
+import { RootStackParamList, ShopConfig } from '../types';
 import { generateId } from '../utils/generateId';
 import { addCard } from '../storage/cardStorage';
-import { getShopById, getShopsGroupedByCategory, CATEGORY_META } from '../config/shops';
+import { getShopById, getShopsByCountry } from '../config/shops';
 import { getSelectedCountry } from '../storage/preferences';
 import { ShopIcon } from '../components/ShopIcon';
 
 type AddCardRouteProp = RouteProp<RootStackParamList, 'AddCard'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
-
-const CATEGORY_ORDER: ShopCategory[] = [
-  'groceries',
-  'fashion',
-  'electronics',
-  'petrol',
-  'pharmacy',
-  'home',
-  'sports',
-  'other',
-];
 
 export function AddCardScreen() {
   const navigation = useNavigation<NavigationProp>();
@@ -42,15 +31,22 @@ export function AddCardScreen() {
   const [cardNumber, setCardNumber] = useState('');
   const [nickname, setNickname] = useState('');
   const [notes, setNotes] = useState('');
-  const [groupedShops, setGroupedShops] = useState<Partial<Record<ShopCategory, ShopConfig[]>>>({});
+  const [allShops, setAllShops] = useState<ShopConfig[]>([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     getSelectedCountry().then((country) => {
       if (country) {
-        setGroupedShops(getShopsGroupedByCategory(country));
+        setAllShops(getShopsByCountry(country));
       }
     });
   }, []);
+
+  const filteredShops = searchQuery.trim()
+    ? allShops.filter((shop) =>
+        shop.name.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : allShops;
 
   const handleScan = () => {
     navigation.navigate('ScanBarcode', { shopId: selectedShop?.id });
@@ -82,42 +78,43 @@ export function AddCardScreen() {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      {/* Shop Selection grouped by category */}
+      {/* Search Bar */}
       <Text style={styles.mainTitle}>Select Shop</Text>
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Search shops..."
+        value={searchQuery}
+        onChangeText={setSearchQuery}
+        testID="shop-search-input"
+        clearButtonMode="while-editing"
+      />
 
-      {CATEGORY_ORDER.map((category) => {
-        const shops = groupedShops[category];
-        if (!shops || shops.length === 0) return null;
+      {/* Shop Grid (flat, no categories) */}
+      <View style={styles.shopGrid}>
+        {filteredShops.map((shop) => (
+          <TouchableOpacity
+            key={shop.id}
+            style={[
+              styles.shopItem,
+              selectedShop?.id === shop.id && styles.shopItemSelected,
+              selectedShop?.id === shop.id && {
+                borderColor: shop.brand.primary_color,
+              },
+            ]}
+            onPress={() => setSelectedShop(shop)}
+            testID={`shop-select-${shop.id}`}
+          >
+            <ShopIcon brand={shop.brand} shopId={shop.id} name={shop.name} size={36} />
+            <Text style={styles.shopItemName} numberOfLines={2}>
+              {shop.name}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
 
-        const meta = CATEGORY_META[category];
-
-        return (
-          <View key={category}>
-            <Text style={styles.categoryTitle}>{meta.label}</Text>
-            <View style={styles.shopGrid}>
-              {shops.map((shop) => (
-                <TouchableOpacity
-                  key={shop.id}
-                  style={[
-                    styles.shopItem,
-                    selectedShop?.id === shop.id && styles.shopItemSelected,
-                    selectedShop?.id === shop.id && {
-                      borderColor: shop.brand.primary_color,
-                    },
-                  ]}
-                  onPress={() => setSelectedShop(shop)}
-                  testID={`shop-select-${shop.id}`}
-                >
-                  <ShopIcon brand={shop.brand} size={36} />
-                  <Text style={styles.shopItemName} numberOfLines={2}>
-                    {shop.name}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-        );
-      })}
+      {filteredShops.length === 0 && searchQuery.trim() && (
+        <Text style={styles.noResults}>No shops matching "{searchQuery}"</Text>
+      )}
 
       {/* Card Number Input */}
       <Text style={styles.sectionTitle}>Card Number</Text>
@@ -192,14 +189,15 @@ const styles = StyleSheet.create({
     color: '#1a1a1a',
     marginBottom: 12,
   },
-  categoryTitle: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#666',
-    marginTop: 16,
-    marginBottom: 8,
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
+  searchInput: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    fontSize: 16,
+    borderWidth: 1,
+    borderColor: '#E5E5E5',
+    marginBottom: 16,
   },
   sectionTitle: {
     fontSize: 14,
@@ -239,6 +237,13 @@ const styles = StyleSheet.create({
     color: '#333',
     marginTop: 4,
     textAlign: 'center',
+  },
+  noResults: {
+    fontSize: 14,
+    color: '#999',
+    textAlign: 'center',
+    marginTop: 16,
+    marginBottom: 8,
   },
   inputRow: {
     flexDirection: 'row',

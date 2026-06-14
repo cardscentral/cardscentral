@@ -9,3 +9,6 @@ executionOrder:
     - flows/03-view-card-detail.yaml
     - flows/04-edit-card.yaml
     - flows/05-delete-card.yaml
+    - flows/06-grid-view-toggle.yaml
+    - flows/07-search-shops.yaml
+    - flows/08-settings.yaml

@@ -6,6 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
   RefreshControl,
+  Dimensions,
 } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -13,13 +14,21 @@ import { LoyaltyCard, RootStackParamList } from '../types';
 import { getAllCards } from '../storage/cardStorage';
 import { getShopById } from '../config/shops';
 import { CardListItem } from '../components/CardListItem';
+import { ShopIcon } from '../components/ShopIcon';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
+
+type ViewMode = 'list' | 'grid';
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const GRID_COLUMNS = 3;
+const GRID_ITEM_SIZE = (SCREEN_WIDTH - 48) / GRID_COLUMNS;
 
 export function CardsListScreen() {
   const navigation = useNavigation<NavigationProp>();
   const [cards, setCards] = useState<LoyaltyCard[]>([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [viewMode, setViewMode] = useState<ViewMode>('list');
 
   const loadCards = useCallback(async () => {
     const storedCards = await getAllCards();
@@ -38,7 +47,7 @@ export function CardsListScreen() {
     setRefreshing(false);
   }, [loadCards]);
 
-  const renderItem = ({ item }: { item: LoyaltyCard }) => {
+  const renderListItem = ({ item }: { item: LoyaltyCard }) => {
     const shop = getShopById(item.shopId);
     if (!shop) return null;
 
@@ -51,9 +60,28 @@ export function CardsListScreen() {
     );
   };
 
+  const renderGridItem = ({ item }: { item: LoyaltyCard }) => {
+    const shop = getShopById(item.shopId);
+    if (!shop) return null;
+
+    return (
+      <TouchableOpacity
+        style={styles.gridItem}
+        onPress={() => navigation.navigate('CardDetail', { cardId: item.id })}
+        activeOpacity={0.7}
+        testID={`card-grid-item-${item.id}`}
+      >
+        <ShopIcon brand={shop.brand} shopId={shop.id} name={shop.name} size={56} />
+        <Text style={styles.gridItemName} numberOfLines={2}>
+          {shop.name}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
   const renderEmptyState = () => (
     <View style={styles.emptyContainer}>
-      <Text style={styles.emptyIcon}>💳</Text>
+      <Text style={styles.emptyIcon}>🏷️</Text>
       <Text style={styles.emptyTitle}>No Cards Yet</Text>
       <Text style={styles.emptySubtitle}>
         Tap the + button to add your first loyalty card
@@ -61,12 +89,37 @@ export function CardsListScreen() {
     </View>
   );
 
+  const renderViewToggle = () => {
+    if (cards.length === 0) return null;
+    return (
+      <View style={styles.toggleContainer} testID="view-toggle">
+        <TouchableOpacity
+          style={[styles.toggleButton, viewMode === 'list' && styles.toggleButtonActive]}
+          onPress={() => setViewMode('list')}
+          testID="view-toggle-list"
+        >
+          <Text style={[styles.toggleText, viewMode === 'list' && styles.toggleTextActive]}>☰</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.toggleButton, viewMode === 'grid' && styles.toggleButtonActive]}
+          onPress={() => setViewMode('grid')}
+          testID="view-toggle-grid"
+        >
+          <Text style={[styles.toggleText, viewMode === 'grid' && styles.toggleTextActive]}>⊞</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <View style={styles.container} testID="cards-list-screen">
+      {renderViewToggle()}
       <FlatList
+        key={viewMode}
         data={cards}
         keyExtractor={(item) => item.id}
-        renderItem={renderItem}
+        renderItem={viewMode === 'list' ? renderListItem : renderGridItem}
+        numColumns={viewMode === 'grid' ? GRID_COLUMNS : 1}
         ListEmptyComponent={renderEmptyState}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -89,6 +142,32 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5F5F7',
+  },
+  toggleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    paddingHorizontal: 16,
+    paddingTop: 8,
+    paddingBottom: 4,
+    gap: 4,
+  },
+  toggleButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#E5E5E5',
+  },
+  toggleButtonActive: {
+    backgroundColor: '#007AFF',
+  },
+  toggleText: {
+    fontSize: 18,
+    color: '#666',
+  },
+  toggleTextActive: {
+    color: '#FFFFFF',
   },
   list: {
     paddingVertical: 12,
@@ -117,6 +196,27 @@ const styles = StyleSheet.create({
     color: '#666',
     textAlign: 'center',
     lineHeight: 22,
+  },
+  gridItem: {
+    width: GRID_ITEM_SIZE,
+    alignItems: 'center',
+    padding: 12,
+    marginHorizontal: 4,
+    marginVertical: 8,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  gridItemName: {
+    fontSize: 11,
+    fontWeight: '500',
+    color: '#333',
+    marginTop: 8,
+    textAlign: 'center',
   },
   fab: {
     position: 'absolute',

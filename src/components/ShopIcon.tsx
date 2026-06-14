@@ -78,7 +78,7 @@ export function ShopIcon({ brand, shopId, name, size = 48 }: ShopIconProps) {
     content = renderFaviconLogo(shopId, size);
   } else {
     // Priority 3: 2-letter abbreviation in brand colors
-    content = renderLetterFallback(name || '??', size, brand.text_color);
+    content = renderLetterFallback(name || 'CC', size, brand.text_color);
   }
 
   return (

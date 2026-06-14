@@ -1,0 +1,63 @@
+appId: com.cardscentral.app
+---
+# Flow: Toggle between list and grid view
+# Precondition: Country selected, need to add a card first
+
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: "cards-list-screen"
+    timeout: 10000
+
+# Add a card so we can see the toggle
+- tapOn:
+    id: "add-card-button"
+- extendedWaitUntil:
+    visible: "Select Shop"
+    timeout: 5000
+- scrollUntilVisible:
+    element:
+      id: "shop-select-tesco"
+    direction: DOWN
+- tapOn:
+    id: "shop-select-tesco"
+- scrollUntilVisible:
+    element:
+      id: "card-number-input"
+    direction: DOWN
+- tapOn:
+    id: "card-number-input"
+- inputText: "9999888877776666"
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      id: "save-card-button"
+    direction: DOWN
+- tapOn:
+    id: "save-card-button"
+
+# Wait for cards list with the card
+- extendedWaitUntil:
+    visible:
+      id: "cards-list-screen"
+    timeout: 10000
+
+# View toggle should be visible now
+- assertVisible:
+    id: "view-toggle"
+
+# Switch to grid view
+- tapOn:
+    id: "view-toggle-grid"
+
+# The card should still be visible (as grid item with shop name)
+- assertVisible:
+    text: ".*Tesco.*"
+
+# Switch back to list view
+- tapOn:
+    id: "view-toggle-list"
+
+# Card is still visible in list view
+- assertVisible:
+    text: ".*Tesco.*"

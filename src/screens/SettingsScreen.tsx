@@ -3,27 +3,44 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'rea
 import { getSyncStatus } from '../storage/syncService';
 import { clearAllCards } from '../storage/cardStorage';
 import { getSelectedCountry, setSelectedCountry } from '../storage/preferences';
+import { getSupportedLanguages, getLanguage, setLanguage, getLanguageForCountry, SupportedLanguage } from '../i18n';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const LANGUAGE_STORAGE_KEY = '@cardscentral/language';
 
 const COUNTRY_NAMES: Record<string, string> = {
-  SK: 'Slovakia 🇸🇰',
-  CZ: 'Czechia 🇨🇿',
-  PL: 'Poland 🇵🇱',
-  HU: 'Hungary 🇭🇺',
-  AT: 'Austria 🇦🇹',
-  DE: 'Germany 🇩🇪',
-  HR: 'Croatia 🇭🇷',
-  RO: 'Romania 🇷🇴',
-  BG: 'Bulgaria 🇧🇬',
-  SI: 'Slovenia 🇸🇮',
+  SK: '🇸🇰 Slovakia',
+  CZ: '🇨🇿 Czechia',
+  PL: '🇵🇱 Poland',
+  HU: '🇭🇺 Hungary',
+  AT: '🇦🇹 Austria',
+  DE: '🇩🇪 Germany',
+  HR: '🇭🇷 Croatia',
+  RO: '🇷🇴 Romania',
+  BG: '🇧🇬 Bulgaria',
+  SI: '🇸🇮 Slovenia',
+  CH: '🇨🇭 Switzerland',
+  FR: '🇫🇷 France',
+  NL: '🇳🇱 Netherlands',
+  IT: '🇮🇹 Italy',
+  ES: '🇪🇸 Spain',
+  GB: '🇬🇧 United Kingdom',
 };
 
 export function SettingsScreen() {
   const syncStatus = getSyncStatus();
   const [country, setCountry] = useState<string>('SK');
+  const [language, setLang] = useState<SupportedLanguage>(getLanguage());
 
   useEffect(() => {
     getSelectedCountry().then((c) => {
       if (c) setCountry(c);
+    });
+    AsyncStorage.getItem(LANGUAGE_STORAGE_KEY).then((stored) => {
+      if (stored) {
+        setLanguage(stored as SupportedLanguage);
+        setLang(stored as SupportedLanguage);
+      }
     });
   }, []);
 
@@ -33,10 +50,41 @@ export function SettingsScreen() {
       onPress: async () => {
         await setSelectedCountry(code);
         setCountry(code);
+        // Also set default language for the new country (if no custom language set)
+        const storedLang = await AsyncStorage.getItem(LANGUAGE_STORAGE_KEY);
+        if (!storedLang) {
+          const newLang = getLanguageForCountry(code);
+          setLanguage(newLang);
+          setLang(newLang);
+        }
       },
     }));
+
     Alert.alert('Change Country', 'Select your country:', [
-      ...options.slice(0, 5),
+      ...options.slice(0, 6),
+      { text: 'More...', onPress: () => {
+        Alert.alert('More Countries', undefined, [
+          ...options.slice(6, 12),
+          { text: 'Cancel', style: 'cancel' },
+        ]);
+      }},
+      { text: 'Cancel', style: 'cancel' },
+    ]);
+  };
+
+  const handleChangeLanguage = () => {
+    const languages = getSupportedLanguages();
+    const options = languages.map((lang) => ({
+      text: `${lang.name}${lang.code === language ? ' ✓' : ''}`,
+      onPress: async () => {
+        setLanguage(lang.code);
+        setLang(lang.code);
+        await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, lang.code);
+      },
+    }));
+
+    Alert.alert('Language', 'Select your preferred language:', [
+      ...options,
       { text: 'Cancel', style: 'cancel' },
     ]);
   };
@@ -59,18 +107,20 @@ export function SettingsScreen() {
     );
   };
 
+  const selectedLanguageName = getSupportedLanguages().find((l) => l.code === language)?.name || 'English';
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      {/* App Info */}
+      {/* General Settings */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>About</Text>
-        <View style={styles.row}>
-          <Text style={styles.rowLabel}>Version</Text>
-          <Text style={styles.rowValue}>1.0.0</Text>
-        </View>
-        <TouchableOpacity style={styles.row} onPress={handleChangeCountry}>
+        <Text style={styles.sectionTitle}>General</Text>
+        <TouchableOpacity style={styles.row} onPress={handleChangeCountry} testID="settings-country">
           <Text style={styles.rowLabel}>Country</Text>
           <Text style={styles.rowValue}>{COUNTRY_NAMES[country] || country} ›</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.row} onPress={handleChangeLanguage} testID="settings-language">
+          <Text style={styles.rowLabel}>Language</Text>
+          <Text style={styles.rowValue}>{selectedLanguageName} ›</Text>
         </TouchableOpacity>
       </View>
 
@@ -98,18 +148,24 @@ export function SettingsScreen() {
       {/* Data Management */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Data</Text>
-        <TouchableOpacity style={styles.dangerRow} onPress={handleClearData}>
+        <TouchableOpacity style={styles.dangerRow} onPress={handleClearData} testID="settings-clear-data">
           <Text style={styles.dangerText}>Delete All Cards</Text>
         </TouchableOpacity>
       </View>
 
-      {/* Credits */}
+      {/* App Info */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Credits</Text>
-        <Text style={styles.credits}>
-          Cards Central - Your loyalty cards in one place.{'\n'}
-          Made with ❤️ in Slovakia
-        </Text>
+        <Text style={styles.sectionTitle}>About</Text>
+        <View style={styles.row}>
+          <Text style={styles.rowLabel}>Version</Text>
+          <Text style={styles.rowValue}>1.0.0</Text>
+        </View>
+        <View style={styles.creditRow}>
+          <Text style={styles.credits}>
+            Cards Central - Your loyalty cards in one place.{'\n'}
+            Made with ❤️ in Slovakia
+          </Text>
+        </View>
       </View>
     </ScrollView>
   );
@@ -194,11 +250,15 @@ const styles = StyleSheet.create({
     color: '#FF3B30',
     fontWeight: '500',
   },
+  creditRow: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: '#E5E5E5',
+  },
   credits: {
     fontSize: 13,
     color: '#999',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
     lineHeight: 20,
     textAlign: 'center',
   },

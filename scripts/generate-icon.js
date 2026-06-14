@@ -1,0 +1,127 @@
+/**
+ * Generate app icon for Cards Central
+ * 
+ * Design: Stacked loyalty cards with a price tag overlay
+ * Colors: Blue gradient background, white card shapes, gold tag
+ * 
+ * Run: node scripts/generate-icon.js
+ * Requires: No dependencies (creates SVG, convert with any tool)
+ */
+
+const fs = require('fs');
+const path = require('path');
+
+const SIZE = 1024;
+
+// SVG icon design: Loyalty cards fan with a tag
+const svg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background: Rounded blue gradient -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a73e8"/>
+      <stop offset="100%" style="stop-color:#0d47a1"/>
+    </linearGradient>
+    <linearGradient id="card1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.9"/>
+      <stop offset="100%" style="stop-color:#f0f0f0;stop-opacity:0.9"/>
+    </linearGradient>
+    <linearGradient id="card2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.7"/>
+      <stop offset="100%" style="stop-color:#e8e8e8;stop-opacity:0.7"/>
+    </linearGradient>
+    <linearGradient id="tag" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700"/>
+      <stop offset="100%" style="stop-color:#FFA000"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="${SIZE}" height="${SIZE}" rx="220" fill="url(#bg)"/>
+  
+  <!-- Back card (rotated slightly) -->
+  <g transform="translate(512, 520) rotate(-8)">
+    <rect x="-200" y="-130" width="400" height="260" rx="24" fill="url(#card2)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+    <!-- Barcode lines on back card -->
+    <g transform="translate(-80, 30)">
+      <rect x="0" y="0" width="4" height="40" fill="rgba(0,0,0,0.15)"/>
+      <rect x="8" y="0" width="2" height="40" fill="rgba(0,0,0,0.15)"/>
+      <rect x="14" y="0" width="6" height="40" fill="rgba(0,0,0,0.15)"/>
+      <rect x="24" y="0" width="3" height="40" fill="rgba(0,0,0,0.15)"/>
+      <rect x="30" y="0" width="5" height="40" fill="rgba(0,0,0,0.15)"/>
+      <rect x="38" y="0" width="2" height="40" fill="rgba(0,0,0,0.15)"/>
+      <rect x="44" y="0" width="4" height="40" fill="rgba(0,0,0,0.15)"/>
+      <rect x="52" y="0" width="6" height="40" fill="rgba(0,0,0,0.15)"/>
+      <rect x="62" y="0" width="3" height="40" fill="rgba(0,0,0,0.15)"/>
+      <rect x="68" y="0" width="2" height="40" fill="rgba(0,0,0,0.15)"/>
+      <rect x="74" y="0" width="5" height="40" fill="rgba(0,0,0,0.15)"/>
+      <rect x="82" y="0" width="4" height="40" fill="rgba(0,0,0,0.15)"/>
+      <rect x="90" y="0" width="6" height="40" fill="rgba(0,0,0,0.15)"/>
+      <rect x="100" y="0" width="3" height="40" fill="rgba(0,0,0,0.15)"/>
+      <rect x="106" y="0" width="4" height="40" fill="rgba(0,0,0,0.15)"/>
+      <rect x="114" y="0" width="2" height="40" fill="rgba(0,0,0,0.15)"/>
+      <rect x="120" y="0" width="5" height="40" fill="rgba(0,0,0,0.15)"/>
+      <rect x="128" y="0" width="6" height="40" fill="rgba(0,0,0,0.15)"/>
+      <rect x="138" y="0" width="3" height="40" fill="rgba(0,0,0,0.15)"/>
+      <rect x="144" y="0" width="4" height="40" fill="rgba(0,0,0,0.15)"/>
+    </g>
+  </g>
+  
+  <!-- Front card -->
+  <g transform="translate(512, 500) rotate(3)">
+    <rect x="-200" y="-130" width="400" height="260" rx="24" fill="url(#card1)" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+    <!-- Shop circle indicator -->
+    <circle cx="-130" cy="-70" r="30" fill="#E53935"/>
+    <text x="-130" y="-62" font-family="Arial,sans-serif" font-size="22" font-weight="bold" fill="white" text-anchor="middle">H&amp;M</text>
+    <!-- Barcode lines -->
+    <g transform="translate(-100, 20)">
+      <rect x="0" y="0" width="4" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="8" y="0" width="2" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="14" y="0" width="6" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="24" y="0" width="3" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="30" y="0" width="5" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="38" y="0" width="2" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="44" y="0" width="4" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="52" y="0" width="6" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="62" y="0" width="3" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="68" y="0" width="2" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="74" y="0" width="5" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="82" y="0" width="4" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="90" y="0" width="6" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="100" y="0" width="3" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="106" y="0" width="4" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="114" y="0" width="2" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="120" y="0" width="5" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="128" y="0" width="6" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="138" y="0" width="3" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="144" y="0" width="4" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="152" y="0" width="2" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="158" y="0" width="5" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="166" y="0" width="6" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="176" y="0" width="3" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="182" y="0" width="4" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="190" y="0" width="2" height="50" fill="rgba(0,0,0,0.7)"/>
+      <rect x="196" y="0" width="5" height="50" fill="rgba(0,0,0,0.7)"/>
+    </g>
+    <!-- Card number text -->
+    <text x="0" y="100" font-family="monospace" font-size="16" fill="rgba(0,0,0,0.5)" text-anchor="middle">2901 4567 8901 2345</text>
+  </g>
+  
+  <!-- Price tag / loyalty tag in top-right -->
+  <g transform="translate(720, 260)">
+    <path d="M-30,-60 L50,-60 L80,-30 L80,30 L50,60 L-30,60 Z" fill="url(#tag)" stroke="rgba(0,0,0,0.1)" stroke-width="2"/>
+    <circle cx="60" cy="0" r="10" fill="white" opacity="0.8"/>
+    <!-- Tag string -->
+    <line x1="-30" y1="-60" x2="-60" y2="-90" stroke="rgba(255,255,255,0.6)" stroke-width="3" stroke-linecap="round"/>
+  </g>
+</svg>`;
+
+// Write SVG
+const svgPath = path.join(__dirname, '..', 'assets', 'icon.svg');
+fs.writeFileSync(svgPath, svg);
+console.log(`✅ Icon SVG written to: ${svgPath}`);
+console.log('');
+console.log('To convert to PNG (1024x1024), use one of:');
+console.log('  npx sharp-cli -i assets/icon.svg -o assets/icon.png resize 1024 1024');
+console.log('  OR open assets/icon.svg in a browser and take a screenshot');
+console.log('  OR use: rsvg-convert -w 1024 -h 1024 assets/icon.svg > assets/icon.png');

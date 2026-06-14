@@ -1,0 +1,28 @@
+appId: com.cardscentral.app
+---
+# Flow: Navigate to settings and verify options
+# Precondition: Country selected
+
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: "cards-list-screen"
+    timeout: 10000
+
+# Navigate to Settings tab
+- tapOn:
+    text: ".*Settings.*"
+
+# Should see settings options
+- extendedWaitUntil:
+    visible:
+      id: "settings-country"
+    timeout: 5000
+- assertVisible:
+    id: "settings-language"
+- assertVisible:
+    text: ".*Premium Feature.*"
+- assertVisible:
+    text: ".*Delete All Cards.*"
+- assertVisible:
+    text: ".*Version.*"

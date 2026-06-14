@@ -1,0 +1,40 @@
+appId: com.cardscentral.app
+---
+# Flow: Search for shops when adding a card
+# Precondition: Country selected
+
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: "cards-list-screen"
+    timeout: 10000
+
+# Navigate to add card
+- tapOn:
+    id: "add-card-button"
+- extendedWaitUntil:
+    visible: "Select Shop"
+    timeout: 5000
+
+# Search for H&M
+- tapOn:
+    id: "shop-search-input"
+- inputText: "H&M"
+
+# H&M should be visible
+- assertVisible:
+    id: "shop-select-hm"
+
+# Clear search and try another
+- tapOn:
+    id: "shop-search-input"
+- eraseText: 3
+- inputText: "Lidl"
+
+# Lidl should be visible
+- assertVisible:
+    id: "shop-select-lidl"
+
+# Navigate back
+- hideKeyboard
+- back
