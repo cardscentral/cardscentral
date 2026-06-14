@@ -2,6 +2,7 @@ id: kesko-fi
 name: "K-Ryhmä"
 description: "K-Plussa Card"
 country: FI
+domain: "k-ruoka.fi"
 category: groceries
 barcode_type: ean13
 brand:

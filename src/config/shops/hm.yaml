@@ -3,6 +3,7 @@ id: hm
 name: "H&M"
 description: "H&M Member Card"
 country: SK
+domain: "hm.com"
 category: fashion
 barcode_type: ean13
 brand:

@@ -2,6 +2,7 @@ id: kaufland-ro
 name: "Kaufland"
 description: "Kaufland Card"
 country: RO
+domain: "kaufland.ro"
 category: groceries
 barcode_type: qr
 brand:

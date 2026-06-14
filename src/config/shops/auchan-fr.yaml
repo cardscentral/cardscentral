@@ -2,6 +2,7 @@ id: auchan-fr
 name: "Auchan"
 description: "Auchan Loyalty Card"
 country: FR
+domain: "auchan.fr"
 category: groceries
 barcode_type: ean13
 brand:

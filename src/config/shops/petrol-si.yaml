@@ -2,6 +2,7 @@ id: petrol-si
 name: "Petrol"
 description: "Petrol Na poti Card"
 country: SI
+domain: "petrol.si"
 category: petrol
 barcode_type: ean13
 brand:

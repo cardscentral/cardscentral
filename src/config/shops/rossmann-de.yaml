@@ -2,6 +2,7 @@ id: rossmann-de
 name: "Rossmann"
 description: "Rossmann Card"
 country: DE
+domain: "rossmann.de"
 category: pharmacy
 barcode_type: ean13
 brand:

@@ -62,7 +62,7 @@ export function CardsListScreen() {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="cards-list-screen">
       <FlatList
         data={cards}
         keyExtractor={(item) => item.id}

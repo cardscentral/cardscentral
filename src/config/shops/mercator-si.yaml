@@ -2,6 +2,7 @@ id: mercator-si
 name: "Mercator"
 description: "Mercator Pika Card"
 country: SI
+domain: "mercator.si"
 category: groceries
 barcode_type: ean13
 brand:

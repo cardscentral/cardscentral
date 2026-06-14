@@ -2,6 +2,7 @@ id: stradivarius
 name: "Stradivarius"
 description: "Stradivarius Card"
 country: EU
+domain: "stradivarius.com"
 category: fashion
 barcode_type: qr
 brand:

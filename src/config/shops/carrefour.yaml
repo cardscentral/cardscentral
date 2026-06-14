@@ -2,6 +2,7 @@ id: carrefour
 name: "Carrefour"
 description: "Carrefour Loyalty Card"
 country: EU
+domain: "carrefour.com"
 category: groceries
 barcode_type: ean13
 brand:

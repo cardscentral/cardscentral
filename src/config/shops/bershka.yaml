@@ -2,6 +2,7 @@ id: bershka
 name: "Bershka"
 description: "Bershka Card"
 country: EU
+domain: "bershka.com"
 category: fashion
 barcode_type: qr
 brand:

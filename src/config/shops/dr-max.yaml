@@ -2,6 +2,7 @@ id: dr-max
 name: "Dr.Max"
 description: "Dr.Max Loyalty Card"
 country: SK
+domain: "drmax.sk"
 category: pharmacy
 barcode_type: ean13
 brand:

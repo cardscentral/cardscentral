@@ -2,6 +2,7 @@ id: zara
 name: "Zara"
 description: "Zara Loyalty Card"
 country: EU
+domain: "zara.com"
 category: fashion
 barcode_type: qr
 brand:

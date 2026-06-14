@@ -42,6 +42,8 @@ export interface ShopConfig {
   name: string;
   description: string;
   country: string;
+  /** Website domain — used to fetch favicon logo at build time */
+  domain?: string;
   category: ShopCategory;
   barcode_type: BarcodeType;
   brand: ShopBrand;

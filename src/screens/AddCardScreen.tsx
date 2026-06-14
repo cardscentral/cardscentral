@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { v4 as uuidv4 } from 'uuid';
 import { RootStackParamList, ShopConfig, ShopCategory } from '../types';
+import { generateId } from '../utils/generateId';
 import { addCard } from '../storage/cardStorage';
 import { getShopById, getShopsGroupedByCategory, CATEGORY_META } from '../config/shops';
 import { getSelectedCountry } from '../storage/preferences';
@@ -68,7 +68,7 @@ export function AddCardScreen() {
 
     const now = new Date().toISOString();
     await addCard({
-      id: uuidv4(),
+      id: generateId(),
       shopId: selectedShop.id,
       cardNumber: cardNumber.trim(),
       nickname: nickname.trim() || undefined,
@@ -128,7 +128,7 @@ export function AddCardScreen() {
           value={cardNumber}
           onChangeText={setCardNumber}
           keyboardType="default"
-          autoCapitalize="characters"
+          autoCapitalize="none"
           testID="card-number-input"
         />
         <TouchableOpacity

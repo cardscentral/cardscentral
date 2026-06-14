@@ -2,6 +2,7 @@ id: ikea
 name: "IKEA"
 description: "IKEA Family Card"
 country: SK
+domain: "ikea.sk"
 category: home
 barcode_type: ean13
 brand:

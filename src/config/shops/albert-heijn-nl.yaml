@@ -2,6 +2,7 @@ id: albert-heijn-nl
 name: "Albert Heijn"
 description: "Albert Heijn Bonus Card"
 country: NL
+domain: "ah.nl"
 category: groceries
 barcode_type: ean13
 brand:

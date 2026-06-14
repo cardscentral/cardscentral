@@ -3,6 +3,7 @@ id: tesco
 name: "Tesco"
 description: "Tesco Clubcard"
 country: SK
+domain: "tesco.com"
 category: groceries
 barcode_type: ean13
 brand:

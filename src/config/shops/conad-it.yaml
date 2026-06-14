@@ -2,6 +2,7 @@ id: conad-it
 name: "Conad"
 description: "Conad Card"
 country: IT
+domain: "conad.it"
 category: groceries
 barcode_type: ean13
 brand:

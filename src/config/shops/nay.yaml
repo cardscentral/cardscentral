@@ -2,6 +2,7 @@ id: nay
 name: "NAY"
 description: "NAY Loyalty Card"
 country: SK
+domain: "nay.sk"
 category: electronics
 barcode_type: ean13
 brand:

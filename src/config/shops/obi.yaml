@@ -2,6 +2,7 @@ id: obi
 name: "OBI"
 description: "OBI Bonus Card"
 country: SK
+domain: "obi.sk"
 category: home
 barcode_type: ean13
 brand:

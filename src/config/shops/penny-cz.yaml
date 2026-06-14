@@ -2,6 +2,7 @@ id: penny-cz
 name: "Penny"
 description: "Penny Card"
 country: CZ
+domain: "penny.cz"
 category: groceries
 barcode_type: ean13
 brand:

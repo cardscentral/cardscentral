@@ -2,6 +2,7 @@ id: aldi
 name: "Aldi"
 description: "Aldi Card"
 country: EU
+domain: "aldi-nord.de"
 category: groceries
 barcode_type: qr
 brand:

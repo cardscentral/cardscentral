@@ -70,7 +70,7 @@ export function CardDetailScreen() {
   }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <ScrollView style={styles.container} contentContainerStyle={styles.content} testID="card-detail-screen">
       {/* Card Header with Shop Branding */}
       <View style={[styles.cardHeader, { backgroundColor: shop.brand.primary_color }]}>
         <ShopIcon brand={shop.brand} size={64} />

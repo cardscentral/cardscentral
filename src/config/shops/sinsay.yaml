@@ -2,6 +2,7 @@ id: sinsay
 name: "Sinsay"
 description: "Sinsay Club Card"
 country: SK
+domain: "sinsay.com"
 category: fashion
 barcode_type: ean13
 brand:

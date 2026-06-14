@@ -2,6 +2,7 @@ id: pepco
 name: "Pepco"
 description: "Pepco Card"
 country: SK
+domain: "pepco.sk"
 category: fashion
 barcode_type: ean13
 brand:

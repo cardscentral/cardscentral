@@ -2,6 +2,7 @@ id: rewe-de
 name: "REWE"
 description: "REWE Bonus Card"
 country: DE
+domain: "rewe.de"
 category: groceries
 barcode_type: qr
 brand:

@@ -2,6 +2,7 @@ id: primark
 name: "Primark"
 description: "Primark Card"
 country: EU
+domain: "primark.com"
 category: fashion
 barcode_type: ean13
 brand:

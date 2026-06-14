@@ -2,6 +2,7 @@ id: bp
 name: "BP"
 description: "BP BPme Card"
 country: EU
+domain: "bp.com"
 category: petrol
 barcode_type: ean13
 brand:

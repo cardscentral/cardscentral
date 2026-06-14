@@ -2,6 +2,7 @@ id: dm-hr
 name: "dm"
 description: "dm active beauty Card"
 country: HR
+domain: "dm.hr"
 category: pharmacy
 barcode_type: ean13
 brand:

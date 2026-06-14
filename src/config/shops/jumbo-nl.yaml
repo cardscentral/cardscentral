@@ -2,6 +2,7 @@ id: jumbo-nl
 name: "Jumbo"
 description: "Jumbo Extra's Card"
 country: NL
+domain: "jumbo.com"
 category: groceries
 barcode_type: ean13
 brand:

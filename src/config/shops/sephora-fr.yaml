@@ -2,6 +2,7 @@ id: sephora-fr
 name: "Sephora"
 description: "Sephora Beauty Card"
 country: FR
+domain: "sephora.fr"
 category: pharmacy
 barcode_type: ean13
 brand:

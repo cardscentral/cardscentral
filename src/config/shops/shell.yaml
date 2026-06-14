@@ -2,6 +2,7 @@ id: shell
 name: "Shell"
 description: "Shell ClubSmart Card"
 country: SK
+domain: "shell.sk"
 category: petrol
 barcode_type: ean13
 brand:

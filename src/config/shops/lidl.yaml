@@ -3,6 +3,7 @@ id: lidl
 name: "Lidl"
 description: "Lidl Plus Card"
 country: SK
+domain: "lidl.sk"
 category: groceries
 barcode_type: qr
 brand:

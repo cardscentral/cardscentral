@@ -2,6 +2,7 @@ id: konzum-hr
 name: "Konzum"
 description: "MultiPlusCard"
 country: HR
+domain: "konzum.hr"
 category: groceries
 barcode_type: ean13
 brand:

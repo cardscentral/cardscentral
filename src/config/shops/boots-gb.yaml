@@ -2,6 +2,7 @@ id: boots-gb
 name: "Boots"
 description: "Boots Advantage Card"
 country: GB
+domain: "boots.com"
 category: pharmacy
 barcode_type: ean13
 brand:

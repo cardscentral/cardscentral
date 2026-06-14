@@ -2,6 +2,7 @@ id: coop-jednota
 name: "COOP Jednota"
 description: "COOP Jednota Card"
 country: SK
+domain: "jednota.sk"
 category: groceries
 barcode_type: ean13
 brand:

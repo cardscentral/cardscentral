@@ -2,6 +2,7 @@ id: saturn
 name: "Saturn"
 description: "Saturn Card"
 country: EU
+domain: "saturn.de"
 category: electronics
 barcode_type: ean13
 brand:

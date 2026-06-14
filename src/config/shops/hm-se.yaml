@@ -2,6 +2,7 @@ id: hm-se
 name: "H&M"
 description: "H&M Member Card"
 country: SE
+domain: "hm.com"
 category: fashion
 barcode_type: ean13
 brand:

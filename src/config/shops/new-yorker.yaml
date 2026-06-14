@@ -2,6 +2,7 @@ id: new-yorker
 name: "New Yorker"
 description: "New Yorker Club Card"
 country: SK
+domain: "newyorker.de"
 category: fashion
 barcode_type: code128
 brand:

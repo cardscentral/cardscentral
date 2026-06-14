@@ -2,6 +2,7 @@ id: payback-de
 name: "PAYBACK"
 description: "PAYBACK Card"
 country: DE
+domain: "payback.de"
 category: other
 barcode_type: ean13
 brand:

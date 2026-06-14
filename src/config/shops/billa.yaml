@@ -2,6 +2,7 @@ id: billa
 name: "Billa"
 description: "Billa Bonus Card"
 country: SK
+domain: "billa.sk"
 category: groceries
 barcode_type: ean13
 brand:

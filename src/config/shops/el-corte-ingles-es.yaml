@@ -2,6 +2,7 @@ id: el-corte-ingles-es
 name: "El Corte Inglés"
 description: "El Corte Inglés Card"
 country: ES
+domain: "elcorteingles.es"
 category: other
 barcode_type: ean13
 brand:

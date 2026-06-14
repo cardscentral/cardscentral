@@ -2,6 +2,7 @@ id: mol-hu
 name: "MOL"
 description: "MOL Limitless Card"
 country: HU
+domain: "mol.hu"
 category: petrol
 barcode_type: ean13
 brand:

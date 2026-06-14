@@ -2,6 +2,7 @@ id: leroy-merlin
 name: "Leroy Merlin"
 description: "Leroy Merlin Card"
 country: EU
+domain: "leroymerlin.sk"
 category: home
 barcode_type: ean13
 brand:

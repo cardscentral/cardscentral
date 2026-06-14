@@ -2,6 +2,7 @@ id: media-markt
 name: "MediaMarkt"
 description: "MediaMarkt Club Card"
 country: EU
+domain: "mediamarkt.de"
 category: electronics
 barcode_type: ean13
 brand:

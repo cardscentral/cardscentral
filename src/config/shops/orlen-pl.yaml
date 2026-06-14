@@ -2,6 +2,7 @@ id: orlen-pl
 name: "Orlen"
 description: "Orlen Vitay Card"
 country: PL
+domain: "orlen.pl"
 category: petrol
 barcode_type: ean13
 brand:

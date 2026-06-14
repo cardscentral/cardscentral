@@ -1,0 +1,11 @@
+# Maestro workspace configuration
+flows:
+  - "flows/*"
+executionOrder:
+  continueOnFailure: false
+  flowsOrder:
+    - flows/01-country-selection.yaml
+    - flows/02-add-card.yaml
+    - flows/03-view-card-detail.yaml
+    - flows/04-edit-card.yaml
+    - flows/05-delete-card.yaml

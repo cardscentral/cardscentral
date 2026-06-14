@@ -2,6 +2,7 @@ id: mohito
 name: "Mohito"
 description: "Mohito Club Card"
 country: SK
+domain: "mohito.com"
 category: fashion
 barcode_type: ean13
 brand:

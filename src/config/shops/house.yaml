@@ -2,6 +2,7 @@ id: house
 name: "House"
 description: "House Club Card"
 country: SK
+domain: "housebrand.com"
 category: fashion
 barcode_type: ean13
 brand:

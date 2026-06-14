@@ -2,6 +2,7 @@ id: reserved
 name: "Reserved"
 description: "Reserved Club Card"
 country: SK
+domain: "reserved.com"
 category: fashion
 barcode_type: ean13
 brand:

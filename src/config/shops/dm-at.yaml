@@ -2,6 +2,7 @@ id: dm-at
 name: "dm"
 description: "dm active beauty Card"
 country: AT
+domain: "dm.at"
 category: pharmacy
 barcode_type: ean13
 brand:

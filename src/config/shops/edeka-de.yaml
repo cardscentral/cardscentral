@@ -2,6 +2,7 @@ id: edeka-de
 name: "Edeka"
 description: "Edeka Genuss+ Card"
 country: DE
+domain: "edeka.de"
 category: groceries
 barcode_type: ean13
 brand:

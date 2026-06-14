@@ -2,6 +2,7 @@ id: tesco-hu
 name: "Tesco"
 description: "Tesco ClubCard"
 country: HU
+domain: "tesco.hu"
 category: groceries
 barcode_type: ean13
 brand:

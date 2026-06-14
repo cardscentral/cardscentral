@@ -2,6 +2,7 @@ id: intersport
 name: "Intersport"
 description: "Intersport Club Card"
 country: EU
+domain: "intersport.sk"
 category: sports
 barcode_type: ean13
 brand:

@@ -2,6 +2,7 @@ id: kruidvat-nl
 name: "Kruidvat"
 description: "Kruidvat Card"
 country: NL
+domain: "kruidvat.nl"
 category: pharmacy
 barcode_type: ean13
 brand:

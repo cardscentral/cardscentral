@@ -3,6 +3,7 @@ id: tako-fashion
 name: "Tako Fashion"
 description: "Tako Fashion Club Card"
 country: SK
+domain: "takofashion.sk"
 category: fashion
 barcode_type: code128
 brand:

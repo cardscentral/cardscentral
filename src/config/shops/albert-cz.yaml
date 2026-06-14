@@ -2,6 +2,7 @@ id: albert-cz
 name: "Albert"
 description: "Albert Club Card"
 country: CZ
+domain: "albert.cz"
 category: groceries
 barcode_type: ean13
 brand:

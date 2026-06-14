@@ -2,6 +2,7 @@ id: orsay
 name: "Orsay"
 description: "Orsay Club Card"
 country: SK
+domain: "orsay.com"
 category: fashion
 barcode_type: ean13
 brand:

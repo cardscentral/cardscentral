@@ -1,17 +1,30 @@
 appId: com.cardscentral.app
 ---
 # Flow: Delete a card
-# Precondition: Card exists (run 02 first)
+# Precondition: A card exists (relies on flow 02 or 04 running first)
 
-# Tap on existing card
-- tapOn: "Family Tesco"
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: "cards-list-screen"
+    timeout: 10000
 
-# Tap delete button
+# Tap on the first card visible
+- tapOn:
+    text: ".*Tesco.*"
+
+# Tap delete button on detail screen
+- extendedWaitUntil:
+    visible:
+      id: "card-detail-screen"
+    timeout: 5000
 - tapOn:
     id: "delete-card-button"
 
 # Confirm deletion
 - tapOn: "Delete"
 
-# Should return to empty state or cards list without the card
-- assertNotVisible: "Family Tesco"
+# Should return to empty cards list
+- extendedWaitUntil:
+    visible: "No Cards Yet"
+    timeout: 5000

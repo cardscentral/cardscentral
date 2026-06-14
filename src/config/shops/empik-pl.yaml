@@ -2,6 +2,7 @@ id: empik-pl
 name: "Empik"
 description: "Empik Premium Card"
 country: PL
+domain: "empik.com"
 category: other
 barcode_type: qr
 brand:

@@ -2,6 +2,7 @@ id: esselunga-it
 name: "Esselunga"
 description: "Esselunga Fìdaty Card"
 country: IT
+domain: "esselunga.it"
 category: groceries
 barcode_type: ean13
 brand:

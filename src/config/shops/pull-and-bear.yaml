@@ -2,6 +2,7 @@ id: pull-and-bear
 name: "Pull & Bear"
 description: "Pull & Bear Card"
 country: EU
+domain: "pullandbear.com"
 category: fashion
 barcode_type: qr
 brand:

@@ -2,6 +2,7 @@ id: omv
 name: "OMV"
 description: "OMV MaxxMotion Card"
 country: SK
+domain: "omv.sk"
 category: petrol
 barcode_type: ean13
 brand:

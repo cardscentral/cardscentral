@@ -3,21 +3,25 @@
  *
  * Displays a branded icon for a shop. Priority:
  * 1. Official brand SVG logo from `simple-icons` npm package (if brand.logo is set)
- * 2. Two-letter abbreviation in brand colors (for shops not in simple-icons)
+ * 2. Favicon PNG fetched from Google (if available in assets/logos/)
+ * 3. Two-letter abbreviation in brand colors (final fallback)
  *
- * Brand logos sourced from the `simple-icons` npm dependency (CC0 license, 3400+ brands).
- * No SVGs are stored in this repo — they're extracted at build time via `npm run generate:icons`.
+ * SVG logos: sourced from `simple-icons` npm dependency (CC0, 3400+ brands)
+ * PNG logos: fetched from Google Favicons during build (`npm run fetch:logos`)
  */
 
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { ShopBrand } from '../types';
 import { brandIcons } from '../config/brand-icons.generated';
+import { logoAssets } from '../config/logo-assets.generated';
 
 interface ShopIconProps {
   brand: ShopBrand;
-  /** Shop name — used for 2-letter fallback when no logo available */
+  /** Shop ID — used to look up fetched favicon PNG */
+  shopId?: string;
+  /** Shop name — used for 2-letter fallback */
   name?: string;
   size?: number;
 }
@@ -35,8 +39,22 @@ function renderBrandLogo(logoSlug: string, size: number, color: string) {
   );
 }
 
+function renderFaviconLogo(shopId: string, size: number) {
+  const asset = logoAssets[shopId];
+  if (!asset) return null;
+
+  const imgSize = size * 0.65;
+
+  return (
+    <Image
+      source={asset}
+      style={{ width: imgSize, height: imgSize, borderRadius: imgSize * 0.1 }}
+      resizeMode="contain"
+    />
+  );
+}
+
 function renderLetterFallback(name: string, size: number, color: string) {
-  // Show 2-letter abbreviation: initials for multi-word names, or first 2 chars
   const words = name.trim().split(/\s+/);
   const letters = words.length >= 2
     ? (words[0][0] + words[1][0]).toUpperCase()
@@ -49,14 +67,17 @@ function renderLetterFallback(name: string, size: number, color: string) {
   );
 }
 
-export function ShopIcon({ brand, name, size = 48 }: ShopIconProps) {
+export function ShopIcon({ brand, shopId, name, size = 48 }: ShopIconProps) {
   let content: React.ReactNode;
 
   if (brand.logo && brandIcons[brand.logo]) {
-    // Official brand SVG logo from simple-icons npm package
+    // Priority 1: Official SVG brand logo from simple-icons
     content = renderBrandLogo(brand.logo, size, brand.text_color);
+  } else if (shopId && logoAssets[shopId]) {
+    // Priority 2: Favicon PNG from Google (fetched at build time)
+    content = renderFaviconLogo(shopId, size);
   } else {
-    // 2-letter abbreviation in brand colors
+    // Priority 3: 2-letter abbreviation in brand colors
     content = renderLetterFallback(name || '??', size, brand.text_color);
   }
 

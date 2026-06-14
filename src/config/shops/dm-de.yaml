@@ -2,6 +2,7 @@ id: dm-de
 name: "dm"
 description: "dm Payback Card"
 country: DE
+domain: "dm.de"
 category: pharmacy
 barcode_type: ean13
 brand:

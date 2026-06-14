@@ -2,6 +2,7 @@ id: muller
 name: "Müller"
 description: "Müller Loyalty Card"
 country: EU
+domain: "mueller.sk"
 category: pharmacy
 barcode_type: ean13
 brand:

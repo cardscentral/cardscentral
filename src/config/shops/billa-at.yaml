@@ -2,6 +2,7 @@ id: billa-at
 name: "Billa"
 description: "Billa Bonus Card"
 country: AT
+domain: "billa.at"
 category: groceries
 barcode_type: ean13
 brand:

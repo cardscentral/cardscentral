@@ -2,6 +2,7 @@ id: massimo-dutti
 name: "Massimo Dutti"
 description: "Massimo Dutti Card"
 country: EU
+domain: "massimodutti.com"
 category: fashion
 barcode_type: qr
 brand:

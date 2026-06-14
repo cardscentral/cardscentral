@@ -2,6 +2,7 @@ id: biedronka-pl
 name: "Biedronka"
 description: "Biedronka Moja Biedronka Card"
 country: PL
+domain: "biedronka.pl"
 category: groceries
 barcode_type: ean13
 brand:

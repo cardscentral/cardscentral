@@ -3,6 +3,7 @@ id: dm
 name: "dm drogerie markt"
 description: "dm active beauty Card"
 country: SK
+domain: "dm-drogeriemarkt.sk"
 category: pharmacy
 barcode_type: ean13
 brand:

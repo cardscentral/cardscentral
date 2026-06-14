@@ -2,6 +2,7 @@ id: bauhaus-de
 name: "Bauhaus"
 description: "Bauhaus Card"
 country: DE
+domain: "bauhaus.info"
 category: home
 barcode_type: ean13
 brand:

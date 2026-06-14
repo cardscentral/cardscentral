@@ -2,6 +2,7 @@ id: total-energies
 name: "TotalEnergies"
 description: "TotalEnergies Card"
 country: EU
+domain: "totalenergies.com"
 category: petrol
 barcode_type: ean13
 brand:

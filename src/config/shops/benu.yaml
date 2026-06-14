@@ -2,6 +2,7 @@ id: benu
 name: "BENU"
 description: "BENU Pharmacy Card"
 country: SK
+domain: "benu.sk"
 category: pharmacy
 barcode_type: ean13
 brand:

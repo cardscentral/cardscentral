@@ -2,6 +2,7 @@ id: dm-hu
 name: "dm"
 description: "dm active beauty Card"
 country: HU
+domain: "dm.hu"
 category: pharmacy
 barcode_type: ean13
 brand:

@@ -2,6 +2,7 @@ id: mango
 name: "Mango"
 description: "Mango Likes You Card"
 country: EU
+domain: "mango.com"
 category: fashion
 barcode_type: qr
 brand:

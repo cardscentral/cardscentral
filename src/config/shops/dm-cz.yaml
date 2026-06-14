@@ -2,6 +2,7 @@ id: dm-cz
 name: "dm drogerie"
 description: "dm active beauty Card"
 country: CZ
+domain: "dm-drogeriemarkt.cz"
 category: pharmacy
 barcode_type: ean13
 brand:

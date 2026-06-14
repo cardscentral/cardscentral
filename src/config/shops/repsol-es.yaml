@@ -2,6 +2,7 @@ id: repsol-es
 name: "Repsol"
 description: "Repsol Waylet Card"
 country: ES
+domain: "repsol.es"
 category: petrol
 barcode_type: qr
 brand:

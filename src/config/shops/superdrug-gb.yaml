@@ -2,6 +2,7 @@ id: superdrug-gb
 name: "Superdrug"
 description: "Superdrug Health & Beautycard"
 country: GB
+domain: "superdrug.com"
 category: pharmacy
 barcode_type: ean13
 brand:

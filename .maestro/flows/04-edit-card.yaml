@@ -1,28 +1,44 @@
 appId: com.cardscentral.app
 ---
-# Flow: Edit an existing card
-# Precondition: Card already added (run 02 first)
+# Flow: Edit a card
+# Precondition: A card exists (relies on flow 02 running first)
 
-# Tap on existing card
-- tapOn: "My Tesco Card"
+- launchApp
+- extendedWaitUntil:
+    visible:
+      text: ".*My Tesco Card.*"
+    timeout: 10000
+
+# Tap on the card to view details
+- tapOn:
+    text: ".*My Tesco Card.*"
 
 # Tap edit button
+- extendedWaitUntil:
+    visible:
+      id: "card-detail-screen"
+    timeout: 5000
 - tapOn:
     id: "edit-card-button"
 
-# Should see edit form with pre-filled values
-- assertVisible: "Edit Card"
+# Should see edit screen with pre-filled fields
+- extendedWaitUntil:
+    visible:
+      id: "edit-nickname-input"
+    timeout: 5000
 
-# Change nickname
-- clearText:
-    id: "nickname-input"
+# Clear and update nickname
 - tapOn:
-    id: "nickname-input"
-- inputText: "Family Tesco"
+    id: "edit-nickname-input"
+- eraseText: 13
+- inputText: "Tesco Bratislava"
 
-# Save changes
+# Save
 - tapOn:
-    id: "save-card-button"
+    id: "save-edit-button"
 
 # Should see updated card
-- assertVisible: "Family Tesco"
+- extendedWaitUntil:
+    visible:
+      text: ".*Tesco Bratislava.*"
+    timeout: 5000

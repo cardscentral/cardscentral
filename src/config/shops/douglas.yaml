@@ -2,6 +2,7 @@ id: douglas
 name: "Douglas"
 description: "Douglas Beauty Card"
 country: EU
+domain: "douglas.sk"
 category: pharmacy
 barcode_type: ean13
 brand:

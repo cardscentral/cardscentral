@@ -1,8 +1,17 @@
 appId: com.cardscentral.app
 ---
 # Flow: Country Selection (First Launch)
-- assertVisible: "Choose Your Country"
-- assertVisible: "🇸🇰"
-- tapOn: "Slovensko"
+- clearState
+- launchApp
+- extendedWaitUntil:
+    visible: "Choose Your Country"
+    timeout: 10000
+- assertVisible:
+    id: "country-SK"
+- tapOn:
+    id: "country-SK"
 # After selecting country, should see the main cards screen
-- assertVisible: "My Cards"
+- extendedWaitUntil:
+    visible:
+      id: "cards-list-screen"
+    timeout: 10000

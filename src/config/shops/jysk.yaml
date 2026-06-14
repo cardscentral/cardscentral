@@ -2,6 +2,7 @@ id: jysk
 name: "JYSK"
 description: "JYSK Card"
 country: EU
+domain: "jysk.sk"
 category: home
 barcode_type: ean13
 brand:

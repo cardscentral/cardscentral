@@ -2,6 +2,7 @@ id: datart
 name: "Datart"
 description: "Datart Loyalty Card"
 country: SK
+domain: "datart.sk"
 category: electronics
 barcode_type: ean13
 brand:

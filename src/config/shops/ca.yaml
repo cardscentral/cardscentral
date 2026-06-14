@@ -3,6 +3,7 @@ id: ca
 name: "C&A"
 description: "C&A More&More Card"
 country: SK
+domain: "c-and-a.com"
 category: fashion
 barcode_type: ean13
 brand:

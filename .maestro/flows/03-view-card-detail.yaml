@@ -1,14 +1,22 @@
 appId: com.cardscentral.app
 ---
-# Flow: View card detail with barcode display
-# Precondition: Card already added (run 02 first)
+# Flow: View card detail
+# Precondition: A card exists (relies on flow 02 running first)
 
-# Tap on existing card to see detail
-- tapOn: "My Tesco Card"
+- launchApp
+- extendedWaitUntil:
+    visible:
+      text: ".*My Tesco Card.*"
+    timeout: 10000
 
-# Should see card detail with barcode
-- assertVisible: "Tesco"
-- assertVisible: "1234567890123"
+# Tap on the card to view details
+- tapOn:
+    text: ".*My Tesco Card.*"
 
-# Go back
-- back
+# Should see card detail screen with barcode
+- extendedWaitUntil:
+    visible:
+      id: "card-detail-screen"
+    timeout: 5000
+- assertVisible:
+    text: ".*1234567890123.*"

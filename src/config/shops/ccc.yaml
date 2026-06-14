@@ -2,6 +2,7 @@ id: ccc
 name: "CCC"
 description: "CCC Club Card"
 country: SK
+domain: "ccc.eu"
 category: fashion
 barcode_type: ean13
 brand:

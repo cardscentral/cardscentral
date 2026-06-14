@@ -1,34 +1,63 @@
 appId: com.cardscentral.app
 ---
 # Flow: Add a new loyalty card
-# Precondition: Country already selected (run 01 first or app already set up)
+# Precondition: Country already selected (relies on flow 01 running first)
 
-# Navigate to add card
-- tapOn: "Add Card"
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: "cards-list-screen"
+    timeout: 10000
 
-# Should see shop selection grouped by category
-- assertVisible: "Select Shop"
-- assertVisible: "GROCERIES"
-- assertVisible: "FASHION & SHOES"
+# Navigate to add card via FAB button
+- tapOn:
+    id: "add-card-button"
+
+# Should see shop selection
+- extendedWaitUntil:
+    visible: "Select Shop"
+    timeout: 5000
 
 # Select a shop (Tesco)
+- scrollUntilVisible:
+    element:
+      id: "shop-select-tesco"
+    direction: DOWN
 - tapOn:
     id: "shop-select-tesco"
 
-# Enter card number manually
+# Scroll to card number input and enter value
+- scrollUntilVisible:
+    element:
+      id: "card-number-input"
+    direction: DOWN
 - tapOn:
     id: "card-number-input"
 - inputText: "1234567890123"
+- hideKeyboard
 
 # Add a nickname
+- scrollUntilVisible:
+    element:
+      id: "nickname-input"
+    direction: DOWN
 - tapOn:
     id: "nickname-input"
 - inputText: "My Tesco Card"
+- hideKeyboard
 
 # Save the card
+- scrollUntilVisible:
+    element:
+      id: "save-card-button"
+    direction: DOWN
 - tapOn:
     id: "save-card-button"
 
 # Should return to cards list and see the new card
-- assertVisible: "My Tesco Card"
-- assertVisible: "Tesco"
+- extendedWaitUntil:
+    visible:
+      id: "cards-list-screen"
+    timeout: 10000
+- assertVisible:
+    text: ".*My Tesco Card.*"

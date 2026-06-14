@@ -2,6 +2,7 @@ id: fnac-fr
 name: "Fnac"
 description: "Fnac+ Card"
 country: FR
+domain: "fnac.com"
 category: electronics
 barcode_type: ean13
 brand:

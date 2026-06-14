@@ -2,6 +2,7 @@ id: s-group-fi
 name: "S-ryhmä"
 description: "S-Etukortti Card"
 country: FI
+domain: "s-kanava.fi"
 category: groceries
 barcode_type: ean13
 brand:

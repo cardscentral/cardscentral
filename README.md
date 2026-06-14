@@ -66,23 +66,113 @@ Verify:
 maestro --version
 ```
 
-#### Step 2: Build the app for your simulator/emulator
+#### Step 2: Set up a simulator/emulator
 
-**iOS (requires macOS + Xcode 15+):**
+Maestro requires a running simulator or emulator. Choose one:
+
+<details>
+<summary><strong>🍎 iOS Simulator (macOS + Xcode)</strong></summary>
+
+```bash
+# 1. Accept Xcode license (one-time, requires sudo)
+sudo xcodebuild -license accept
+
+# 2. Download iOS simulator runtime matching your Xcode version (one-time, ~8GB)
+#    This automatically picks the correct version for your Xcode installation.
+xcodebuild -downloadPlatform iOS
+
+# 3. Check what runtime was installed
+xcrun simctl list runtimes
+# Example output: iOS 26.5 (26.5 - 23F77) - com.apple.CoreSimulator.SimRuntime.iOS-26-5
+
+# 4. Check available device types
+xcrun simctl list devicetypes | grep iPhone
+
+# 5. Create a simulator (use the runtime identifier from step 3)
+#    Replace the runtime ID to match your installed version
+xcrun simctl create "iPhone 16" \
+  "com.apple.CoreSimulator.SimDeviceType.iPhone-16" \
+  "com.apple.CoreSimulator.SimRuntime.iOS-26-5"
+
+# 6. Boot the simulator
+xcrun simctl boot "iPhone 16"
+
+# 7. Open the Simulator app to see the screen
+open -a Simulator
+
+# 8. Verify it's running
+xcrun simctl list devices | grep Booted
+```
+
+> **Tip:** If xcodebuild fails with "not agreed to license", run step 1 first.
+> If the build says "iOS X.Y is not installed", your runtime version doesn't match Xcode.
+> Always run `xcodebuild -downloadPlatform iOS` to get the matching version.
+
+</details>
+
+<details>
+<summary><strong>🤖 Android Emulator (Android Studio)</strong></summary>
+
+**Option A: Via Android Studio GUI (recommended)**
+
+1. Open Android Studio → **Device Manager** (right sidebar)
+2. Click **Create Virtual Device**
+3. Select **Pixel 6** (or any phone) → **Next**
+4. Download a system image (API 34, x86_64) → **Next** → **Finish**
+5. Click the ▶️ play button to boot the emulator
+
+**Option B: Via command line**
+
+```bash
+# Add SDK tools to PATH (add to your ~/.zshrc)
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$ANDROID_HOME/emulator:$ANDROID_HOME/platform-tools:$PATH
+
+# List available system images
+sdkmanager --list | grep "system-images"
+
+# Download a system image
+sdkmanager "system-images;android-34;google_apis;arm64-v8a"
+
+# Create an AVD
+avdmanager create avd -n Pixel_6 -k "system-images;android-34;google_apis;arm64-v8a" -d pixel_6
+
+# Boot the emulator
+emulator -avd Pixel_6
+```
+
+**Verify the emulator is running:**
+```bash
+adb devices
+# Should show: emulator-5554  device
+```
+
+</details>
+
+#### Step 3: Build the app for your simulator/emulator
+
+**iOS:**
 ```bash
 make build-ios-debug
+# Prebuild + xcodebuild for iphonesimulator
 ```
 
-This runs: `npx expo prebuild --platform ios --clean` → `xcodebuild ...`
-
-**Android (requires Android Studio + JDK 17):**
+**Android:**
 ```bash
 make build-android-debug
+# Prebuild + ./gradlew assembleDebug
 ```
 
-This runs: `npx expo prebuild --platform android --clean` → `./gradlew assembleDebug`
+**Install on device (if not using `npx expo run:*`):**
+```bash
+# iOS
+xcrun simctl install booted ios/build/Build/Products/Debug-iphonesimulator/cardscentral.app
 
-#### Step 3: Run all E2E test flows
+# Android
+adb install android/app/build/outputs/apk/debug/app-debug.apk
+```
+
+#### Step 4: Run all E2E test flows
 
 Make sure a simulator/emulator is running with the app installed, then:
 

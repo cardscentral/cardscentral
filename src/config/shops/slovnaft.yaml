@@ -2,6 +2,7 @@ id: slovnaft
 name: "Slovnaft"
 description: "Slovnaft Bonus Card"
 country: SK
+domain: "slovnaft.sk"
 category: petrol
 barcode_type: ean13
 brand:

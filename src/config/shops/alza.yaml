@@ -2,6 +2,7 @@ id: alza
 name: "Alza"
 description: "Alza Premium Card"
 country: SK
+domain: "alza.sk"
 category: electronics
 barcode_type: qr
 brand:

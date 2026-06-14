@@ -2,6 +2,7 @@ id: ica-se
 name: "ICA"
 description: "ICA Stammis Card"
 country: SE
+domain: "ica.se"
 category: groceries
 barcode_type: ean13
 brand:

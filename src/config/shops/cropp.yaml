@@ -2,6 +2,7 @@ id: cropp
 name: "Cropp"
 description: "Cropp Club Card"
 country: SK
+domain: "cropp.com"
 category: fashion
 barcode_type: ean13
 brand:

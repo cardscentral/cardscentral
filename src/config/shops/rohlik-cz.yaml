@@ -2,6 +2,7 @@ id: rohlik-cz
 name: "Rohlík"
 description: "Rohlík Premium Card"
 country: CZ
+domain: "rohlik.cz"
 category: groceries
 barcode_type: qr
 brand:

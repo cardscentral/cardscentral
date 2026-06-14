@@ -2,6 +2,7 @@ id: decathlon
 name: "Decathlon"
 description: "Decathlon Loyalty Card"
 country: SK
+domain: "decathlon.sk"
 category: sports
 barcode_type: ean13
 brand:

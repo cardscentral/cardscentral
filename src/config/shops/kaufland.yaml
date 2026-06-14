@@ -2,6 +2,7 @@ id: kaufland
 name: "Kaufland"
 description: "Kaufland Card"
 country: SK
+domain: "kaufland.sk"
 category: groceries
 barcode_type: qr
 brand:

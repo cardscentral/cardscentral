@@ -2,6 +2,7 @@ id: aral-de
 name: "Aral"
 description: "Aral PAYBACK Card"
 country: DE
+domain: "aral.de"
 category: petrol
 barcode_type: ean13
 brand:

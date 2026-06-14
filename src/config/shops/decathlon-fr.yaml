@@ -2,6 +2,7 @@ id: decathlon-fr
 name: "Décathlon"
 description: "Décathlon Card"
 country: FR
+domain: "decathlon.fr"
 category: sports
 barcode_type: ean13
 brand:

@@ -54,3 +54,7 @@ e2e/*.js.map
 
 # Generated from simple-icons npm package at build time
 src/config/brand-icons.generated.ts
+
+# Fetched from Google Favicons at build time (npm run fetch:logos)
+assets/logos/
+src/config/logo-assets.generated.ts

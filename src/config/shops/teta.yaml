@@ -2,6 +2,7 @@ id: teta
 name: "Teta Drogerie"
 description: "Teta Club Card"
 country: SK
+domain: "tetadrogerie.sk"
 category: pharmacy
 barcode_type: ean13
 brand:

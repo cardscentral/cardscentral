@@ -2,6 +2,7 @@ id: hema-nl
 name: "HEMA"
 description: "HEMA Card"
 country: NL
+domain: "hema.com"
 category: other
 barcode_type: ean13
 brand:

@@ -2,6 +2,7 @@ id: hornbach
 name: "Hornbach"
 description: "Hornbach ProfiCard"
 country: SK
+domain: "hornbach.sk"
 category: home
 barcode_type: ean13
 brand:

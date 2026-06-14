@@ -2,6 +2,7 @@ id: deichmann
 name: "Deichmann"
 description: "Deichmann Loyalty Card"
 country: SK
+domain: "deichmann.com"
 category: fashion
 barcode_type: ean13
 brand:

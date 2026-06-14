@@ -2,6 +2,7 @@ id: zabka-pl
 name: "Żabka"
 description: "Żappka Card"
 country: PL
+domain: "zabka.pl"
 category: groceries
 barcode_type: qr
 brand:

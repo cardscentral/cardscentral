@@ -2,6 +2,7 @@ id: sainsburys-gb
 name: "Sainsbury's"
 description: "Sainsbury's Nectar Card"
 country: GB
+domain: "sainsburys.co.uk"
 category: groceries
 barcode_type: ean13
 brand:
