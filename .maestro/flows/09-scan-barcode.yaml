@@ -1,7 +1,11 @@
 appId: com.cardscentral.app
 ---
-# Flow: Navigate to barcode scanner screen
-# Tests the scan workflow (camera permission screen on simulator)
+# Flow: Scan barcode from gallery image
+# Tests the image-based barcode recognition flow
+
+# Inject QR code image into simulator photo library
+- addMedia:
+    - ../test-assets/qr-test.png
 
 - launchApp
 - extendedWaitUntil:
@@ -34,11 +38,27 @@ appId: com.cardscentral.app
 - tapOn:
     id: "scan-barcode-button"
 
-# On simulator, camera permission dialog or permission request screen shows
+# Wait for scan screen to appear (look for the gallery button)
 - extendedWaitUntil:
     visible:
-      text: ".*camera.*|.*Camera.*|.*permission.*|.*Permission.*"
+      id: "pick-from-gallery-button"
     timeout: 5000
 
-# Go back (permission dialog blocks actual scanning on simulator)
-- back
+# Tap "Pick from Gallery" button
+- tapOn:
+    id: "pick-from-gallery-button"
+
+# The photo picker should appear - select the first (most recent) photo
+- extendedWaitUntil:
+    visible:
+      text: ".*Photo.*15 June.*"
+    timeout: 5000
+- tapOn:
+    text: ".*Photo.*15 June.*08:05"
+    index: 0
+
+# After picking, the barcode should be scanned and we navigate back to AddCard
+# The scanned code should populate the card number field
+- extendedWaitUntil:
+    visible: "Select Shop"
+    timeout: 10000
