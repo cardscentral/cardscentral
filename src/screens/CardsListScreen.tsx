@@ -15,6 +15,7 @@ import { getAllCards } from '../storage/cardStorage';
 import { getShopById } from '../config/shops';
 import { CardListItem } from '../components/CardListItem';
 import { ShopIcon } from '../components/ShopIcon';
+import { useI18n } from '../i18n/I18nContext';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -26,6 +27,7 @@ const GRID_ITEM_SIZE = (SCREEN_WIDTH - 48) / GRID_COLUMNS;
 
 export function CardsListScreen() {
   const navigation = useNavigation<NavigationProp>();
+  const { t } = useI18n();
   const [cards, setCards] = useState<LoyaltyCard[]>([]);
   const [refreshing, setRefreshing] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>('list');
@@ -82,9 +84,9 @@ export function CardsListScreen() {
   const renderEmptyState = () => (
     <View style={styles.emptyContainer}>
       <Text style={styles.emptyIcon}>🏷️</Text>
-      <Text style={styles.emptyTitle}>No Cards Yet</Text>
+      <Text style={styles.emptyTitle}>{t('noCardsYet')}</Text>
       <Text style={styles.emptySubtitle}>
-        Tap the + button to add your first loyalty card
+        {t('noCardsSubtitle')}
       </Text>
     </View>
   );

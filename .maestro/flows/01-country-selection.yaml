@@ -4,7 +4,7 @@ appId: com.cardscentral.app
 - clearState
 - launchApp
 - extendedWaitUntil:
-    visible: "Choose Your Country"
+    visible: "Select your country"
     timeout: 10000
 - assertVisible:
     id: "country-SK"

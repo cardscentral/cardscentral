@@ -17,6 +17,7 @@ import { getShopById, getShopsByCountry } from '../config/shops';
 import { getSelectedCountry } from '../storage/preferences';
 import { ShopIcon } from '../components/ShopIcon';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useI18n } from '../i18n/I18nContext';
 
 type AddCardRouteProp = RouteProp<RootStackParamList, 'AddCard'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -24,6 +25,7 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 export function AddCardScreen() {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<AddCardRouteProp>();
+  const { t } = useI18n();
   const preselectedShopId = route.params?.shopId;
 
   const [selectedShop, setSelectedShop] = useState<ShopConfig | undefined>(
@@ -80,10 +82,10 @@ export function AddCardScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       {/* Search Bar */}
-      <Text style={styles.mainTitle}>Select Shop</Text>
+      <Text style={styles.mainTitle}>{t('selectShop')}</Text>
       <TextInput
         style={styles.searchInput}
-        placeholder="Search shops..."
+        placeholder={t('searchShops')}
         value={searchQuery}
         onChangeText={setSearchQuery}
         testID="shop-search-input"
@@ -118,11 +120,11 @@ export function AddCardScreen() {
       )}
 
       {/* Card Number Input */}
-      <Text style={styles.sectionTitle}>Card Number</Text>
+      <Text style={styles.sectionTitle}>{t('cardNumber')}</Text>
       <View style={styles.inputRow}>
         <TextInput
           style={styles.input}
-          placeholder="Enter card number"
+          placeholder={t('enterCardNumber')}
           value={cardNumber}
           onChangeText={setCardNumber}
           keyboardType="default"
@@ -140,7 +142,7 @@ export function AddCardScreen() {
       </View>
 
       {/* Optional Fields */}
-      <Text style={styles.sectionTitle}>Nickname (optional)</Text>
+      <Text style={styles.sectionTitle}>{t('nicknameOptional')}</Text>
       <TextInput
         style={styles.input}
         placeholder="e.g. My H&M Card"
@@ -149,10 +151,10 @@ export function AddCardScreen() {
         testID="nickname-input"
       />
 
-      <Text style={styles.sectionTitle}>Notes (optional)</Text>
+      <Text style={styles.sectionTitle}>{t('notesOptional')}</Text>
       <TextInput
         style={[styles.input, styles.notesInput]}
-        placeholder="Any additional notes..."
+        placeholder={t('notes')}
         value={notes}
         onChangeText={setNotes}
         multiline
@@ -170,7 +172,7 @@ export function AddCardScreen() {
         disabled={!selectedShop || !cardNumber.trim()}
         testID="save-card-button"
       >
-        <Text style={styles.saveButtonText}>Save Card</Text>
+        <Text style={styles.saveButtonText}>{t('saveCard')}</Text>
       </TouchableOpacity>
     </ScrollView>
   );

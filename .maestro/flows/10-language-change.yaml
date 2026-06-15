@@ -1,0 +1,76 @@
+appId: com.cardscentral.app
+---
+# Flow: Verify language change affects the UI
+# Changes language from whatever current language to English first, then to Slovak
+
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "Select your country"
+    timeout: 10000
+
+# Select Slovakia (fresh start)
+- tapOn: "🇸🇰 Slovakia"
+- extendedWaitUntil:
+    visible:
+      id: "cards-list-screen"
+    timeout: 10000
+
+# Default language for SK should be Slovak
+# Verify Slovak UI (Moje karty) shows in the header or tab
+- assertVisible:
+    text: ".*Moje karty.*"
+
+# Go to Settings tab (in Slovak it's "Nastavenia")
+- tapOn:
+    text: ".*Nastavenia.*tab.*"
+- extendedWaitUntil:
+    visible:
+      id: "settings-screen"
+    timeout: 5000
+
+# Verify Slovak labels
+- assertVisible: "Krajina"
+- assertVisible: "Jazyk"
+
+# Now change language to English
+- tapOn:
+    id: "settings-language"
+- tapOn: "English"
+
+# Wait for UI to update to English
+- extendedWaitUntil:
+    visible: "Settings"
+    timeout: 3000
+
+# Verify English labels
+- assertVisible: "Language"
+- assertVisible: "Country"
+
+# Go to My Cards tab - should be in English now
+- tapOn:
+    text: ".*My Cards.*tab.*"
+- extendedWaitUntil:
+    visible:
+      id: "cards-list-screen"
+    timeout: 5000
+
+# Header should be in English
+- assertVisible: "My Cards"
+
+# Switch back to Slovak for verification
+- tapOn:
+    text: ".*Settings.*tab.*"
+- extendedWaitUntil:
+    visible:
+      id: "settings-screen"
+    timeout: 5000
+- tapOn:
+    id: "settings-language"
+- tapOn: "Slovenčina"
+
+# Verify Slovak is back
+- extendedWaitUntil:
+    visible: "Nastavenia"
+    timeout: 3000
+- assertVisible: "Jazyk"

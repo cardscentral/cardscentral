@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Platform } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { setSelectedCountry } from '../storage/preferences';
 
 interface Country {
@@ -57,34 +58,43 @@ export function CountrySelectScreen({ onCountrySelected }: CountrySelectScreenPr
     onCountrySelected(code);
   };
 
-  const renderItem = ({ item }: { item: Country }) => (
+  const renderItem = ({ item, index }: { item: Country; index: number }) => (
     <TouchableOpacity
-      style={styles.item}
+      style={[
+        styles.item,
+        index === 0 && styles.itemFirst,
+        index === COUNTRIES.length - 1 && styles.itemLast,
+      ]}
       onPress={() => handleSelect(item.code)}
       testID={`country-${item.code}`}
+      activeOpacity={0.6}
     >
       <Text style={styles.flag}>{item.flag}</Text>
-      <View style={styles.itemInfo}>
-        <Text style={styles.itemName}>{item.name}</Text>
-        <Text style={styles.itemCode}>{item.code}</Text>
-      </View>
+      <Text style={styles.itemName}>{item.name}</Text>
+      <Ionicons name="chevron-forward" size={16} color="#C7C7CC" />
     </TouchableOpacity>
   );
+
+  const ItemSeparator = () => <View style={styles.separator} />;
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.emoji}>🌍</Text>
-        <Text style={styles.title}>Choose Your Country</Text>
+        <View style={styles.iconContainer}>
+          <Ionicons name="location-outline" size={24} color="#FFFFFF" />
+        </View>
+        <Text style={styles.title}>Select your country</Text>
         <Text style={styles.subtitle}>
-          We'll show you loyalty cards available in your country
+          Cards and stores will be tailored to your location
         </Text>
       </View>
       <FlatList
         data={COUNTRIES}
         keyExtractor={(item) => item.code}
         renderItem={renderItem}
+        ItemSeparatorComponent={ItemSeparator}
         contentContainerStyle={styles.list}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
@@ -93,62 +103,68 @@ export function CountrySelectScreen({ onCountrySelected }: CountrySelectScreenPr
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F7',
+    backgroundColor: '#F2F2F7',
   },
   header: {
     alignItems: 'center',
-    paddingTop: 60,
-    paddingBottom: 24,
-    paddingHorizontal: 32,
+    paddingTop: 72,
+    paddingBottom: 32,
+    paddingHorizontal: 40,
   },
-  emoji: {
-    fontSize: 48,
+  iconContainer: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#34C759',
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 16,
   },
   title: {
-    fontSize: 26,
+    fontSize: 22,
     fontWeight: '700',
-    color: '#1a1a1a',
-    marginBottom: 8,
+    color: '#000000',
+    marginBottom: 6,
+    letterSpacing: -0.4,
   },
   subtitle: {
-    fontSize: 15,
-    color: '#666',
+    fontSize: 14,
+    color: '#8E8E93',
     textAlign: 'center',
-    lineHeight: 22,
+    lineHeight: 20,
   },
   list: {
     paddingHorizontal: 16,
-    paddingBottom: 32,
+    paddingBottom: 40,
   },
   item: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 1,
+    paddingVertical: 13,
+    paddingHorizontal: 16,
+  },
+  itemFirst: {
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+  },
+  itemLast: {
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
   },
   flag: {
-    fontSize: 32,
-    marginRight: 16,
-  },
-  itemInfo: {
-    flex: 1,
+    fontSize: Platform.OS === 'android' ? 22 : 24,
+    marginRight: 12,
   },
   itemName: {
-    fontSize: 17,
-    fontWeight: '600',
-    color: '#1a1a1a',
+    flex: 1,
+    fontSize: 16,
+    fontWeight: '400',
+    color: '#000000',
   },
-  itemCode: {
-    fontSize: 13,
-    color: '#999',
-    marginTop: 2,
+  separator: {
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: '#E5E5EA',
+    marginLeft: 52,
   },
 });

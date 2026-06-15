@@ -3,7 +3,8 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'rea
 import { getSyncStatus } from '../storage/syncService';
 import { clearAllCards } from '../storage/cardStorage';
 import { getSelectedCountry, setSelectedCountry } from '../storage/preferences';
-import { getSupportedLanguages, getLanguage, setLanguage, getLanguageForCountry, SupportedLanguage } from '../i18n';
+import { getSupportedLanguages, getLanguageForCountry, SupportedLanguage } from '../i18n';
+import { useI18n } from '../i18n/I18nContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LANGUAGE_STORAGE_KEY = '@cardscentral/language';
@@ -29,17 +30,21 @@ const COUNTRY_NAMES: Record<string, string> = {
 
 export function SettingsScreen() {
   const syncStatus = getSyncStatus();
+  const { t, language, setLanguage: setI18nLanguage, setLanguageFromCountry } = useI18n();
   const [country, setCountry] = useState<string>('SK');
-  const [language, setLang] = useState<SupportedLanguage>(getLanguage());
 
   useEffect(() => {
     getSelectedCountry().then((c) => {
-      if (c) setCountry(c);
-    });
-    AsyncStorage.getItem(LANGUAGE_STORAGE_KEY).then((stored) => {
-      if (stored) {
-        setLanguage(stored as SupportedLanguage);
-        setLang(stored as SupportedLanguage);
+      if (c) {
+        setCountry(c);
+        // Load stored language preference or use country default
+        AsyncStorage.getItem(LANGUAGE_STORAGE_KEY).then((stored) => {
+          if (stored) {
+            setI18nLanguage(stored as SupportedLanguage);
+          } else {
+            setLanguageFromCountry(c);
+          }
+        });
       }
     });
   }, []);
@@ -53,22 +58,20 @@ export function SettingsScreen() {
         // Also set default language for the new country (if no custom language set)
         const storedLang = await AsyncStorage.getItem(LANGUAGE_STORAGE_KEY);
         if (!storedLang) {
-          const newLang = getLanguageForCountry(code);
-          setLanguage(newLang);
-          setLang(newLang);
+          setLanguageFromCountry(code);
         }
       },
     }));
 
-    Alert.alert('Change Country', 'Select your country:', [
+    Alert.alert(t('country'), undefined, [
       ...options.slice(0, 6),
       { text: 'More...', onPress: () => {
         Alert.alert('More Countries', undefined, [
           ...options.slice(6, 12),
-          { text: 'Cancel', style: 'cancel' },
+          { text: t('cancel'), style: 'cancel' },
         ]);
       }},
-      { text: 'Cancel', style: 'cancel' },
+      { text: t('cancel'), style: 'cancel' },
     ]);
   };
 
@@ -77,30 +80,28 @@ export function SettingsScreen() {
     const options = languages.map((lang) => ({
       text: `${lang.name}${lang.code === language ? ' ✓' : ''}`,
       onPress: async () => {
-        setLanguage(lang.code);
-        setLang(lang.code);
+        setI18nLanguage(lang.code);
         await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, lang.code);
       },
     }));
 
-    Alert.alert('Language', 'Select your preferred language:', [
+    Alert.alert(t('language'), undefined, [
       ...options,
-      { text: 'Cancel', style: 'cancel' },
+      { text: t('cancel'), style: 'cancel' },
     ]);
   };
 
   const handleClearData = () => {
     Alert.alert(
-      'Clear All Data',
-      'This will delete all your saved cards. This cannot be undone.',
+      t('deleteCard'),
+      t('deleteConfirm'),
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: t('cancel'), style: 'cancel' },
         {
-          text: 'Delete All',
+          text: t('delete'),
           style: 'destructive',
           onPress: async () => {
             await clearAllCards();
-            Alert.alert('Done', 'All cards have been deleted.');
           },
         },
       ]
@@ -110,30 +111,29 @@ export function SettingsScreen() {
   const selectedLanguageName = getSupportedLanguages().find((l) => l.code === language)?.name || 'English';
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <ScrollView style={styles.container} contentContainerStyle={styles.content} testID="settings-screen">
       {/* General Settings */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>General</Text>
+        <Text style={styles.sectionTitle} testID="settings-general-title">{t('settings')}</Text>
         <TouchableOpacity style={styles.row} onPress={handleChangeCountry} testID="settings-country">
-          <Text style={styles.rowLabel}>Country</Text>
+          <Text style={styles.rowLabel}>{t('country')}</Text>
           <Text style={styles.rowValue}>{COUNTRY_NAMES[country] || country} ›</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.row} onPress={handleChangeLanguage} testID="settings-language">
-          <Text style={styles.rowLabel}>Language</Text>
-          <Text style={styles.rowValue}>{selectedLanguageName} ›</Text>
+          <Text style={styles.rowLabel}>{t('language')}</Text>
+          <Text style={styles.rowValue} testID="settings-language-value">{selectedLanguageName} ›</Text>
         </TouchableOpacity>
       </View>
 
       {/* Cloud Sync (Premium) */}
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Cloud Sync</Text>
+        <Text style={styles.sectionTitle}>{t('premium')}</Text>
         <View style={styles.premiumBanner}>
           <Text style={styles.premiumIcon}>⭐</Text>
           <View style={styles.premiumInfo}>
-            <Text style={styles.premiumTitle}>Premium Feature</Text>
+            <Text style={styles.premiumTitle}>{t('premium')}</Text>
             <Text style={styles.premiumDescription}>
-              Sync your cards across devices and share with family members.
-              Coming soon!
+              {t('premiumDescription')}
             </Text>
           </View>
         </View>
@@ -149,7 +149,7 @@ export function SettingsScreen() {
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Data</Text>
         <TouchableOpacity style={styles.dangerRow} onPress={handleClearData} testID="settings-clear-data">
-          <Text style={styles.dangerText}>Delete All Cards</Text>
+          <Text style={styles.dangerText}>{t('deleteCard')}</Text>
         </TouchableOpacity>
       </View>
 

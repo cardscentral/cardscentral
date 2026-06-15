@@ -4,6 +4,7 @@ import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { CountrySelectScreen } from './src/screens/CountrySelectScreen';
 import { getSelectedCountry } from './src/storage/preferences';
+import { I18nProvider } from './src/i18n/I18nContext';
 
 export default function App() {
   const [country, setCountry] = useState<string | null>(null);
@@ -34,10 +35,10 @@ export default function App() {
   }
 
   return (
-    <>
+    <I18nProvider initialCountry={country}>
       <StatusBar style="auto" />
       <AppNavigator />
-    </>
+    </I18nProvider>
   );
 }
 

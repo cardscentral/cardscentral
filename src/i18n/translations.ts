@@ -53,7 +53,7 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     cancel: 'Cancel',
     delete: 'Delete',
     scan: 'Scan',
-    chooseCountry: 'Choose Your Country',
+    chooseCountry: 'Select your country',
     language: 'Language',
     country: 'Country',
     premium: 'Premium',

@@ -2,9 +2,9 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Text } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { RootStackParamList, MainTabParamList } from '../types';
+import { useI18n } from '../i18n/I18nContext';
 import { CardsListScreen } from '../screens/CardsListScreen';
 import { CardDetailScreen } from '../screens/CardDetailScreen';
 import { AddCardScreen } from '../screens/AddCardScreen';
@@ -16,6 +16,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
 function MainTabs() {
+  const { t } = useI18n();
   return (
     <Tab.Navigator
       screenOptions={{
@@ -35,7 +36,7 @@ function MainTabs() {
         name="Cards"
         component={CardsListScreen}
         options={{
-          title: 'My Cards',
+          title: t('myCards'),
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="loyalty" size={size} color={color} />
           ),
@@ -45,7 +46,7 @@ function MainTabs() {
         name="Settings"
         component={SettingsScreen}
         options={{
-          title: 'Settings',
+          title: t('settings'),
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="settings" size={size} color={color} />
           ),
