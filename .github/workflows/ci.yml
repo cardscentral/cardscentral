@@ -80,22 +80,32 @@ jobs:
       - name: Prebuild iOS
         run: npx expo prebuild --platform ios --clean
 
+      # Build for the simulator SDK without targeting a specific device.
+      # 'generic/platform=iOS Simulator' avoids depending on a particular
+      # pre-created simulator existing on the runner.
       - name: Build iOS (Debug)
         run: |
           cd ios && xcodebuild -workspace CardsCentral.xcworkspace \
             -scheme CardsCentral \
             -configuration Debug \
             -sdk iphonesimulator \
-            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -destination 'generic/platform=iOS Simulator' \
             -derivedDataPath build \
             build
 
-      # Boot simulator and install app
+      # Create + boot a concrete simulator, then install and launch the app.
+      # The runner may not ship a pre-created "iPhone 16" device, so create one
+      # explicitly against an available runtime.
       - name: Boot Simulator
         run: |
-          xcrun simctl boot 'iPhone 16' || true
-          xcrun simctl install booted ios/build/Build/Products/Debug-iphonesimulator/CardsCentral.app
-          xcrun simctl launch booted com.cardscentral.app
+          RUNTIME=$(xcrun simctl list runtimes ios -j | python3 -c "import json,sys;rs=[r for r in json.load(sys.stdin)['runtimes'] if r['isAvailable']];print(rs[-1]['identifier'])")
+          echo "Using runtime: $RUNTIME"
+          UDID=$(xcrun simctl create 'ci-iphone' 'iPhone 16' "$RUNTIME")
+          echo "Created simulator: $UDID"
+          xcrun simctl boot "$UDID"
+          xcrun simctl install "$UDID" ios/build/Build/Products/Debug-iphonesimulator/CardsCentral.app
+          xcrun simctl launch "$UDID" com.cardscentral.app
+
 
 
       # Run Maestro E2E tests
