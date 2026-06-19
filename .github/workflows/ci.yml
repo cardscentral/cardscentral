@@ -43,12 +43,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # React Native's new-architecture build requires Xcode >= 16.1; pin a
-      # known-good version that's available on the macos-15 runner.
-      - name: Select Xcode 16.2
+      # Expo SDK 56's SPM packages (expo-modules-jsi, expo-modules-macros-plugin)
+      # declare `swift-tools-version:6.2`, which ships with Xcode 16.4. Older
+      # Xcode fails package resolution with:
+      #   "package 'apple' is using Swift tools version 6.2.0 but the installed
+      #    version is 6.0.0".
+      - name: Select Xcode 16.4
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '16.2'
+          xcode-version: '16.4'
+
 
 
       - uses: actions/setup-node@v4
