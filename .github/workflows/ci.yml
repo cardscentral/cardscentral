@@ -43,12 +43,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # React Native (new architecture) requires Xcode >= 16.1.
-      # The default Xcode on macOS runners may be older, so select it explicitly.
-      - name: Select Xcode 16.1
+      # Expo SDK 56 ships precompiled React Native / Expo .xcframeworks whose
+      # Swift modules are built with a newer toolchain. Swift modules are not
+      # backward-compatible, so consuming them requires Xcode >= 16.2 (Xcode 16.1
+      # fails compiling Swift pods like ExpoLogBox / ExpoModulesJSI).
+      - name: Select Xcode 16.2
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '16.1'
+          xcode-version: '16.2'
+
 
       - uses: actions/setup-node@v4
         with:
