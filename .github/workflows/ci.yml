@@ -79,8 +79,8 @@ jobs:
 
       - name: Build iOS (Debug)
         run: |
-          cd ios && xcodebuild -workspace cardscentral.xcworkspace \
-            -scheme cardscentral \
+          cd ios && xcodebuild -workspace CardsCentral.xcworkspace \
+            -scheme CardsCentral \
             -configuration Debug \
             -sdk iphonesimulator \
             -destination 'platform=iOS Simulator,name=iPhone 16' \
@@ -91,8 +91,9 @@ jobs:
       - name: Boot Simulator
         run: |
           xcrun simctl boot 'iPhone 16' || true
-          xcrun simctl install booted ios/build/Build/Products/Debug-iphonesimulator/cardscentral.app
+          xcrun simctl install booted ios/build/Build/Products/Debug-iphonesimulator/CardsCentral.app
           xcrun simctl launch booted com.cardscentral.app
+
 
       # Run Maestro E2E tests
       - name: Run Maestro E2E Tests
