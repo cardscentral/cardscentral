@@ -21,6 +21,12 @@ jobs:
           node-version: 20
           cache: npm
 
+      - name: Cache fetched logos
+        uses: actions/cache@v4
+        with:
+          path: assets/logos
+          key: logos-${{ hashFiles('src/config/shops/*.yaml') }}
+
       - run: npm ci
       - run: npm run generate:shops
       - run: npm run generate:icons
@@ -41,6 +47,12 @@ jobs:
         with:
           node-version: 20
           cache: npm
+
+      - name: Cache fetched logos
+        uses: actions/cache@v4
+        with:
+          path: assets/logos
+          key: logos-${{ hashFiles('src/config/shops/*.yaml') }}
 
       - run: npm ci
       - run: npm run generate:shops
@@ -104,6 +116,12 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
+
+      - name: Cache fetched logos
+        uses: actions/cache@v4
+        with:
+          path: assets/logos
+          key: logos-${{ hashFiles('src/config/shops/*.yaml') }}
 
       - run: npm ci
       - run: npm run generate:shops
