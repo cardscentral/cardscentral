@@ -36,7 +36,7 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "generate:shops": "node scripts/generate-shops.js",
-    "typecheck": "npm run generate:shops && tsc --noEmit",
+    "typecheck": "npm run generate:shops && npm run generate:icons && npm run fetch:logos && tsc --noEmit",
     "prebuild": "expo prebuild --clean",
     "prebuild:ios": "expo prebuild --platform ios --clean",
     "prebuild:android": "expo prebuild --platform android --clean",

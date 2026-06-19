@@ -23,6 +23,8 @@ jobs:
 
       - run: npm ci
       - run: npm run generate:shops
+      - run: npm run generate:icons
+      - run: npm run fetch:logos
       - run: npx tsc --noEmit
 
   # ──────────────────────────────────────────────────────────
@@ -42,6 +44,8 @@ jobs:
 
       - run: npm ci
       - run: npm run generate:shops
+      - run: npm run generate:icons
+      - run: npm run fetch:logos
 
       # Install Maestro
       - name: Install Maestro
@@ -103,6 +107,8 @@ jobs:
 
       - run: npm ci
       - run: npm run generate:shops
+      - run: npm run generate:icons
+      - run: npm run fetch:logos
 
       # Install Maestro
       - name: Install Maestro
