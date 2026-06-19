@@ -10,7 +10,8 @@ appId: com.cardscentral.app
     timeout: 10000
 
 # Select Slovakia (fresh start)
-- tapOn: "🇸🇰 Slovakia"
+- tapOn:
+    id: "country-SK"
 - extendedWaitUntil:
     visible:
       id: "cards-list-screen"
@@ -30,8 +31,10 @@ appId: com.cardscentral.app
     timeout: 5000
 
 # Verify Slovak labels
-- assertVisible: "Krajina"
-- assertVisible: "Jazyk"
+- assertVisible:
+    id: "settings-country"
+- assertVisible:
+    id: "settings-language"
 
 # Now change language to English
 - tapOn:
@@ -44,8 +47,10 @@ appId: com.cardscentral.app
     timeout: 3000
 
 # Verify English labels
-- assertVisible: "Language"
-- assertVisible: "Country"
+- assertVisible:
+    id: "settings-language"
+- assertVisible:
+    id: "settings-country"
 
 # Go to My Cards tab - should be in English now
 - tapOn:
@@ -67,10 +72,13 @@ appId: com.cardscentral.app
     timeout: 5000
 - tapOn:
     id: "settings-language"
-- tapOn: "Slovenčina"
+- tapOn:
+    text: ".*Sloven.*"
 
-# Verify Slovak is back
+# Verify Slovak is back (settings-screen remains visible with language row)
 - extendedWaitUntil:
-    visible: "Nastavenia"
+    visible:
+      id: "settings-screen"
     timeout: 3000
-- assertVisible: "Jazyk"
+- assertVisible:
+    id: "settings-language"

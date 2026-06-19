@@ -24,11 +24,15 @@ export function ScanBarcodeScreen() {
   };
 
   const navigateWithResult = (code: string) => {
-    navigation.navigate('AddCard', {
-      shopId: route.params?.shopId,
-      // @ts-ignore - extending params for passing scan result
-      scannedCode: code,
-    });
+    const shopId = route.params?.shopId;
+    if (shopId) {
+      navigation.navigate('CardDetails', {
+        shopId,
+        scannedCode: code,
+      });
+    } else {
+      navigation.goBack();
+    }
   };
 
   const handlePickFromGallery = async () => {

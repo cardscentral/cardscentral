@@ -13,7 +13,8 @@ appId: com.cardscentral.app
 - tapOn:
     id: "add-card-button"
 - extendedWaitUntil:
-    visible: "Select Shop"
+    visible:
+      id: "shop-search-input"
     timeout: 5000
 
 # Search for H&M

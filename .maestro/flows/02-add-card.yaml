@@ -13,12 +13,13 @@ appId: com.cardscentral.app
 - tapOn:
     id: "add-card-button"
 
-# Should see shop selection
+# Should see shop selection (Slovak: "Vybrať obchod" when SK country is selected)
 - extendedWaitUntil:
-    visible: "Select Shop"
+    visible:
+      id: "shop-search-input"
     timeout: 5000
 
-# Select a shop (Tesco)
+# Select a shop (Tesco) - navigates to card details screen
 - scrollUntilVisible:
     element:
       id: "shop-select-tesco"
@@ -26,25 +27,23 @@ appId: com.cardscentral.app
 - tapOn:
     id: "shop-select-tesco"
 
-# Scroll to card number input and enter value
-- scrollUntilVisible:
-    element:
+# Wait for card details screen to appear
+- extendedWaitUntil:
+    visible:
       id: "card-number-input"
-    direction: DOWN
+    timeout: 5000
+
+# Enter card number
 - tapOn:
     id: "card-number-input"
 - inputText: "1234567890123"
-- hideKeyboard
+- pressKey: Enter
 
 # Add a nickname
-- scrollUntilVisible:
-    element:
-      id: "nickname-input"
-    direction: DOWN
 - tapOn:
     id: "nickname-input"
 - inputText: "My Tesco Card"
-- hideKeyboard
+- pressKey: Enter
 
 # Save the card
 - scrollUntilVisible:

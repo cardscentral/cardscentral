@@ -17,10 +17,11 @@ appId: com.cardscentral.app
 - tapOn:
     id: "add-card-button"
 - extendedWaitUntil:
-    visible: "Select Shop"
+    visible:
+      id: "shop-search-input"
     timeout: 5000
 
-# Select Tesco shop
+# Select Tesco shop - navigates to card details screen
 - scrollUntilVisible:
     element:
       id: "shop-select-tesco"
@@ -28,11 +29,11 @@ appId: com.cardscentral.app
 - tapOn:
     id: "shop-select-tesco"
 
-# Scroll to see scan button
-- scrollUntilVisible:
-    element:
+# Wait for card details screen to appear
+- extendedWaitUntil:
+    visible:
       id: "scan-barcode-button"
-    direction: DOWN
+    timeout: 5000
 
 # Tap scan button to navigate to scan screen
 - tapOn:
@@ -57,8 +58,9 @@ appId: com.cardscentral.app
     text: ".*Photo.*15 June.*08:05"
     index: 0
 
-# After picking, the barcode should be scanned and we navigate back to AddCard
+# After picking, the barcode should be scanned and we navigate back to CardDetails
 # The scanned code should populate the card number field
 - extendedWaitUntil:
-    visible: "Select Shop"
+    visible:
+      id: "card-number-input"
     timeout: 10000

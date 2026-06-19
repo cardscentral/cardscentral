@@ -77,6 +77,7 @@ export interface SyncStatus {
 export type RootStackParamList = {
   Main: undefined;
   AddCard: { shopId?: string };
+  CardDetails: { shopId: string; scannedCode?: string };
   EditCard: { cardId: string };
   CardDetail: { cardId: string };
   ScanBarcode: { shopId?: string };

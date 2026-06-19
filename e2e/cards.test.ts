@@ -121,6 +121,11 @@ describe('Cards Central - Card Management', () => {
   describe('Scan Barcode', () => {
     it('should navigate to barcode scanner', async () => {
       await element(by.id('add-card-button')).tap();
+
+      // First select a shop to get to card details screen
+      await element(by.id('shop-select-hm')).tap();
+
+      // Now tap scan button on card details screen
       await element(by.id('scan-barcode-button')).tap();
 
       // Should show camera permission request or camera view

@@ -8,6 +8,7 @@ import { useI18n } from '../i18n/I18nContext';
 import { CardsListScreen } from '../screens/CardsListScreen';
 import { CardDetailScreen } from '../screens/CardDetailScreen';
 import { AddCardScreen } from '../screens/AddCardScreen';
+import { CardDetailsScreen } from '../screens/CardDetailsScreen';
 import { EditCardScreen } from '../screens/EditCardScreen';
 import { ScanBarcodeScreen } from '../screens/ScanBarcodeScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
@@ -75,6 +76,11 @@ export function AppNavigator() {
           name="AddCard"
           component={AddCardScreen}
           options={{ title: 'Add Card' }}
+        />
+        <Stack.Screen
+          name="CardDetails"
+          component={CardDetailsScreen}
+          options={{ title: 'Card Details' }}
         />
         <Stack.Screen
           name="EditCard"

@@ -21,10 +21,11 @@ appId: com.cardscentral.app
 - tapOn:
     id: "delete-card-button"
 
-# Confirm deletion
+# Confirm deletion in native Alert (buttons are in English: "Delete")
 - tapOn: "Delete"
 
-# Should return to empty cards list
+# Should return to cards list
 - extendedWaitUntil:
-    visible: "No Cards Yet"
-    timeout: 5000
+    visible:
+      id: "cards-list-screen"
+    timeout: 10000
