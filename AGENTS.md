@@ -36,24 +36,25 @@ Read the exact versioned docs at https://docs.expo.dev/versions/v56.0.0/ before 
    ```
    Wait until you see "Logs for your project will appear below." before running tests.
 
-4. **Maestro CLI** is installed at: `/Users/butkovic/.maestro/bin/maestro`
+4. **Maestro CLI** is installed (default location: `$HOME/.maestro/bin/maestro`)
 
 ### Running Tests
 
 Run individual flows:
 ```bash
-/Users/butkovic/.maestro/bin/maestro test .maestro/flows/02-add-card.yaml
+maestro test .maestro/flows/02-add-card.yaml
 ```
 
 Run multiple flows sequentially:
 ```bash
-/Users/butkovic/.maestro/bin/maestro test .maestro/flows/01-country-selection.yaml .maestro/flows/02-add-card.yaml
+maestro test .maestro/flows/01-country-selection.yaml .maestro/flows/02-add-card.yaml
 ```
 
 Run all flows:
 ```bash
-/Users/butkovic/.maestro/bin/maestro test .maestro/flows/
+maestro test .maestro/flows/
 ```
+
 
 ### Flow Dependencies
 
@@ -68,7 +69,8 @@ Run all flows:
 - After selecting SK (Slovakia) as country, the app language switches to **Slovak**. Maestro flows use `testID` attributes (not text) for assertions to avoid i18n issues.
 - On iOS 26.5, `hideKeyboard` may fail. Use `pressKey: Enter` or tap a non-interactive element instead.
 - When running multiple flows in sequence, Maestro may encounter connection issues between flows. If a flow fails with "Failed to connect", retry it individually.
-- Debug output (logs & screenshots) is saved to: `/Users/butkovic/.maestro/tests/`
+- Debug output (logs & screenshots) is saved to: `$HOME/.maestro/tests/`
+
 
 ### TypeScript Type Checking
 
@@ -102,7 +104,8 @@ gh run view <run-id> --log-failed --job <job-id> > /tmp/ci.log
 ```
 Build both platforms locally first:
 ```bash
-# iOS  (uses local Xcode 26.x = Swift 6.2+)
+# iOS  (requires Xcode 26.1+ = Swift 6.3; see gotcha #1)
+
 npx expo prebuild --platform ios --clean
 cd ios && xcodebuild -workspace CardsCentral.xcworkspace -scheme CardsCentral \
   -configuration Debug -sdk iphonesimulator \
@@ -128,9 +131,9 @@ Known, log-proven causes (and their fixes already applied to the workflows):
    - `expo-modules-jsi` source uses `weak let` (SE-0481), which only *compiles*
      on **Swift 6.3 (Xcode 26.1+)**. Xcode 26.0.1 (Swift 6.2) passes the tools
      gate but then fails to build with: `'weak' must be a mutable variable,
-     because it may change at runtime`. Local Xcode 26.5 (Swift 6.3.2) builds
-     fine — match it in CI by selecting the latest Xcode 26.x on the runner
-     (macos-15 ships 26.0.1 / 26.1.1 / 26.2 / 26.3; we pin `26.3`).
+     because it may change at runtime`. → Select the latest Xcode 26.x on the
+     runner (macos-15 ships 26.0.1 / 26.1.1 / 26.2 / 26.3; we pin `26.3`).
+
 
 
 
