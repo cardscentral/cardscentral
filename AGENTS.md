@@ -129,7 +129,9 @@ Known, log-proven causes (and their fixes already applied to the workflows):
      on **Swift 6.3 (Xcode 26.1+)**. Xcode 26.0.1 (Swift 6.2) passes the tools
      gate but then fails to build with: `'weak' must be a mutable variable,
      because it may change at runtime`. Local Xcode 26.5 (Swift 6.3.2) builds
-     fine — match it in CI by selecting the latest Xcode 26.x on the runner.
+     fine — match it in CI by selecting the latest Xcode 26.x on the runner
+     (macos-15 ships 26.0.1 / 26.1.1 / 26.2 / 26.3; we pin `26.3`).
+
 
 
 2. **DerivedData path (iOS).** `-derivedDataPath build` collides with React

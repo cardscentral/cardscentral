@@ -27,11 +27,13 @@ jobs:
       #      satisfies the tools gate but fails to build with: "'weak' must be a
       #      mutable variable, because it may change at runtime".
       # So 26.0.1 is NOT enough. The macos-15 image ships 26.0.1 / 26.1.1 / 26.2
-      # / 26.3 — pin to 26.2 (Swift 6.3, matches local 26.5 behavior).
+      # / 26.3 — pin to 26.3 (Swift 6.3), the newest available so it tracks the
+      # known-good local Xcode 26.5 as closely as the runner allows.
       - name: Select Xcode 26
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '26.2'
+          xcode-version: '26.3'
+
 
 
 
