@@ -1,8 +1,23 @@
 # Maestro workspace configuration
+#
+# `flows` is an explicit allow-list (NOT the `flows/*` glob): `flowsOrder`
+# only orders the flows it lists, it does NOT exclude the rest, so a bare
+# glob would still run 09/10. We intentionally exclude:
+#   - 09-scan-barcode: needs a non-portable fixture (`addMedia` asset path +
+#     a hardcoded gallery date/time) that doesn't exist in CI.
+#   - 10-language-change: kept out of the default CI set for now.
 flows:
-  - "flows/*"
+  - "flows/01-country-selection.yaml"
+  - "flows/02-add-card.yaml"
+  - "flows/03-view-card-detail.yaml"
+  - "flows/04-edit-card.yaml"
+  - "flows/05-delete-card.yaml"
+  - "flows/06-grid-view-toggle.yaml"
+  - "flows/07-search-shops.yaml"
+  - "flows/08-settings.yaml"
 executionOrder:
   continueOnFailure: false
+
   flowsOrder:
     - flows/01-country-selection.yaml
     - flows/02-add-card.yaml

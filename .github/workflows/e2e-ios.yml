@@ -132,8 +132,14 @@ jobs:
           xcrun simctl install "$UDID" ios/derived_data/Build/Products/Debug-iphonesimulator/CardsCentral.app
           xcrun simctl launch "$UDID" com.cardscentral.app
 
+      # Run the Maestro *workspace* (.maestro), NOT the raw `flows/` glob, so
+      # config.yaml's `flowsOrder` is honored — it intentionally runs only
+      # 01–08. Flows 09 (scan-barcode) and 10 (language-change) are excluded
+      # there because they need machine-specific fixtures (09's `addMedia`
+      # asset + a hardcoded gallery date) that aren't portable to CI.
       - name: Run Maestro E2E Tests
-        run: maestro test .maestro/flows/ --format junit --output report.xml
+        run: maestro test .maestro --format junit --output report.xml
+
 
       - name: Upload test results
         uses: actions/upload-artifact@v4

@@ -106,7 +106,11 @@ jobs:
           disable-animations: true
           script: |
             adb install android/app/build/outputs/apk/debug/app-debug.apk
-            maestro test .maestro/flows/ --format junit --output report.xml
+            # Run the Maestro workspace (.maestro), NOT the raw flows/ glob, so
+            # config.yaml's flowsOrder is honored (runs 01–08 only; 09/10 need
+            # non-portable machine-specific fixtures).
+            maestro test .maestro --format junit --output report.xml
+
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
