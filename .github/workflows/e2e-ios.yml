@@ -110,15 +110,22 @@ jobs:
       # `ios/build` makes Xcode manage that same directory and wipe the codegen
       # files on a clean build, causing "Build input file cannot be found:
       # …/ReactCodegen/<lib>/<lib>-generated.mm". Use a separate path instead.
-      - name: Build iOS (Debug)
+      # Build *Release*, not Debug. A Debug RN/Expo build loads its JS bundle
+      # from a running Metro server (localhost:8081); CI has no Metro, so a
+      # Debug app launches to a blank/red screen and every Maestro assertion
+      # fails ("Select your country" never appears). Release runs the "Bundle
+      # React Native code and images" phase, embedding the JS into the .app so
+      # it's self-contained. (Simulator builds need no code signing.)
+      - name: Build iOS (Release)
         run: |
           cd ios && xcodebuild -workspace CardsCentral.xcworkspace \
             -scheme CardsCentral \
-            -configuration Debug \
+            -configuration Release \
             -sdk iphonesimulator \
             -destination 'generic/platform=iOS Simulator' \
             -derivedDataPath derived_data \
             build
+
 
       # Create + boot a concrete simulator, then install and launch the app.
       # The runner may not ship a pre-created "iPhone 16" device, so create one
@@ -133,7 +140,8 @@ jobs:
           # `simctl boot` returns before the OS is ready; wait so the subsequent
           # install/launch don't race against an unbooted system.
           xcrun simctl bootstatus "$UDID" -b
-          xcrun simctl install "$UDID" ios/derived_data/Build/Products/Debug-iphonesimulator/CardsCentral.app
+          xcrun simctl install "$UDID" ios/derived_data/Build/Products/Release-iphonesimulator/CardsCentral.app
+
           xcrun simctl launch "$UDID" com.cardscentral.app
 
       # Pass the flow files explicitly (NOT the whole `.maestro` workspace, which

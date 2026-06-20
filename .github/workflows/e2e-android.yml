@@ -90,8 +90,15 @@ jobs:
       - name: Prebuild Android
         run: npx expo prebuild --platform android --clean
 
-      - name: Build Android (Debug)
-        run: cd android && ./gradlew assembleDebug
+      # Build *Release*, not Debug. A Debug RN/Expo build loads its JS bundle
+      # from a running Metro server; CI has no Metro, so a Debug app launches to
+      # a blank screen and every Maestro assertion fails. The release build runs
+      # the bundle/hermes task, embedding the JS into the APK so it's
+      # self-contained. Expo prebuild wires the `release` buildType to the debug
+      # signing config, so the APK is installable without extra signing secrets.
+      - name: Build Android (Release)
+        run: cd android && ./gradlew assembleRelease
+
 
       - name: Enable KVM group permissions
         run: |
@@ -109,21 +116,18 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
           disable-animations: true
           script: |
-            adb install android/app/build/outputs/apk/debug/app-debug.apk
+            adb install android/app/build/outputs/apk/release/app-release.apk
+
             # Pass the flow files explicitly so they run sequentially in order.
             # Flows 02–08 are stateful (02 adds the card 03/04/05 use), so they
             # can't run as an unordered workspace. 09/10 are omitted (09 needs a
             # non-portable addMedia fixture + hardcoded gallery date).
-            maestro test \
-              .maestro/flows/01-country-selection.yaml \
-              .maestro/flows/02-add-card.yaml \
-              .maestro/flows/03-view-card-detail.yaml \
-              .maestro/flows/04-edit-card.yaml \
-              .maestro/flows/05-delete-card.yaml \
-              .maestro/flows/06-grid-view-toggle.yaml \
-              .maestro/flows/07-search-shops.yaml \
-              .maestro/flows/08-settings.yaml \
-              --format junit --output report.xml
+            # NOTE: keep this on a SINGLE line — the emulator-runner action does
+            # not run this as a normal multi-line bash script, so backslash line
+            # continuations get mangled (Maestro then sees a literal `\` flow
+            # path: "Flow path does not exist: …/\").
+            maestro test .maestro/flows/01-country-selection.yaml .maestro/flows/02-add-card.yaml .maestro/flows/03-view-card-detail.yaml .maestro/flows/04-edit-card.yaml .maestro/flows/05-delete-card.yaml .maestro/flows/06-grid-view-toggle.yaml .maestro/flows/07-search-shops.yaml .maestro/flows/08-settings.yaml --format junit --output report.xml
+
 
 
 
