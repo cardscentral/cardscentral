@@ -117,13 +117,20 @@ cd android && ./gradlew assembleDebug --no-daemon
 Known, log-proven causes (and their fixes already applied to the workflows):
 
 
-1. **Xcode version (iOS).** Expo SDK 56 SPM packages (`expo-modules-jsi`,
-   `@expo/expo-modules-macros-plugin`) declare `swift-tools-version:6.2`, which
-   only ships with **Xcode 26** (Swift 6.2). Xcode 16.4 = Swift 6.1, 16.2 =
-   Swift 6.0 and both fail with: `package 'apple' is using Swift tools version
-   6.2.0 but the installed version is 6.1.0`. The error is raised by the *nested*
-   `xcodebuild` in the `ExpoModulesJSI` "Build … xcframework" build phase. → Pin
-   `maxim-lobanov/setup-xcode` to `26.x`.
+1. **Xcode version (iOS).** Expo SDK 56 needs Swift on TWO counts, so pin
+   `maxim-lobanov/setup-xcode` to **26.1+** (26.0.1 is NOT enough):
+   - SPM packages (`expo-modules-jsi`, `@expo/expo-modules-macros-plugin`)
+     declare `swift-tools-version:6.2`, which only ships with Xcode 26. Xcode
+     16.4 = Swift 6.1, 16.2 = Swift 6.0 → both fail package resolution (incl.
+     the *nested* `xcodebuild` in the `ExpoModulesJSI` "Build … xcframework"
+     phase): `package 'apple' is using Swift tools version 6.2.0 but the
+     installed version is 6.1.0`.
+   - `expo-modules-jsi` source uses `weak let` (SE-0481), which only *compiles*
+     on **Swift 6.3 (Xcode 26.1+)**. Xcode 26.0.1 (Swift 6.2) passes the tools
+     gate but then fails to build with: `'weak' must be a mutable variable,
+     because it may change at runtime`. Local Xcode 26.5 (Swift 6.3.2) builds
+     fine — match it in CI by selecting the latest Xcode 26.x on the runner.
+
 
 2. **DerivedData path (iOS).** `-derivedDataPath build` collides with React
    Native's fixed codegen dir `ios/build/generated/ios/ReactCodegen` (populated

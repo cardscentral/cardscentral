@@ -16,18 +16,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Expo SDK 56's SPM packages (expo-modules-jsi, expo-modules-macros-plugin)
-      # declare `swift-tools-version:6.2`. Swift 6.2 ships with Xcode 26 — NOT
-      # Xcode 16.4 (Swift 6.1) or 16.2 (Swift 6.0). Older Xcode fails package
-      # resolution (including the nested xcodebuild run by the ExpoModulesJSI
-      # "Build … xcframework" build phase) with:
-      #   "package 'apple' is using Swift tools version 6.2.0 but the installed
-      #    version is 6.1.0".
-      # Xcode 26.x is available on the macos-15 runner image.
+      # Expo SDK 56 needs a recent Swift on two counts, so pin Xcode 26.1+:
+      #   1. Its SPM packages (expo-modules-jsi, expo-modules-macros-plugin)
+      #      declare `swift-tools-version:6.2` → fails on < Xcode 26 (Swift 6.1/6.0)
+      #      during package resolution (incl. the nested xcodebuild in the
+      #      ExpoModulesJSI "Build … xcframework" phase): "package 'apple' is
+      #      using Swift tools version 6.2.0 but the installed version is 6.1.0".
+      #   2. expo-modules-jsi source uses `weak let` (SE-0481), which only
+      #      *compiles* on Swift 6.3 (Xcode 26.1+). Xcode 26.0.1 (Swift 6.2)
+      #      satisfies the tools gate but fails to build with: "'weak' must be a
+      #      mutable variable, because it may change at runtime".
+      # So 26.0.1 is NOT enough. The macos-15 image ships 26.0.1 / 26.1.1 / 26.2
+      # / 26.3 — pin to 26.2 (Swift 6.3, matches local 26.5 behavior).
       - name: Select Xcode 26
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '26.0.1'
+          xcode-version: '26.2'
+
+
 
       - uses: actions/setup-node@v4
         with:
