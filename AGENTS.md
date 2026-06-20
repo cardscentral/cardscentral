@@ -159,5 +159,19 @@ Known, log-proven causes (and their fixes already applied to the workflows):
    disk space" step (remove unused preinstalled toolchains + `docker image
    prune`) before building.
 
+6. **Caching (both).** Native builds dominate wall-clock, so cache the stable,
+   content-addressed toolchain caches with `actions/cache` (npm is already
+   cached via `setup-node`). NOTE: `expo prebuild --clean` regenerates `ios/`
+   and `android/` every run, so do NOT cache the project dirs — cache only the
+   shared homedir caches:
+   - iOS: `~/.cocoapods/repos` + `~/Library/Caches/CocoaPods` (pods) and
+     `~/Library/Caches/org.swift.swiftpm` (SPM). Avoid caching full
+     `DerivedData` — stale incremental state causes flaky/incorrect builds.
+   - Android: `~/.gradle/caches` + `~/.gradle/wrapper`.
+   - Both: `~/.maestro` (skip the Maestro install on a cache hit).
+   Key caches on `package-lock.json`/`app.json` with a loose `restore-keys`
+   prefix so a near-miss still warm-starts.
+
+
 
 
