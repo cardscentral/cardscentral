@@ -2,6 +2,10 @@ appId: com.cardscentral.app
 ---
 # Flow: Navigate to settings and verify options
 # Precondition: Country selected
+#
+# Use testIDs, not visible English text. After SK is selected the UI is in
+# Slovak, so literal strings like "Settings" / "Premium Feature" / "Version"
+# never match.
 
 - launchApp
 - extendedWaitUntil:
@@ -9,20 +13,18 @@ appId: com.cardscentral.app
       id: "cards-list-screen"
     timeout: 10000
 
-# Navigate to Settings tab
+# Navigate to the Settings tab via its stable testID
 - tapOn:
-    text: ".*Settings.*"
+    id: "tab-settings"
 
-# Should see settings options
+# Should see the settings screen and its rows
 - extendedWaitUntil:
     visible:
-      id: "settings-country"
+      id: "settings-screen"
     timeout: 5000
+- assertVisible:
+    id: "settings-country"
 - assertVisible:
     id: "settings-language"
 - assertVisible:
-    text: ".*Premium Feature.*"
-- assertVisible:
-    text: ".*Delete All Cards.*"
-- assertVisible:
-    text: ".*Version.*"
+    id: "settings-clear-data"

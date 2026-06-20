@@ -38,6 +38,9 @@ function MainTabs() {
         component={CardsListScreen}
         options={{
           title: t('myCards'),
+          // Stable testID so E2E flows can find the tab regardless of the
+          // localized title (the UI switches to Slovak once SK is selected).
+          tabBarButtonTestID: 'tab-cards',
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="loyalty" size={size} color={color} />
           ),
@@ -48,11 +51,13 @@ function MainTabs() {
         component={SettingsScreen}
         options={{
           title: t('settings'),
+          tabBarButtonTestID: 'tab-settings',
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="settings" size={size} color={color} />
           ),
         }}
       />
+
     </Tab.Navigator>
   );
 }

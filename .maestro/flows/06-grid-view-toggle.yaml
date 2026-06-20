@@ -12,9 +12,13 @@ appId: com.cardscentral.app
 # Add a card so we can see the toggle
 - tapOn:
     id: "add-card-button"
+# Use the search input's testID, not English "Select Shop" text — after SK is
+# selected the UI is in Slovak, so the literal English string never matches.
 - extendedWaitUntil:
-    visible: "Select Shop"
+    visible:
+      id: "shop-search-input"
     timeout: 5000
+
 - scrollUntilVisible:
     element:
       id: "shop-select-tesco"
@@ -28,7 +32,9 @@ appId: com.cardscentral.app
 - tapOn:
     id: "card-number-input"
 - inputText: "9999888877776666"
-- hideKeyboard
+# `hideKeyboard` can fail on iOS 26.5; pressing Enter is reliable.
+- pressKey: Enter
+
 - scrollUntilVisible:
     element:
       id: "save-card-button"
