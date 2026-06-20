@@ -1,0 +1,34 @@
+name: Checks
+
+on:
+  push:
+    branches: [main, initial]
+  pull_request:
+    branches: [main, initial]
+
+jobs:
+  # ──────────────────────────────────────────────────────────
+  # Lint, typecheck, validate shop configs
+  # ──────────────────────────────────────────────────────────
+  checks:
+    name: Checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Cache fetched logos
+        uses: actions/cache@v4
+        with:
+          path: assets/logos
+          key: logos-${{ hashFiles('src/config/shops/*.yaml') }}
+
+      - run: npm ci
+      - run: npm run generate:shops
+      - run: npm run generate:icons
+      - run: npm run fetch:logos
+      - run: npx tsc --noEmit

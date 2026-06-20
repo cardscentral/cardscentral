@@ -86,7 +86,12 @@ npx expo prebuild --platform ios --clean
 cd ios && xcodebuild -workspace CardsCentral.xcworkspace -scheme CardsCentral -configuration Debug -sdk iphonesimulator -derivedDataPath derived_data build
 ```
 
-## CI / native build gotchas (READ BEFORE TOUCHING `.github/workflows/ci.yml`)
+## CI / native build gotchas (READ BEFORE TOUCHING the workflows in `.github/workflows/`)
+
+CI is split into three workflows: `checks.yml` (lint/typecheck, ubuntu),
+`e2e-ios.yml` (macOS), and `e2e-android.yml` (ubuntu). Each runs independently
+so a platform can be re-run on its own.
+
 
 **Always debug CI from the real logs, never guess. Each run only surfaces ONE
 error at a time, so reproduce locally before pushing:**
@@ -109,7 +114,8 @@ npx expo prebuild --platform android --clean
 cd android && ./gradlew assembleDebug --no-daemon
 ```
 
-Known, log-proven causes (and their fixes already applied to `ci.yml`):
+Known, log-proven causes (and their fixes already applied to the workflows):
+
 
 1. **Xcode version (iOS).** Expo SDK 56 SPM packages (`expo-modules-jsi`,
    `@expo/expo-modules-macros-plugin`) declare `swift-tools-version:6.2`, which
