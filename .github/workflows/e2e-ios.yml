@@ -13,7 +13,11 @@ jobs:
   e2e-ios:
     name: E2E Tests (iOS)
     runs-on: macos-15
+    # Opt out of Maestro's anonymous analytics for all steps in this job.
+    env:
+      MAESTRO_CLI_NO_ANALYTICS: '1'
     steps:
+
       - uses: actions/checkout@v4
 
       # Expo SDK 56 needs a recent Swift on two counts, so pin Xcode 26.1+:
@@ -132,13 +136,26 @@ jobs:
           xcrun simctl install "$UDID" ios/derived_data/Build/Products/Debug-iphonesimulator/CardsCentral.app
           xcrun simctl launch "$UDID" com.cardscentral.app
 
-      # Run the Maestro *workspace* (.maestro), NOT the raw `flows/` glob, so
-      # config.yaml's `flowsOrder` is honored — it intentionally runs only
-      # 01–08. Flows 09 (scan-barcode) and 10 (language-change) are excluded
-      # there because they need machine-specific fixtures (09's `addMedia`
-      # asset + a hardcoded gallery date) that aren't portable to CI.
+      # Pass the flow files explicitly (NOT the whole `.maestro` workspace, which
+      # Maestro may run in parallel/independently). Flows 02–08 are stateful and
+      # sequential — 02 adds the card that 03/04/05 view/edit/delete — so they
+      # must run in this order on one app instance. Listing them runs them
+      # sequentially in order, and deliberately omits the non-portable 09
+      # (scan-barcode: needs an `addMedia` fixture + hardcoded gallery date) and
+      # 10 (language-change).
       - name: Run Maestro E2E Tests
-        run: maestro test .maestro --format junit --output report.xml
+        run: |
+          maestro test \
+            .maestro/flows/01-country-selection.yaml \
+            .maestro/flows/02-add-card.yaml \
+            .maestro/flows/03-view-card-detail.yaml \
+            .maestro/flows/04-edit-card.yaml \
+            .maestro/flows/05-delete-card.yaml \
+            .maestro/flows/06-grid-view-toggle.yaml \
+            .maestro/flows/07-search-shops.yaml \
+            .maestro/flows/08-settings.yaml \
+            --format junit --output report.xml
+
 
 
       - name: Upload test results

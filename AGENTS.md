@@ -70,6 +70,12 @@ maestro test .maestro/flows/
 - On iOS 26.5, `hideKeyboard` may fail. Use `pressKey: Enter` or tap a non-interactive element instead.
 - When running multiple flows in sequence, Maestro may encounter connection issues between flows. If a flow fails with "Failed to connect", retry it individually.
 - Debug output (logs & screenshots) is saved to: `$HOME/.maestro/tests/`
+- Flows 02–08 are **stateful and sequential** (02 adds the card 03/04/05 act
+  on). CI passes the explicit ordered flow list to `maestro test` (NOT the
+  `.maestro` workspace, which can run flows in parallel/independently and break
+  the chain), and omits the non-portable 09/10. Set `MAESTRO_CLI_NO_ANALYTICS=1`
+  to silence Maestro's analytics notice.
+
 
 
 ### TypeScript Type Checking
