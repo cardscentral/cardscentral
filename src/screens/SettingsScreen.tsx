@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../types';
 import { getSyncStatus } from '../storage/syncService';
+
 import { clearAllCards } from '../storage/cardStorage';
 import { getSelectedCountry, setSelectedCountry } from '../storage/preferences';
 import { getSupportedLanguages, getLanguageForCountry, SupportedLanguage } from '../i18n';
@@ -29,7 +33,9 @@ const COUNTRY_NAMES: Record<string, string> = {
 };
 
 export function SettingsScreen() {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const syncStatus = getSyncStatus();
+
   const { t, language, setLanguage: setI18nLanguage, setLanguageFromCountry } = useI18n();
   const [country, setCountry] = useState<string>('SK');
 
@@ -148,10 +154,19 @@ export function SettingsScreen() {
       {/* Data Management */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Data</Text>
+        <TouchableOpacity
+          style={styles.row}
+          onPress={() => navigation.navigate('Import')}
+          testID="settings-import"
+        >
+          <Text style={styles.rowLabel}>{t('import')}</Text>
+          <Text style={styles.rowValue}>›</Text>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.dangerRow} onPress={handleClearData} testID="settings-clear-data">
           <Text style={styles.dangerText}>{t('deleteCard')}</Text>
         </TouchableOpacity>
       </View>
+
 
       {/* App Info */}
       <View style={styles.section}>

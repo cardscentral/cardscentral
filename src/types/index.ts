@@ -81,7 +81,9 @@ export type RootStackParamList = {
   EditCard: { cardId: string };
   CardDetail: { cardId: string };
   ScanBarcode: { shopId?: string };
+  Import: undefined;
 };
+
 
 export type MainTabParamList = {
   Cards: undefined;

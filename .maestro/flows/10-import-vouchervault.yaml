@@ -1,0 +1,57 @@
+appId: com.cardscentral.app
+---
+# Flow: Import loyalty cards from a VoucherVault JSON export
+# Precondition: Country already selected (relies on flow 01 running first)
+#
+# Uses the paste-JSON path (the primary, fully scriptable import method); the
+# optional native file picker can't be reliably driven by Maestro in CI.
+# Uses testIDs, not visible text, because the UI is in Slovak after SK is
+# selected. "Tesco" is a brand name and renders the same in every language, so
+# it is safe to assert as text for the resulting card.
+
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: "cards-list-screen"
+    timeout: 10000
+
+# Settings → Import
+- tapOn:
+    id: "tab-settings"
+- extendedWaitUntil:
+    visible:
+      id: "settings-import"
+    timeout: 5000
+- tapOn:
+    id: "settings-import"
+
+# Import screen
+- extendedWaitUntil:
+    visible:
+      id: "import-screen"
+    timeout: 5000
+
+# Paste a minimal VoucherVault export (merchant "Tesco" maps to the tesco shop)
+- tapOn:
+    id: "import-input"
+- inputText: '[{"merchant":"Tesco","code":"9991234567890","format":"EAN13"}]'
+
+# Run the import
+- tapOn:
+    id: "import-button"
+
+# Success indicator should appear
+- extendedWaitUntil:
+    visible:
+      id: "import-success"
+    timeout: 5000
+
+# Return to the cards list and verify the imported card is there
+- tapOn:
+    id: "import-done"
+- extendedWaitUntil:
+    visible:
+      id: "cards-list-screen"
+    timeout: 10000
+- assertVisible:
+    text: ".*Tesco.*"

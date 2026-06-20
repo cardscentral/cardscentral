@@ -121,13 +121,16 @@ jobs:
 
             # Pass the flow files explicitly so they run sequentially in order.
             # Flows 02–08 are stateful (02 adds the card 03/04/05 use), so they
-            # can't run as an unordered workspace. 09/10 are omitted (09 needs a
-            # non-portable addMedia fixture + hardcoded gallery date).
+            # can't run as an unordered workspace. Flow 10 (import-vouchervault)
+            # is portable (paste-only) so it's included; only 09 is omitted (it
+            # needs a non-portable addMedia fixture + hardcoded gallery date).
+
             # NOTE: keep this on a SINGLE line — the emulator-runner action does
             # not run this as a normal multi-line bash script, so backslash line
             # continuations get mangled (Maestro then sees a literal `\` flow
             # path: "Flow path does not exist: …/\").
-            maestro test .maestro/flows/01-country-selection.yaml .maestro/flows/02-add-card.yaml .maestro/flows/03-view-card-detail.yaml .maestro/flows/04-edit-card.yaml .maestro/flows/05-delete-card.yaml .maestro/flows/06-grid-view-toggle.yaml .maestro/flows/07-search-shops.yaml .maestro/flows/08-settings.yaml --format junit --output report.xml
+            maestro test .maestro/flows/01-country-selection.yaml .maestro/flows/02-add-card.yaml .maestro/flows/03-view-card-detail.yaml .maestro/flows/04-edit-card.yaml .maestro/flows/05-delete-card.yaml .maestro/flows/06-grid-view-toggle.yaml .maestro/flows/07-search-shops.yaml .maestro/flows/08-settings.yaml .maestro/flows/10-import-vouchervault.yaml --format junit --output report.xml
+
 
 
 

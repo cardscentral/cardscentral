@@ -1,0 +1,17 @@
+# Generic fallback shop
+#
+# Used for imported cards whose merchant doesn't match a known shop (see
+# src/storage/voucherVaultImport.ts → matchShopId). Without a real shop entry
+# the cards list silently drops cards with an unknown shopId, so this entry
+# guarantees every imported card still renders (with the 2-letter abbreviation
+# from ShopIcon). country: EU makes it available regardless of selected country.
+id: generic
+name: "Other"
+description: "Imported / other loyalty card"
+country: EU
+category: other
+barcode_type: code128
+brand:
+  primary_color: "#6B7280"
+  secondary_color: "#9CA3AF"
+  text_color: "#FFFFFF"

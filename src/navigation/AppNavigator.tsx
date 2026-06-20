@@ -12,6 +12,8 @@ import { CardDetailsScreen } from '../screens/CardDetailsScreen';
 import { EditCardScreen } from '../screens/EditCardScreen';
 import { ScanBarcodeScreen } from '../screens/ScanBarcodeScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
+import { ImportScreen } from '../screens/ImportScreen';
+
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 const Tab = createBottomTabNavigator<MainTabParamList>();
@@ -102,7 +104,13 @@ export function AppNavigator() {
           component={ScanBarcodeScreen}
           options={{ title: 'Scan Barcode', headerTransparent: true, headerTintColor: '#FFFFFF' }}
         />
+        <Stack.Screen
+          name="Import"
+          component={ImportScreen}
+          options={{ title: 'Import' }}
+        />
       </Stack.Navigator>
+
     </NavigationContainer>
   );
 }

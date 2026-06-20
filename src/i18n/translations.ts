@@ -27,7 +27,16 @@ export type TranslationKeys =
   | 'premium'
   | 'premiumDescription'
   | 'listView'
-  | 'gridView';
+  | 'gridView'
+  | 'import'
+  | 'importTitle'
+  | 'importDescription'
+  | 'importPlaceholder'
+  | 'importButton'
+  | 'importPickFile'
+  | 'importDone'
+  | 'importEmpty';
+
 
 type TranslationMap = Record<TranslationKeys, string>;
 
@@ -60,7 +69,16 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     premiumDescription: 'Sync cards across devices (coming soon)',
     listView: 'List view',
     gridView: 'Grid view',
+    import: 'Import cards',
+    importTitle: 'Import cards',
+    importDescription: 'Import cards from a VoucherVault export. In VoucherVault, open Account → Export Data, then paste the contents of the JSON file below. (Closed apps like Klarna don\u2019t offer an export.)',
+    importPlaceholder: 'Paste VoucherVault export JSON here',
+    importButton: 'Import',
+    importPickFile: 'Pick a file\u2026',
+    importDone: 'Done',
+    importEmpty: 'Nothing to import yet.',
   },
+
   sk: {
     myCards: 'Moje karty',
     settings: 'Nastavenia',
@@ -89,7 +107,16 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     premiumDescription: 'Synchronizácia kariet medzi zariadeniami (už čoskoro)',
     listView: 'Zoznam',
     gridView: 'Mriežka',
+    import: 'Importovať karty',
+    importTitle: 'Importovať karty',
+    importDescription: 'Importuj karty z exportu VoucherVault. Vo VoucherVault otvor Účet → Exportovať dáta a nižšie vlož obsah JSON súboru. (Uzavreté aplikácie ako Klarna export neponúkajú.)',
+    importPlaceholder: 'Sem vlož JSON export z VoucherVault',
+    importButton: 'Importovať',
+    importPickFile: 'Vybrať súbor\u2026',
+    importDone: 'Hotovo',
+    importEmpty: 'Zatiaľ niet čo importovať.',
   },
+
   cs: {
     myCards: 'Moje karty',
     settings: 'Nastavení',
@@ -118,7 +145,16 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     premiumDescription: 'Synchronizace karet mezi zařízeními (již brzy)',
     listView: 'Seznam',
     gridView: 'Mřížka',
+    import: 'Importovat karty',
+    importTitle: 'Importovat karty',
+    importDescription: 'Importuj karty z exportu VoucherVault. Ve VoucherVault otevři Účet → Exportovat data a níže vlož obsah JSON souboru. (Uzavřené aplikace jako Klarna export nenabízejí.)',
+    importPlaceholder: 'Sem vlož JSON export z VoucherVault',
+    importButton: 'Importovat',
+    importPickFile: 'Vybrat soubor\u2026',
+    importDone: 'Hotovo',
+    importEmpty: 'Zatím není co importovat.',
   },
+
   de: {
     myCards: 'Meine Karten',
     settings: 'Einstellungen',
@@ -147,7 +183,16 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     premiumDescription: 'Karten geräteübergreifend synchronisieren (demnächst)',
     listView: 'Liste',
     gridView: 'Raster',
+    import: 'Karten importieren',
+    importTitle: 'Karten importieren',
+    importDescription: 'Importiere Karten aus einem VoucherVault-Export. Öffne in VoucherVault Konto → Daten exportieren und füge unten den Inhalt der JSON-Datei ein. (Geschlossene Apps wie Klarna bieten keinen Export.)',
+    importPlaceholder: 'VoucherVault-Export-JSON hier einfügen',
+    importButton: 'Importieren',
+    importPickFile: 'Datei wählen\u2026',
+    importDone: 'Fertig',
+    importEmpty: 'Noch nichts zu importieren.',
   },
+
   pl: {
     myCards: 'Moje karty',
     settings: 'Ustawienia',
@@ -176,7 +221,16 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     premiumDescription: 'Synchronizacja kart między urządzeniami (wkrótce)',
     listView: 'Lista',
     gridView: 'Siatka',
+    import: 'Importuj karty',
+    importTitle: 'Importuj karty',
+    importDescription: 'Zaimportuj karty z eksportu VoucherVault. W VoucherVault otwórz Konto → Eksportuj dane i wklej poniżej zawartość pliku JSON. (Zamknięte aplikacje jak Klarna nie udostępniają eksportu.)',
+    importPlaceholder: 'Wklej tutaj JSON eksportu VoucherVault',
+    importButton: 'Importuj',
+    importPickFile: 'Wybierz plik\u2026',
+    importDone: 'Gotowe',
+    importEmpty: 'Nie ma jeszcze nic do zaimportowania.',
   },
+
   hu: {
     myCards: 'Kártyáim',
     settings: 'Beállítások',
@@ -205,7 +259,16 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     premiumDescription: 'Kártyák szinkronizálása eszközök között (hamarosan)',
     listView: 'Lista',
     gridView: 'Rács',
+    import: 'Kártyák importálása',
+    importTitle: 'Kártyák importálása',
+    importDescription: 'Importálj kártyákat egy VoucherVault exportból. A VoucherVaultban nyisd meg a Fiók → Adatok exportálása menüt, majd illeszd be alább a JSON fájl tartalmát. (A zárt alkalmazások, mint a Klarna, nem kínálnak exportot.)',
+    importPlaceholder: 'Illeszd be ide a VoucherVault export JSON-t',
+    importButton: 'Importálás',
+    importPickFile: 'Fájl választása\u2026',
+    importDone: 'Kész',
+    importEmpty: 'Még nincs mit importálni.',
   },
+
   fr: {
     myCards: 'Mes cartes',
     settings: 'Paramètres',
@@ -234,5 +297,14 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     premiumDescription: 'Synchroniser les cartes entre appareils (bientôt)',
     listView: 'Liste',
     gridView: 'Grille',
+    import: 'Importer des cartes',
+    importTitle: 'Importer des cartes',
+    importDescription: 'Importez des cartes depuis un export VoucherVault. Dans VoucherVault, ouvrez Compte → Exporter les données, puis collez le contenu du fichier JSON ci-dessous. (Les applis fermées comme Klarna ne proposent pas d\u2019export.)',
+    importPlaceholder: 'Collez ici le JSON d\u2019export VoucherVault',
+    importButton: 'Importer',
+    importPickFile: 'Choisir un fichier\u2026',
+    importDone: 'Terminé',
+    importEmpty: 'Rien à importer pour le moment.',
   },
+
 };
