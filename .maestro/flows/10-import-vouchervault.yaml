@@ -51,6 +51,10 @@ appId: com.cardscentral.app
     id: "import-done"
 # After navigating back to Main, the Settings tab may still be active (we came
 # from Settings → Import), so explicitly switch to the Cards tab.
+- extendedWaitUntil:
+    visible:
+      id: "tab-cards"
+    timeout: 10000
 - tapOn:
     id: "tab-cards"
 - extendedWaitUntil:
