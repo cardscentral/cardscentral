@@ -92,14 +92,21 @@ jobs:
       # APK at build time), we cache the final APK keyed on files that affect the
       # native build: package-lock.json, app.json, native plugins, etc.
       # When the fingerprint matches we skip prebuild+build entirely.
+      # Compute the fingerprint from git-tracked source ONLY. We must exclude
+      # build-time artifacts (assets/logos/* fetched by fetch:logos, and
+      # *.generated.* produced by generate:shops/icons) because those are
+      # non-deterministic across runs and would make the cache always miss.
+      # `git ls-files` lists committed files; we hash their contents + the
+      # generator scripts so the APK rebuilds whenever real inputs change.
       - name: Compute build fingerprint
         id: build-fingerprint
         run: |
-          # Hash ALL files that end up in the APK: native config + JS source.
-          # This ensures we rebuild when anything changes, but reuse the cached
-          # APK for truly identical builds (e.g. workflow-only changes, retries).
-          HASH=$(find src/ assets/ app.json package-lock.json index.ts App.tsx -type f 2>/dev/null | sort | xargs cat | sha256sum | cut -d' ' -f1)
+          HASH=$(git ls-files \
+            'src/' 'assets/' 'app.json' 'package-lock.json' 'index.ts' 'App.tsx' 'scripts/' \
+            ':!:*.generated.*' ':!:assets/logos/**' \
+            | sort | xargs sha256sum | sha256sum | cut -d' ' -f1)
           echo "hash=$HASH" >> "$GITHUB_OUTPUT"
+          echo "Build fingerprint: $HASH"
 
       - name: Cache Android APK
         id: cache-apk
