@@ -66,7 +66,6 @@ jobs:
           path: assets/logos
           key: logos-v2-${{ hashFiles('src/config/shops/*.yaml') }}
 
-
       # Cache the Maestro CLI so we skip the network install on cache hits.
       - name: Cache Maestro CLI
         id: cache-maestro
@@ -87,8 +86,30 @@ jobs:
       - name: Add Maestro to PATH
         run: echo "$HOME/.maestro/bin" >> $GITHUB_PATH
 
+      # ── Fingerprint-based APK caching ──────────────────────────────────────
+      # The Gradle release build takes ~21 min. To avoid rebuilding when only JS
+      # changes (which don't affect the native binary since we bundle JS into the
+      # APK at build time), we cache the final APK keyed on files that affect the
+      # native build: package-lock.json, app.json, native plugins, etc.
+      # When the fingerprint matches we skip prebuild+build entirely.
+      - name: Compute build fingerprint
+        id: build-fingerprint
+        run: |
+          # Hash ALL files that end up in the APK: native config + JS source.
+          # This ensures we rebuild when anything changes, but reuse the cached
+          # APK for truly identical builds (e.g. workflow-only changes, retries).
+          HASH=$(find src/ assets/ app.json package-lock.json index.ts App.tsx -type f 2>/dev/null | sort | xargs cat | sha256sum | cut -d' ' -f1)
+          echo "hash=$HASH" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Android APK
+        id: cache-apk
+        uses: actions/cache@v4
+        with:
+          path: cached-apk/app-release.apk
+          key: android-apk-${{ steps.build-fingerprint.outputs.hash }}
 
       - name: Prebuild Android
+        if: steps.cache-apk.outputs.cache-hit != 'true'
         run: npx expo prebuild --platform android --clean
 
       # Build *Release*, not Debug. A Debug RN/Expo build loads its JS bundle
@@ -98,8 +119,19 @@ jobs:
       # self-contained. Expo prebuild wires the `release` buildType to the debug
       # signing config, so the APK is installable without extra signing secrets.
       - name: Build Android (Release)
-        run: cd android && ./gradlew assembleRelease
+        if: steps.cache-apk.outputs.cache-hit != 'true'
+        run: |
+          cd android && ./gradlew assembleRelease \
+            -Dorg.gradle.parallel=true \
+            -Dorg.gradle.workers.max=4 \
+            -Dorg.gradle.daemon=false \
+            --no-configuration-cache
 
+      - name: Store APK in cache dir
+        if: steps.cache-apk.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p cached-apk
+          cp android/app/build/outputs/apk/release/app-release.apk cached-apk/app-release.apk
 
       - name: Enable KVM group permissions
         run: |
@@ -117,7 +149,11 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
           disable-animations: true
           script: |
-            adb install android/app/build/outputs/apk/release/app-release.apk
+            APK_PATH="cached-apk/app-release.apk"
+            if [ ! -f "$APK_PATH" ]; then
+              APK_PATH="android/app/build/outputs/apk/release/app-release.apk"
+            fi
+            adb install "$APK_PATH"
 
             # Pass the flow files explicitly so they run sequentially in order.
             # Flows 02–08 are stateful (02 adds the card 03/04/05 use), so they
@@ -130,10 +166,6 @@ jobs:
             # continuations get mangled (Maestro then sees a literal `\` flow
             # path: "Flow path does not exist: …/\").
             maestro test .maestro/flows/01-country-selection.yaml .maestro/flows/02-add-card.yaml .maestro/flows/03-view-card-detail.yaml .maestro/flows/04-edit-card.yaml .maestro/flows/05-delete-card.yaml .maestro/flows/06-grid-view-toggle.yaml .maestro/flows/07-search-shops.yaml .maestro/flows/08-settings.yaml .maestro/flows/10-import-vouchervault.yaml --format junit --output report.xml
-
-
-
-
 
       - name: Upload test results
         uses: actions/upload-artifact@v4
