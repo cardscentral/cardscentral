@@ -135,7 +135,7 @@ export function ImportScreen() {
       {result !== null && !hasError && (
         <TouchableOpacity
           style={styles.doneButton}
-          onPress={() => navigation.navigate('Main')}
+          onPress={() => navigation.popToTop()}
           testID="import-done"
         >
           <Text style={styles.doneButtonText}>{t('importDone')}</Text>
