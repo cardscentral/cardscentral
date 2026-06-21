@@ -36,6 +36,8 @@ appId: com.cardscentral.app
     id: "import-input"
 - inputText: '[{"merchant":"Tesco","code":"9991234567890","format":"EAN13"}]'
 
+# Dismiss the keyboard so import-button and subsequent elements are reachable
+- hideKeyboard
 # Run the import
 - tapOn:
     id: "import-button"
@@ -46,11 +48,10 @@ appId: com.cardscentral.app
       id: "import-success"
     timeout: 5000
 
-# Return to the cards list and verify the imported card is there
-- tapOn:
-    id: "import-done"
-# After navigating back to Main, the Settings tab may still be active (we came
-# from Settings → Import), so explicitly switch to the Cards tab.
+# Navigate back to main using the navigation back action (more reliable than
+# tapping the in-page "Done" button which may be off-screen on smaller devices).
+- back
+# After going back we land on the Settings tab; switch to Cards tab.
 - extendedWaitUntil:
     visible:
       id: "tab-cards"
