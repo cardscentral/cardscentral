@@ -24,6 +24,11 @@ export function CardDetailScreen() {
   const { cardId } = route.params;
 
   const [card, setCard] = useState<LoyaltyCard | undefined>();
+  // Set while a delete is in flight so the screen stops rendering the card's
+  // barcode/details. Without this, deleting then calling navigation.goBack()
+  // can race the back-transition: the still-mounted detail screen re-renders
+  // with stale state and intermittently crashes the app on iOS.
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     loadCard();
@@ -44,15 +49,19 @@ export function CardDetailScreen() {
           text: 'Delete',
           style: 'destructive',
           onPress: async () => {
-            await deleteCard(cardId);
-            navigation.goBack();
+            setDeleting(true);
+            try {
+              await deleteCard(cardId);
+            } finally {
+              navigation.goBack();
+            }
           },
         },
       ]
     );
   };
 
-  if (!card) {
+  if (deleting || !card) {
     return (
       <View style={styles.container}>
         <Text style={styles.loadingText}>Loading...</Text>
