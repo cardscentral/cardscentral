@@ -19,7 +19,15 @@ export function CardListItem({ card, shop, onPress }: CardListItemProps) {
     >
       <ShopIcon brand={shop.brand} size={48} />
       <View style={styles.info}>
-        <Text style={styles.shopName}>{shop.name}</Text>
+        <View style={styles.titleRow}>
+          <Text style={styles.shopName}>{shop.name}</Text>
+          {card.sharedBy && (
+            <View style={styles.sharedBadge} testID={`card-shared-badge-${card.id}`}>
+              <Text style={styles.sharedBadgeText}>Shared</Text>
+            </View>
+          )}
+        </View>
+
         <Text style={styles.cardNumber} numberOfLines={1}>
           {card.nickname || card.cardNumber}
         </Text>
@@ -56,11 +64,29 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 12,
   },
+  titleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
   shopName: {
     fontSize: 16,
     fontWeight: '600',
     color: '#1a1a1a',
   },
+  sharedBadge: {
+    backgroundColor: '#EAF3FF',
+    borderRadius: 6,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+  },
+  sharedBadgeText: {
+    fontSize: 10,
+    fontWeight: '700',
+    color: '#0A5BBF',
+    textTransform: 'uppercase',
+  },
+
   cardNumber: {
     fontSize: 14,
     color: '#666',

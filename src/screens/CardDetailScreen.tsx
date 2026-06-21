@@ -118,26 +118,54 @@ export function CardDetailScreen() {
             {new Date(card.createdAt).toLocaleDateString()}
           </Text>
         </View>
+        {card.sharedBy && (
+          <View style={styles.infoRow}>
+            <Text style={styles.infoLabel}>Shared by</Text>
+            <Text style={styles.infoValue} testID="shared-by-value">
+              {card.sharedBy}
+            </Text>
+          </View>
+        )}
       </View>
 
       {/* Actions */}
-      <View style={styles.actions}>
-        <TouchableOpacity
-          style={styles.editButton}
-          onPress={() => navigation.navigate('EditCard', { cardId: card.id })}
-          testID="edit-card-button"
-        >
-          <Text style={styles.editButtonText}>Edit Card</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.deleteButton}
-          onPress={handleDelete}
-          testID="delete-card-button"
-        >
-          <Text style={styles.deleteButtonText}>Delete Card</Text>
-        </TouchableOpacity>
-      </View>
+      {card.sharedBy ? (
+        // Shared cards are read-only: no edit. Users can still remove the copy
+        // from their own wallet, but cannot modify a card someone shared.
+        <View style={styles.actions} testID="shared-card-actions">
+          <View style={styles.sharedBanner}>
+            <Text style={styles.sharedBannerText}>
+              This card was shared with you and is read-only.
+            </Text>
+          </View>
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={handleDelete}
+            testID="remove-shared-card-button"
+          >
+            <Text style={styles.deleteButtonText}>Remove from My Wallet</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.actions}>
+          <TouchableOpacity
+            style={styles.editButton}
+            onPress={() => navigation.navigate('EditCard', { cardId: card.id })}
+            testID="edit-card-button"
+          >
+            <Text style={styles.editButtonText}>Edit Card</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={handleDelete}
+            testID="delete-card-button"
+          >
+            <Text style={styles.deleteButtonText}>Delete Card</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </ScrollView>
+
   );
 }
 
@@ -216,6 +244,21 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     gap: 12,
   },
+  sharedBanner: {
+    backgroundColor: '#EAF3FF',
+    borderRadius: 12,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderWidth: 1,
+    borderColor: '#B9D8FF',
+  },
+  sharedBannerText: {
+    color: '#0A5BBF',
+    fontSize: 14,
+    fontWeight: '500',
+    textAlign: 'center',
+  },
+
   editButton: {
     backgroundColor: '#007AFF',
     borderRadius: 12,

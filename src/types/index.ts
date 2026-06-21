@@ -60,7 +60,15 @@ export interface LoyaltyCard {
   notes?: string;
   createdAt: string;
   updatedAt: string;
+  /**
+   * Set when this card was shared with the current user by someone else and
+   * accepted into their wallet. Shared cards are read-only (the recipient can
+   * view/accept but not edit them). Only the email of who shared it is shown,
+   * and only on the card detail screen.
+   */
+  sharedBy?: string;
 }
+
 
 /**
  * Premium sync status (placeholder for future backend integration)
