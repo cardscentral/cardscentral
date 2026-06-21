@@ -97,19 +97,20 @@ jobs:
       # The xcodebuild release build takes ~14 min. Cache the simulator .app
       # keyed on files that affect the native build. When the fingerprint
       # matches we skip prebuild+build entirely.
-      # Compute the fingerprint from git-tracked source ONLY. We must exclude
-      # build-time artifacts (assets/logos/* fetched by fetch:logos, and
-      # *.generated.* produced by generate:shops/icons) because those are
-      # non-deterministic across runs and would make the cache always miss.
-      # `git ls-files` lists committed files; we hash their contents + the
-      # generator scripts so the .app rebuilds whenever real inputs change.
+      # Compute the fingerprint from the *committed* tree (git ls-tree -r HEAD
+      # lists blob object IDs) so it's fully deterministic and immune to
+      # working-tree mutations from earlier steps (npm ci, generate:shops/icons,
+      # fetch:logos). We exclude build-time artifacts that vary across runs:
+      #   - *.generated.* (produced by generate:shops/icons)
+      #   - assets/logos/** (fetched by fetch:logos; Google returns varying bytes)
+      # Identical committed source ⇒ identical key ⇒ the ~14m build is skipped.
       - name: Compute build fingerprint
         id: build-fingerprint
         run: |
-          HASH=$(git ls-files \
-            'src/' 'assets/' 'app.json' 'package-lock.json' 'index.ts' 'App.tsx' 'scripts/' \
-            ':!:*.generated.*' ':!:assets/logos/**' \
-            | sort | xargs shasum -a 256 | shasum -a 256 | cut -d' ' -f1)
+          HASH=$(git ls-tree -r HEAD -- \
+            src/ assets/ app.json package-lock.json index.ts App.tsx scripts/ \
+            | grep -vE '\.generated\.|assets/logos/' \
+            | shasum -a 256 | cut -d' ' -f1)
           echo "hash=$HASH" >> "$GITHUB_OUTPUT"
           echo "Build fingerprint: $HASH"
 
