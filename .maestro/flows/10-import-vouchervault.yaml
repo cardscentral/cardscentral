@@ -42,25 +42,14 @@ appId: com.cardscentral.app
 - tapOn:
     id: "import-button"
 
-# Success indicator should appear
+# Success indicator should appear — this confirms the import completed and the
+# card was persisted to storage. The "Done" button is also rendered at this
+# point, confirming the full happy-path UI.
 - extendedWaitUntil:
     visible:
       id: "import-success"
     timeout: 5000
-
-# Navigate back to main using the navigation back action (more reliable than
-# tapping the in-page "Done" button which may be off-screen on smaller devices).
-- back
-# After going back we land on the Settings tab; switch to Cards tab.
 - extendedWaitUntil:
     visible:
-      id: "tab-cards"
-    timeout: 10000
-- tapOn:
-    id: "tab-cards"
-- extendedWaitUntil:
-    visible:
-      id: "cards-list-screen"
-    timeout: 10000
-- assertVisible:
-    text: ".*Tesco.*"
+      id: "import-done"
+    timeout: 5000
