@@ -149,11 +149,7 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim
           disable-animations: true
           script: |
-            APK_PATH="cached-apk/app-release.apk"
-            if [ ! -f "$APK_PATH" ]; then
-              APK_PATH="android/app/build/outputs/apk/release/app-release.apk"
-            fi
-            adb install "$APK_PATH"
+            adb install "$( [ -f cached-apk/app-release.apk ] && echo cached-apk/app-release.apk || echo android/app/build/outputs/apk/release/app-release.apk )"
 
             # Pass the flow files explicitly so they run sequentially in order.
             # Flows 02–08 are stateful (02 adds the card 03/04/05 use), so they
