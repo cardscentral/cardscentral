@@ -16,6 +16,9 @@ jobs:
     # Opt out of Maestro's anonymous analytics for all steps in this job.
     env:
       MAESTRO_CLI_NO_ANALYTICS: '1'
+      # The logos dir is restored from cache (keyed on the shop YAMLs), so a
+      # present logo is already current — skip the multi-minute network refetch.
+      FETCH_LOGOS_SKIP_STALE: '1'
     steps:
 
       - uses: actions/checkout@v4

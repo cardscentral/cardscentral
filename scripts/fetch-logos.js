@@ -121,8 +121,18 @@ async function main() {
     
     const outputFile = path.join(OUTPUT_DIR, `${config.id}.png`);
     
-    // Skip if already fetched and not stale (less than 7 days old)
+    // Skip if already fetched and not stale (less than 7 days old).
+    //
+    // In CI the logos directory is restored from an actions/cache keyed on the
+    // shop YAML hashes, so a present file is already up to date for that key —
+    // re-fetching ~100 favicons over the network adds several minutes per run
+    // for no benefit. Set FETCH_LOGOS_SKIP_STALE=1 (the CI workflows do) to
+    // skip purely on existence and avoid that network round-trip.
     if (fs.existsSync(outputFile)) {
+      if (process.env.FETCH_LOGOS_SKIP_STALE === '1') {
+        skipped++;
+        continue;
+      }
       const stat = fs.statSync(outputFile);
       const age = Date.now() - stat.mtimeMs;
       if (age < 7 * 24 * 60 * 60 * 1000) {
