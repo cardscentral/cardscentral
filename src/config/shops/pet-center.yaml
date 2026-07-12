@@ -1,0 +1,11 @@
+id: pet-center
+name: "Pet Center"
+description: "Pet Center Loyalty Card"
+country: SK
+domain: "petcenter.sk"
+category: other
+barcode_type: ean13
+brand:
+  primary_color: "#00953A"
+  secondary_color: "#F58220"
+  text_color: "#FFFFFF"

@@ -1,0 +1,11 @@
+id: humanic
+name: "Humanic"
+description: "Humanic Loyalty Card"
+country: SK
+domain: "humanic.net"
+category: fashion
+barcode_type: ean13
+brand:
+  primary_color: "#E2001A"
+  secondary_color: "#000000"
+  text_color: "#FFFFFF"

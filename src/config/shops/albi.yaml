@@ -1,0 +1,11 @@
+id: albi
+name: "Albi"
+description: "Albi Loyalty Card"
+country: SK
+domain: "albi.sk"
+category: other
+barcode_type: ean13
+brand:
+  primary_color: "#E30613"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

@@ -1,10 +1,13 @@
 /**
  * ShopIcon Component
  *
- * Displays a branded icon for a shop. Priority:
- * 1. Official brand SVG logo from `simple-icons` npm package (if brand.logo is set)
+ * Displays a branded icon for a shop. Simple Icons is the source of truth for
+ * brand logos (same approach as VoucherVault). Priority:
+ * 1. Official brand SVG from `simple-icons`, resolved either from an explicit
+ *    `brand.logo` slug or auto-matched from the shop name/domain at build time.
  * 2. Favicon PNG fetched from Google (if available in assets/logos/)
  * 3. Two-letter abbreviation in brand colors (final fallback)
+
  *
  * SVG logos: sourced from `simple-icons` npm dependency (CC0, 3400+ brands)
  * PNG logos: fetched from Google Favicons during build (`npm run fetch:logos`)
@@ -15,8 +18,9 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ShopBrand } from '../types';
-import { brandIcons } from '../config/brand-icons.generated';
+import { brandIcons, resolvedShopIcons } from '../config/brand-icons.generated';
 import { logoAssets } from '../config/logo-assets.generated';
+
 
 interface ShopIconProps {
   brand: ShopBrand;
@@ -86,10 +90,19 @@ export function ShopIcon({ brand, shopId, name, size = 48, hasApp = false }: Sho
   //  - letter fallback: brand color tile with the letters in text_color.
   let backgroundColor = brand.primary_color;
 
-  if (brand.logo && brandIcons[brand.logo]) {
+  // Simple Icons is the source of truth: prefer an explicit `brand.logo` slug,
+  // otherwise the slug auto-resolved from the shop name/domain at build time.
+  const brandSlug =
+    (brand.logo && brandIcons[brand.logo] && brand.logo) ||
+    (shopId && resolvedShopIcons[shopId] && brandIcons[resolvedShopIcons[shopId]]
+      ? resolvedShopIcons[shopId]
+      : undefined);
+
+  if (brandSlug) {
     // Priority 1: Official SVG brand logo from simple-icons
-    content = renderBrandLogo(brand.logo, size, brand.text_color);
+    content = renderBrandLogo(brandSlug, size, brand.text_color);
   } else if (shopId && logoAssets[shopId]) {
+
     // Priority 2: Favicon PNG from Google (fetched at build time)
     content = renderFaviconLogo(shopId, size);
     backgroundColor = '#FFFFFF';

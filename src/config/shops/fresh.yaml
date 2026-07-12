@@ -1,0 +1,15 @@
+id: fresh
+name: "Fresh"
+description: "Fresh Loyalty Card"
+country: SK
+domain: "freshmarket.sk"
+category: groceries
+barcode_type: ean13
+brand:
+  # "Fresh" collides with the unrelated Simple Icons "Fresh" brand — opt out of
+  # auto-resolution so we use the fetched favicon / letter avatar instead.
+  no_auto_logo: true
+  primary_color: "#8CC63F"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"
+

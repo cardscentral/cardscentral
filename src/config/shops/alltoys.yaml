@@ -1,0 +1,11 @@
+id: alltoys
+name: "Alltoys"
+description: "Alltoys Loyalty Card"
+country: SK
+domain: "alltoys.sk"
+category: other
+barcode_type: ean13
+brand:
+  primary_color: "#E2001A"
+  secondary_color: "#FFDD00"
+  text_color: "#FFFFFF"

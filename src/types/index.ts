@@ -22,7 +22,15 @@ export interface ShopIcon {
 export interface ShopBrand {
   /** simple-icons slug for official brand SVG logo (e.g. "siLidl") */
   logo?: string;
+  /**
+   * Opt out of build-time auto-resolution of a Simple Icons logo. Use when the
+   * shop's name coincidentally matches an unrelated Simple Icons brand (e.g. a
+   * grocery "Fresh" vs. the "Fresh" developer brand) so it cleanly falls back
+   * to the fetched favicon / letter avatar instead of a wrong logo.
+   */
+  no_auto_logo?: boolean;
   primary_color: string;
+
   secondary_color: string;
   text_color: string;
   /** @deprecated Fallback icon — prefer logo field */

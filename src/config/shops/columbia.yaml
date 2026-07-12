@@ -1,0 +1,12 @@
+id: columbia
+name: "Columbia"
+description: "Columbia Greater Rewards"
+country: SK
+domain: "columbia.com"
+
+category: sports
+barcode_type: ean13
+brand:
+  primary_color: "#00263A"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

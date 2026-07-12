@@ -1,0 +1,11 @@
+id: ozeta
+name: "Ozeta"
+description: "Ozeta Loyalty Card"
+country: SK
+domain: "ozeta.sk"
+category: fashion
+barcode_type: ean13
+brand:
+  primary_color: "#003DA5"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

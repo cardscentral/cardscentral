@@ -1,0 +1,11 @@
+id: moebelix
+name: "Möbelix"
+description: "Möbelix Loyalty Card"
+country: SK
+domain: "moebelix.sk"
+category: home
+barcode_type: ean13
+brand:
+  primary_color: "#E2001A"
+  secondary_color: "#FFDD00"
+  text_color: "#FFFFFF"

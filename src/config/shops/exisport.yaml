@@ -1,0 +1,11 @@
+id: exisport
+name: "Exisport"
+description: "Exisport Loyalty Card"
+country: SK
+domain: "exisport.com"
+category: sports
+barcode_type: ean13
+brand:
+  primary_color: "#E2001A"
+  secondary_color: "#000000"
+  text_color: "#FFFFFF"

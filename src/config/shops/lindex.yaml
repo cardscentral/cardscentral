@@ -1,0 +1,11 @@
+id: lindex
+name: "Lindex"
+description: "Lindex Loyalty Card"
+country: SK
+domain: "lindex.com"
+category: fashion
+barcode_type: ean13
+brand:
+  primary_color: "#D71F85"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

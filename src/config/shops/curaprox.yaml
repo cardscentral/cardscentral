@@ -1,0 +1,12 @@
+id: curaprox
+name: "Curaprox"
+description: "Curaprox Loyalty Card"
+country: SK
+domain: "curaprox.com"
+
+category: pharmacy
+barcode_type: ean13
+brand:
+  primary_color: "#009FE3"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

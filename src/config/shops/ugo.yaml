@@ -1,0 +1,11 @@
+id: ugo
+name: "UGO"
+description: "UGO Loyalty Card"
+country: SK
+domain: "ugo.sk"
+category: groceries
+barcode_type: ean13
+brand:
+  primary_color: "#8DC63F"
+  secondary_color: "#F58220"
+  text_color: "#FFFFFF"

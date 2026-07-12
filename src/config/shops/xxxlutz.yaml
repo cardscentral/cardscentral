@@ -1,0 +1,11 @@
+id: xxxlutz
+name: "XXXLutz"
+description: "XXXLutz Loyalty Card"
+country: SK
+domain: "xxxlutz.sk"
+category: home
+barcode_type: ean13
+brand:
+  primary_color: "#E2001A"
+  secondary_color: "#000000"
+  text_color: "#FFFFFF"

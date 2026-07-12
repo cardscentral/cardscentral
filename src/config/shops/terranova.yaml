@@ -1,0 +1,11 @@
+id: terranova
+name: "Terranova"
+description: "Terranova Loyalty Card"
+country: SK
+domain: "terranovastyle.com"
+category: fashion
+barcode_type: ean13
+brand:
+  primary_color: "#E4002B"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

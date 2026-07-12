@@ -1,0 +1,11 @@
+id: dracik
+name: "Dráčik"
+description: "Dráčik Loyalty Card"
+country: SK
+domain: "dracik.sk"
+category: other
+barcode_type: ean13
+brand:
+  primary_color: "#E30613"
+  secondary_color: "#FFE600"
+  text_color: "#FFFFFF"

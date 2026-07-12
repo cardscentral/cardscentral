@@ -1,0 +1,11 @@
+id: muziker
+name: "Muziker"
+description: "Muziker Loyalty Card"
+country: SK
+domain: "muziker.sk"
+category: electronics
+barcode_type: ean13
+brand:
+  primary_color: "#0A0A0A"
+  secondary_color: "#FF5A00"
+  text_color: "#FFFFFF"

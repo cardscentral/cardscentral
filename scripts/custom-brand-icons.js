@@ -17,7 +17,18 @@
  */
 
 module.exports = {
+  // Decathlon — used to ship in Simple Icons but was removed (trademark
+  // takedown). Keep a hand-made rounded-square monogram so the existing
+  // `brand.logo: siDecathlon` references still render a crisp offline logo.
+  siDecathlon: {
+    title: 'Decathlon',
+    hex: '0082C3',
+    path:
+      'M4 3h9a7 7 0 010 14H8v4H4V3zm4 4v6h5a3 3 0 000-6H8z',
+  },
+
   // BP — Helios "sunburst" mark (simplified, single colour).
+
   siBp: {
     title: 'BP',
     hex: '009B3A',
