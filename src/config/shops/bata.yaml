@@ -1,0 +1,12 @@
+id: bata
+name: "Baťa"
+description: "Baťa Club Card"
+country: SK
+domain: "bata.sk"
+category: fashion
+barcode_type: ean13
+brand:
+  logo: siBata
+  primary_color: "#E4002B"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

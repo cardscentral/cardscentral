@@ -1,0 +1,11 @@
+id: panta-rhei
+name: "Panta Rhei"
+description: "Panta Rhei Club Card"
+country: SK
+domain: "pantarhei.sk"
+category: other
+barcode_type: ean13
+brand:
+  primary_color: "#E4002B"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

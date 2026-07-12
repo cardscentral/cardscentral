@@ -177,8 +177,7 @@ export function SettingsScreen() {
         </View>
         <View style={styles.creditRow}>
           <Text style={styles.credits}>
-            Cards Central - Your loyalty cards in one place.{'\n'}
-            Made with ❤️ in Slovakia
+            Cards Central - Your loyalty cards in one place.
           </Text>
         </View>
       </View>

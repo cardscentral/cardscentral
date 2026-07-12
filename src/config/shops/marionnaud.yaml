@@ -1,0 +1,11 @@
+id: marionnaud
+name: "Marionnaud"
+description: "Marionnaud Loyalty Card"
+country: SK
+domain: "marionnaud.sk"
+category: pharmacy
+barcode_type: ean13
+brand:
+  primary_color: "#000000"
+  secondary_color: "#B48A4C"
+  text_color: "#FFFFFF"

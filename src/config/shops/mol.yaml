@@ -1,0 +1,12 @@
+id: mol
+name: "MOL"
+description: "MOL Move Loyalty Card"
+country: SK
+domain: "mol.sk"
+category: petrol
+barcode_type: ean13
+brand:
+  logo: siMol
+  primary_color: "#009640"
+  secondary_color: "#E30613"
+  text_color: "#FFFFFF"

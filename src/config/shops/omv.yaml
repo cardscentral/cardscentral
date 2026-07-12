@@ -6,6 +6,7 @@ domain: "omv.sk"
 category: petrol
 barcode_type: ean13
 brand:
+  logo: siOMV
   primary_color: "#003366"
   secondary_color: "#0070BA"
   text_color: "#FFFFFF"

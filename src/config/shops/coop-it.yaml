@@ -2,7 +2,7 @@ id: coop-it
 name: "Coop"
 description: "Coop Socio Card"
 country: IT
-domain: "e-coop.it"
+domain: "coop.it"
 category: groceries
 barcode_type: ean13
 brand:

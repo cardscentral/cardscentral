@@ -6,6 +6,7 @@ domain: "housebrand.com"
 category: fashion
 barcode_type: ean13
 brand:
+  logo: siHouse
   primary_color: "#333333"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"

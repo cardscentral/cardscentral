@@ -1,11 +1,11 @@
-id: benu
-name: "BENU"
-description: "BENU Pharmacy Card"
+id: notino
+name: "Notino"
+description: "Notino Loyalty Card"
 country: SK
-domain: "benu.cz"
+domain: "notino.sk"
 category: pharmacy
 barcode_type: ean13
 brand:
-  primary_color: "#00843D"
+  primary_color: "#E20025"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"

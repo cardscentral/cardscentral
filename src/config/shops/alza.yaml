@@ -1,11 +1,11 @@
 id: alza
 name: "Alza"
-description: "Alza Premium Card"
+description: "Alza Neo / Loyalty Card"
 country: SK
 domain: "alza.sk"
 category: electronics
-barcode_type: qr
+barcode_type: ean13
 brand:
-  primary_color: "#82BC00"
-  secondary_color: "#FFFFFF"
+  primary_color: "#86BC25"
+  secondary_color: "#004B87"
   text_color: "#FFFFFF"

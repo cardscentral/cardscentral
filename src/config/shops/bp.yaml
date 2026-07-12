@@ -2,10 +2,11 @@ id: bp
 name: "BP"
 description: "BP BPme Card"
 country: EU
-domain: "bp.com"
+domain: "bpme.com"
 category: petrol
 barcode_type: ean13
 brand:
+  logo: siBp
   primary_color: "#009B3A"
   secondary_color: "#FFD200"
-  text_color: "#FFFFFF"
+  text_color: "#FFD200"

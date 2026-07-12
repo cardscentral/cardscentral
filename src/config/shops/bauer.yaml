@@ -1,0 +1,12 @@
+id: bauer
+name: "Bauer"
+description: "Bauer Loyalty Card"
+country: SK
+domain: "bauer.sk"
+category: groceries
+barcode_type: ean13
+brand:
+  logo: siBauer
+  primary_color: "#E2001A"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

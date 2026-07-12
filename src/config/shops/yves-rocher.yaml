@@ -1,0 +1,11 @@
+id: yves-rocher
+name: "Yves Rocher"
+description: "Yves Rocher Club Card"
+country: SK
+domain: "yves-rocher.sk"
+category: pharmacy
+barcode_type: ean13
+brand:
+  primary_color: "#00693E"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

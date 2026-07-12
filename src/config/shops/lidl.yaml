@@ -7,7 +7,6 @@ domain: "lidl.sk"
 category: groceries
 barcode_type: qr
 brand:
-  logo: siLidl
   primary_color: "#0050AA"
   secondary_color: "#FFF000"
   text_color: "#FFFFFF"

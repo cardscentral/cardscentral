@@ -1,0 +1,12 @@
+# Takko Fashion Loyalty Card Configuration
+id: takko-fashion
+name: "Takko Fashion"
+description: "Takko Fashion Card"
+country: SK
+domain: "takko.com"
+category: fashion
+barcode_type: ean13
+brand:
+  primary_color: "#E2001A"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"

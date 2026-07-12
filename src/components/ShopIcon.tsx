@@ -30,7 +30,7 @@ function renderBrandLogo(logoSlug: string, size: number, color: string) {
   const iconData = brandIcons[logoSlug];
   if (!iconData) return null;
 
-  const svgSize = size * 0.6;
+  const svgSize = size * 0.62;
 
   return (
     <Svg width={svgSize} height={svgSize} viewBox="0 0 24 24" fill={color}>
@@ -43,16 +43,18 @@ function renderFaviconLogo(shopId: string, size: number) {
   const asset = logoAssets[shopId];
   if (!asset) return null;
 
-  const imgSize = size * 0.65;
+  const imgSize = size * 0.68;
 
   return (
     <Image
       source={asset}
-      style={{ width: imgSize, height: imgSize, borderRadius: imgSize * 0.1 }}
+      style={{ width: imgSize, height: imgSize }}
       resizeMode="contain"
     />
   );
 }
+
+
 
 function renderLetterFallback(name: string, size: number, color: string) {
   const words = name.trim().split(/\s+/);
@@ -69,6 +71,14 @@ function renderLetterFallback(name: string, size: number, color: string) {
 
 export function ShopIcon({ brand, shopId, name, size = 48 }: ShopIconProps) {
   let content: React.ReactNode;
+  // The tile background depends on which logo source we use:
+  //  - simple-icons SVG: monochrome, drawn in text_color, so it needs the
+  //    brand color behind it for contrast.
+  //  - favicon PNG: already full-color with its own background baked in, so a
+  //    neutral light tile keeps it clean and avoids clashing with the brand
+  //    color (which previously produced odd colored borders).
+  //  - letter fallback: brand color tile with the letters in text_color.
+  let backgroundColor = brand.primary_color;
 
   if (brand.logo && brandIcons[brand.logo]) {
     // Priority 1: Official SVG brand logo from simple-icons
@@ -76,6 +86,7 @@ export function ShopIcon({ brand, shopId, name, size = 48 }: ShopIconProps) {
   } else if (shopId && logoAssets[shopId]) {
     // Priority 2: Favicon PNG from Google (fetched at build time)
     content = renderFaviconLogo(shopId, size);
+    backgroundColor = '#FFFFFF';
   } else {
     // Priority 3: 2-letter abbreviation in brand colors
     content = renderLetterFallback(name || 'CC', size, brand.text_color);
@@ -89,7 +100,7 @@ export function ShopIcon({ brand, shopId, name, size = 48 }: ShopIconProps) {
           width: size,
           height: size,
           borderRadius: size * 0.2,
-          backgroundColor: brand.primary_color,
+          backgroundColor,
         },
       ]}
     >
@@ -103,5 +114,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(0,0,0,0.08)',
   },
 });

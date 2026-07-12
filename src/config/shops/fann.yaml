@@ -1,0 +1,11 @@
+id: fann
+name: "FANN"
+description: "FANN Parfumérie Club Card"
+country: SK
+domain: "fann.sk"
+category: pharmacy
+barcode_type: ean13
+brand:
+  primary_color: "#000000"
+  secondary_color: "#C8102E"
+  text_color: "#FFFFFF"

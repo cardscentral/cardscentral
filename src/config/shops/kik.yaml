@@ -1,0 +1,12 @@
+id: kik
+name: "KiK"
+description: "KiK Loyalty Card"
+country: SK
+domain: "kik.sk"
+category: fashion
+barcode_type: ean13
+brand:
+  logo: siKik
+  primary_color: "#E2001A"
+  secondary_color: "#FFF200"
+  text_color: "#FFFFFF"

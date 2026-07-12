@@ -11,6 +11,7 @@
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
+const customIcons = require('./custom-brand-icons');
 
 const SHOPS_DIR = path.join(__dirname, '..', 'src', 'config', 'shops');
 const OUTPUT_FILE = path.join(__dirname, '..', 'src', 'config', 'brand-icons.generated.ts');
@@ -48,10 +49,22 @@ function main() {
         title: icon.title,
       };
       found++;
+    } else if (customIcons[slug]) {
+      // Brand not in simple-icons — use our hand-made custom glyph so shops
+      // like BP, OMV, SPAR, Slovnaft, etc. still get a correct, crisp logo
+      // instead of a tiny/wrong fetched favicon.
+      const custom = customIcons[slug];
+      icons[slug] = {
+        path: custom.path,
+        hex: custom.hex,
+        title: custom.title,
+      };
+      found++;
     } else {
       notFound.push(slug);
     }
   }
+
 
   if (notFound.length > 0) {
     console.warn(`⚠️  ${notFound.length} brand icons not found in simple-icons:`);
