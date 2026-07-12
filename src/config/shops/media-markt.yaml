@@ -10,3 +10,7 @@ brand:
   primary_color: "#DF0000"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  android:
+    package: "de.mediamarkt.mediamarkt"

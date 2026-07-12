@@ -10,3 +10,7 @@ brand:
   primary_color: "#00A0E2"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  android:
+    package: "com.icemobile.albertheijn"

@@ -11,3 +11,9 @@ brand:
   primary_color: "#222222"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
+# Official "H&M" app (H&M membership).
+apps:
+  ios:
+    store_id: "834465911"    # H&M on the App Store
+  android:
+    package: "com.hm.goe"     # H&M on Google Play

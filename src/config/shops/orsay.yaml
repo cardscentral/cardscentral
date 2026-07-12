@@ -9,3 +9,7 @@ brand:
   primary_color: "#C4007A"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  android:
+    package: "com.orsay.app"

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { LoyaltyCard, ShopConfig } from '../types';
 import { ShopIcon } from './ShopIcon';
+import { hasShopApp } from '../utils/openShopApp';
 
 interface CardListItemProps {
   card: LoyaltyCard;
@@ -17,7 +18,7 @@ export function CardListItem({ card, shop, onPress }: CardListItemProps) {
       activeOpacity={0.7}
       testID={`card-item-${card.id}`}
     >
-      <ShopIcon brand={shop.brand} size={48} />
+      <ShopIcon brand={shop.brand} size={48} hasApp={hasShopApp(shop)} />
       <View style={styles.info}>
         <View style={styles.titleRow}>
           <Text style={styles.shopName}>{shop.name}</Text>

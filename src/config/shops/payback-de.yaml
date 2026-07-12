@@ -9,3 +9,11 @@ brand:
   primary_color: "#003399"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  ios:
+    store_id: "395811840"
+    scheme: "payback://"
+  android:
+    package: "de.payback.client.android"
+    scheme: "payback://"

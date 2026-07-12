@@ -9,3 +9,7 @@ brand:
   primary_color: "#E30613"
   secondary_color: "#000000"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  android:
+    package: "cz.a3sport.app"

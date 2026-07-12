@@ -6,14 +6,24 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  Platform,
 } from 'react-native';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { LoyaltyCard, RootStackParamList } from '../types';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { getCardById, deleteCard } from '../storage/cardStorage';
 import { getShopById } from '../config/shops';
 import { ShopIcon } from '../components/ShopIcon';
 import { BarcodeDisplay } from '../components/BarcodeDisplay';
+import {
+  hasShopApp,
+  openShopApp,
+  openUrl,
+  getAppStoreUrl,
+  getPlayStoreUrl,
+} from '../utils/openShopApp';
+import { useI18n } from '../i18n/I18nContext';
 
 type CardDetailRouteProp = RouteProp<RootStackParamList, 'CardDetail'>;
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -21,6 +31,7 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 export function CardDetailScreen() {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<CardDetailRouteProp>();
+  const { t } = useI18n();
   const { cardId } = route.params;
 
   const [card, setCard] = useState<LoyaltyCard | undefined>();
@@ -78,11 +89,24 @@ export function CardDetailScreen() {
     );
   }
 
+  const appAvailable = hasShopApp(shop);
+  // Single platform-appropriate store button: App Store on iOS, Google Play on
+  // Android. Label reads "Open" when we know the shop has a native app for the
+  // platform, otherwise "Install".
+  const storeUrl = Platform.OS === 'ios' ? getAppStoreUrl(shop) : getPlayStoreUrl(shop);
+
+  const handleStoreButton = async () => {
+    // If the app is known, try to deep-link into it (falls back to the store);
+    // otherwise just open the store listing so the user can install it.
+    const ok = appAvailable ? await openShopApp(shop) : await openUrl(storeUrl!);
+    if (!ok) Alert.alert(shop.name, t('couldNotOpenApp'));
+  };
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content} testID="card-detail-screen">
       {/* Card Header with Shop Branding */}
       <View style={[styles.cardHeader, { backgroundColor: shop.brand.primary_color }]}>
-        <ShopIcon brand={shop.brand} size={64} />
+        <ShopIcon brand={shop.brand} size={64} hasApp={appAvailable} />
         <Text style={[styles.shopName, { color: shop.brand.text_color }]}>
           {shop.name}
         </Text>
@@ -102,6 +126,53 @@ export function CardDetailScreen() {
           height={120}
         />
       </View>
+
+      {/* Official app section — shown for every shop. A single platform button
+          (App Store on iOS, Google Play on Android): it reads "Open app" and
+          deep-links when we know the shop has a native app, otherwise it reads
+          "Install app" and opens the store listing/search. The info banner only
+          shows when a known native app exists for this shop. */}
+      {storeUrl && (
+        <View style={styles.appSection} testID="shop-app-section">
+          {appAvailable && (
+            <View
+              style={[
+                styles.appBanner,
+                shop.requires_app ? styles.appBannerRequired : styles.appBannerAvailable,
+              ]}
+            >
+              <MaterialCommunityIcons
+                name={shop.requires_app ? 'cellphone-check' : 'cellphone-cog'}
+                size={20}
+                color={shop.requires_app ? '#8A5A00' : '#0A5BBF'}
+              />
+              <Text
+                style={[
+                  styles.appBannerText,
+                  shop.requires_app ? styles.appBannerTextRequired : styles.appBannerTextAvailable,
+                ]}
+              >
+                {shop.requires_app ? t('appRequiredBanner') : t('appAvailableBanner')}
+              </Text>
+            </View>
+          )}
+
+          <TouchableOpacity
+            style={styles.storeButton}
+            onPress={handleStoreButton}
+            testID="open-store-button"
+          >
+            <MaterialCommunityIcons
+              name={Platform.OS === 'ios' ? 'apple' : 'google-play'}
+              size={18}
+              color="#007AFF"
+            />
+            <Text style={styles.storeButtonText}>
+              {appAvailable ? t('openApp') : t('installApp')}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
 
       {/* Card Info */}
       <View style={styles.infoSection}>
@@ -219,6 +290,68 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 4,
+  },
+  appSection: {
+    marginTop: 24,
+    marginHorizontal: 16,
+    gap: 12,
+  },
+  appBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    padding: 14,
+    borderRadius: 12,
+    borderWidth: 1,
+  },
+  appBannerRequired: {
+    backgroundColor: '#FFF7E6',
+    borderColor: '#F5D08A',
+  },
+  appBannerAvailable: {
+    backgroundColor: '#EAF3FF',
+    borderColor: '#B9D8FF',
+  },
+  appBannerText: {
+    flex: 1,
+    fontSize: 13,
+    lineHeight: 18,
+  },
+  appBannerTextRequired: {
+    color: '#8A5A00',
+  },
+  appBannerTextAvailable: {
+    color: '#0A5BBF',
+  },
+  openAppButton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: '#007AFF',
+    borderRadius: 12,
+    paddingVertical: 16,
+  },
+  openAppButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  storeButton: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 8,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    paddingVertical: 14,
+    borderWidth: 1,
+    borderColor: '#007AFF',
+  },
+  storeButtonText: {
+    color: '#007AFF',
+    fontSize: 15,
+    fontWeight: '600',
   },
   infoSection: {
     marginTop: 24,

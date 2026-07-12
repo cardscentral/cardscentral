@@ -187,9 +187,10 @@ jobs:
       # sequential — 02 adds the card that 03/04/05 view/edit/delete — so they
       # must run in this order on one app instance. Listing them runs them
       # sequentially in order. Flow 10 (import-vouchervault) is portable
-      # (paste-only, no native assets) so it's included; only the non-portable
-      # 09 (scan-barcode: needs an `addMedia` fixture + hardcoded gallery date)
-      # is omitted.
+      # (paste-only, no native assets) so it's included. Two flows are omitted:
+      #   - 09 (scan-barcode): needs an `addMedia` fixture + hardcoded gallery date.
+      #   - 11 (language-change): starts with `clearState: true`, which would wipe
+      #     the card that flow 12 (shop-app-links) depends on; it's independent.
 
       - name: Run Maestro E2E Tests
         run: |
@@ -203,7 +204,9 @@ jobs:
             .maestro/flows/07-search-shops.yaml \
             .maestro/flows/08-settings.yaml \
             .maestro/flows/10-import-vouchervault.yaml \
+            .maestro/flows/12-shop-app-links.yaml \
             --format junit --output report.xml
+
 
       - name: Upload test results
         uses: actions/upload-artifact@v4

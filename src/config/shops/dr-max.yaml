@@ -9,3 +9,8 @@ brand:
   primary_color: "#00A651"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
+# Official "Dr.Max" app. (iOS listing id unverified → iOS falls back to a
+# name-based App Store search; the Android package below is the official one.)
+apps:
+  android:
+    package: "cz.drmax.mobile"  # Dr.Max on Google Play

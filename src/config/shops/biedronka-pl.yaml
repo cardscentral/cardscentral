@@ -9,3 +9,7 @@ brand:
   primary_color: "#FFD700"
   secondary_color: "#E30613"
   text_color: "#E30613"
+# Official app store references.
+apps:
+  android:
+    package: "com.jeronimomartins.biedronka.loyalty"

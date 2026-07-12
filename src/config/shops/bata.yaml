@@ -10,3 +10,7 @@ brand:
   primary_color: "#E4002B"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  android:
+    package: "com.bata.club"

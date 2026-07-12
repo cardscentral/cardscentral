@@ -9,3 +9,8 @@ brand:
   primary_color: "#E30613"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
+# Official "Albert" app. (iOS listing id unverified → iOS falls back to a
+# name-based App Store search; the Android package below is the official one.)
+apps:
+  android:
+    package: "cz.albert.app"  # Albert on Google Play

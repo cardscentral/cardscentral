@@ -9,3 +9,7 @@ brand:
   primary_color: "#F47920"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  android:
+    package: "com.hornbach.baumarkt"

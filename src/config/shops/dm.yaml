@@ -11,3 +11,13 @@ brand:
   primary_color: "#FFD700"
   secondary_color: "#FFFFFF"
   text_color: "#000000"
+# dm no longer runs its own loyalty app — its loyalty program is handled by the
+# shared Payback app, so the store references below point at the official
+# Payback app.
+apps:
+  ios:
+    store_id: "395811840"              # PAYBACK on the App Store
+    scheme: "payback://"
+  android:
+    package: "de.payback.client.android"  # PAYBACK on Google Play
+    scheme: "payback://"

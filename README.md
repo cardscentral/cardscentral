@@ -2,7 +2,18 @@
 
 Your loyalty cards in one place. A React Native (Expo) mobile app for storing and managing loyalty cards from shops in Slovakia.
 
+## 🚀 Try it now (no install needed)
+
+**[▶ Open the web app](https://cardscentral.github.io/cardscentral/)** — it's an installable **PWA**, so there are no App Store / Play Store fees required to use it.
+
+- **iPhone/iPad (Safari):** tap **Share → Add to Home Screen**
+- **Android (Chrome):** tap **⋮ → Install app / Add to Home Screen**
+- **Desktop (Chrome/Edge):** click the **install** icon in the address bar
+
+Once added, it launches full-screen like a native app and works offline (data stays on your device).
+
 ## Features
+
 
 - 📋 **List & manage** your loyalty cards
 - 📷 **Scan barcodes** with your camera to add cards instantly
@@ -10,16 +21,6 @@ Your loyalty cards in one place. A React Native (Expo) mobile app for storing an
 - 📊 **Multiple barcode types** - EAN-13, Code 128, QR codes, and more
 - 🔧 **Easy to extend** - add new shops via YAML configuration
 - ☁️ **Premium sync ready** - backend sync placeholder for future implementation
-
-## Supported Shops (Slovakia 🇸🇰)
-
-| Shop | Card Type | Brand Color |
-|------|-----------|-------------|
-| H&M | EAN-13 | ⬛ Black |
-| C&A | EAN-13 | 🟥 Red |
-| Tako Fashion | Code 128 | ⬛ Black/Gold |
-| dm drogerie markt | EAN-13 | 🟨 Yellow |
-| Lidl | QR Code | 🟦 Blue |
 
 ## Getting Started
 
@@ -260,7 +261,31 @@ make ci-e2e-android     # Full CI E2E pipeline (Android)
 make detox-test-ios     # Run Detox tests (advanced, alternative)
 ```
 
+#### Web / PWA E2E (Playwright)
+
+The mobile flows above are mirrored by a **[Playwright](https://playwright.dev/)** suite that drives the **production web build** (`dist/`) in a headless browser. Because `react-native-web` renders each RN `testID` as `data-testid`, the web specs reuse the exact same selectors as the Maestro flows — so the shared UI logic (add / view / edit card, shop search, grid toggle, VoucherVault import, settings, official-app links) gets fast, emulator-free coverage on every PR.
+
+```bash
+# One-time: install the headless browser
+make e2e-web-install         # or: npx playwright install --with-deps chromium
+
+# Run the whole suite (builds + serves dist/ automatically)
+make e2e-web                 # or: npm run e2e:web
+
+# Interactive UI mode / open the last HTML report
+make e2e-web-ui              # or: npm run e2e:web:ui
+make e2e-web-report          # or: npm run e2e:web:report
+```
+
+Specs live in `e2e-web/` (`01-*.spec.ts` … `12-*.spec.ts`) and are numbered to match the Maestro flows. A few flows are **native-only** and can't run in a browser:
+
+- **`09-scan-barcode`** — needs the device camera / photo-library picker, so it's `test.skip`-ped on web and covered only by Maestro.
+- **Destructive confirms** (delete card, clear data) and the **language switch** use a multi-button `Alert.alert`, which `react-native-web` renders as a no-op. On web those specs assert the reachable affordance (e.g. the delete button, the localized default language) instead of the native confirmation result.
+
+CI runs this suite via `.github/workflows/e2e-web.yml`; run the full pipeline locally with `make ci-e2e-web`.
+
 #### Why Maestro over Detox / Docker?
+
 
 - **Same commands locally and in CI** — no Docker needed for mobile E2E
 - **YAML-based** — flows are readable, no TypeScript test code to compile
@@ -361,7 +386,46 @@ Triggered on every push and PR to `main`:
 2. **E2E Tests (iOS)** - Runs Detox tests on iOS simulator
 3. **E2E Tests (Android)** - Runs Detox tests on Android emulator
 
+### Web / PWA (`deploy-pwa.yml`)
+
+Ships the app as an **installable Progressive Web App** on **GitHub Pages** — free hosting, no App Store / Play Store fees.
+
+```bash
+# Build the PWA locally into dist/
+make build-web        # or: npm run build:web
+
+# Preview it (served under the /cardscentral base path)
+npx serve dist -l 3000   # then open http://localhost:3000/cardscentral/
+```
+
+The build (`scripts/build-web.js`) runs `expo export --platform web`, injects the
+PWA `<head>` tags + service-worker registration, and writes `404.html` (SPA
+fallback) and `.nojekyll`. PWA assets live in `public/` (`manifest.webmanifest`,
+`sw.js`, `icons/`) and are copied into `dist/` by Expo.
+
+**One-time GitHub setup:** repo **Settings → Pages → Source = "GitHub Actions"**.
+The workflow deploys **only when a GitHub Release is published** (releases are
+cut from a git tag), so the live site always tracks a tagged, released version:
+
+```bash
+# 1. Tag the release commit and push the tag
+git tag v1.2.3
+git push origin v1.2.3
+
+# 2. Publish a GitHub Release for that tag (triggers the deploy)
+gh release create v1.2.3 --generate-notes
+```
+
+`workflow_dispatch` is also enabled for manual re-deploys. The live site is
+`https://<owner>.github.io/cardscentral/`.
+
+
+> The base path is set via `experiments.baseUrl` in `app.json` (currently
+> `/cardscentral`). If you rename the repo or use a custom domain at the root,
+> update `baseUrl` (and the `start_url`/`scope` in `public/manifest.webmanifest`).
+
 ### Build & Deploy (`build-deploy.yml`)
+
 
 Triggered on version tags (`v*`) or manual dispatch:
 
@@ -401,7 +465,8 @@ These features are stubbed in `src/storage/syncService.ts` and ready for backend
 - **Navigation**: React Navigation 7
 - **Storage**: AsyncStorage (local)
 - **Camera**: expo-camera (barcode scanning)
-- **E2E Testing**: Maestro (primary) + Detox (advanced)
+- **E2E Testing**: Maestro (native) + Playwright (web/PWA) + Detox (advanced)
+
 - **CI/CD**: GitHub Actions + EAS Build
 - **Build**: Makefile for consistent local/CI commands
 

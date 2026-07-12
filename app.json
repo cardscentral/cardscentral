@@ -29,7 +29,22 @@
       "permissions": ["CAMERA"]
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro",
+      "output": "single",
+
+      "name": "Cards Central",
+      "shortName": "Cards",
+      "description": "All your loyalty cards in one place — offline, private, installable.",
+      "themeColor": "#007AFF",
+      "backgroundColor": "#007AFF",
+      "display": "standalone",
+      "startUrl": "/cardscentral/",
+      "scope": "/cardscentral/",
+      "orientation": "portrait"
+    },
+    "experiments": {
+      "baseUrl": "/cardscentral"
     },
     "plugins": [
       [

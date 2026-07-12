@@ -9,3 +9,7 @@ brand:
   primary_color: "#00563B"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  android:
+    package: "com.johnlewis.jl"

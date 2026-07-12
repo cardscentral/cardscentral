@@ -13,6 +13,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { ShopBrand } from '../types';
 import { brandIcons } from '../config/brand-icons.generated';
 import { logoAssets } from '../config/logo-assets.generated';
@@ -24,6 +25,11 @@ interface ShopIconProps {
   /** Shop name — used for 2-letter fallback */
   name?: string;
   size?: number;
+  /**
+   * When true, an "app available" badge is overlaid on the corner of the tile
+   * to signal that this shop has a dedicated official app.
+   */
+  hasApp?: boolean;
 }
 
 function renderBrandLogo(logoSlug: string, size: number, color: string) {
@@ -69,7 +75,7 @@ function renderLetterFallback(name: string, size: number, color: string) {
   );
 }
 
-export function ShopIcon({ brand, shopId, name, size = 48 }: ShopIconProps) {
+export function ShopIcon({ brand, shopId, name, size = 48, hasApp = false }: ShopIconProps) {
   let content: React.ReactNode;
   // The tile background depends on which logo source we use:
   //  - simple-icons SVG: monochrome, drawn in text_color, so it needs the
@@ -92,19 +98,47 @@ export function ShopIcon({ brand, shopId, name, size = 48 }: ShopIconProps) {
     content = renderLetterFallback(name || 'CC', size, brand.text_color);
   }
 
+  // Outer wrapper is needed so the "app available" badge can overflow past the
+  // tile's clipped (overflow: hidden) rounded corners.
+  const badgeSize = Math.max(14, size * 0.34);
+
   return (
-    <View
-      style={[
-        styles.container,
-        {
-          width: size,
-          height: size,
-          borderRadius: size * 0.2,
-          backgroundColor,
-        },
-      ]}
-    >
-      {content}
+    <View style={{ width: size, height: size }}>
+      <View
+        style={[
+          styles.container,
+          {
+            width: size,
+            height: size,
+            borderRadius: size * 0.2,
+            backgroundColor,
+          },
+        ]}
+      >
+        {content}
+      </View>
+
+      {hasApp && (
+        <View
+          style={[
+            styles.appBadge,
+            {
+              width: badgeSize,
+              height: badgeSize,
+              borderRadius: badgeSize / 2,
+              right: -badgeSize * 0.28,
+              bottom: -badgeSize * 0.28,
+            },
+          ]}
+          testID="shop-app-badge"
+        >
+          <MaterialCommunityIcons
+            name="cellphone-arrow-down"
+            size={badgeSize * 0.66}
+            color="#FFFFFF"
+          />
+        </View>
+      )}
     </View>
   );
 }
@@ -116,5 +150,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: 'rgba(0,0,0,0.08)',
+  },
+  appBadge: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#007AFF',
+    borderWidth: 2,
+    borderColor: '#FFFFFF',
   },
 });

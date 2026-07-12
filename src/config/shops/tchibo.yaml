@@ -9,3 +9,7 @@ brand:
   primary_color: "#003D6B"
   secondary_color: "#E2001A"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  android:
+    package: "com.tchibo.tchiboapp"

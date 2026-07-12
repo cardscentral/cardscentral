@@ -10,3 +10,9 @@ brand:
   primary_color: "#003366"
   secondary_color: "#0070BA"
   text_color: "#FFFFFF"
+# Official "OMV" app.
+apps:
+  ios:
+    store_id: "1441087213"    # OMV on the App Store
+  android:
+    package: "com.omv.omvapp"  # OMV on Google Play

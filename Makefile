@@ -1,7 +1,7 @@
 # Cards Central - Development & Testing Commands
 # Same commands work locally and in CI
 
-.PHONY: install generate typecheck prebuild e2e e2e-ios e2e-android maestro maestro-ios maestro-android clean help
+.PHONY: install generate typecheck prebuild build-web maestro maestro-ios maestro-android clean help e2e-web e2e-web-install e2e-web-ui e2e-web-report ci ci-e2e-ios ci-e2e-android ci-e2e-web dev
 
 # ──────────────────────────────────────────────────────────────
 # Setup
@@ -30,15 +30,25 @@ prebuild-android: ## Generate native project (Android only)
 	npx expo prebuild --platform android --clean
 
 build-ios-debug: prebuild-ios ## Build iOS debug for testing
-	cd ios && xcodebuild -workspace cardscentral.xcworkspace \
-		-scheme cardscentral \
-		-configuration Debug \
-		-sdk iphonesimulator \
-		-derivedDataPath build \
-		build
+	# The iOS project name is derived by `expo prebuild` from expo.name in
+	# app.json (e.g. "Cards Central" -> "CardsCentral"), so detect the actual
+	# .xcworkspace on disk instead of hardcoding a name that can drift.
+	cd ios && \
+		WORKSPACE=$$(ls -d *.xcworkspace | head -n1) && \
+		SCHEME=$$(basename "$$WORKSPACE" .xcworkspace) && \
+		echo "Building workspace $$WORKSPACE (scheme $$SCHEME)" && \
+		xcodebuild -workspace "$$WORKSPACE" \
+			-scheme "$$SCHEME" \
+			-configuration Debug \
+			-sdk iphonesimulator \
+			-derivedDataPath build \
+			build
 
 build-android-debug: prebuild-android ## Build Android debug for testing
 	cd android && ./gradlew assembleDebug
+
+build-web: ## Build the installable PWA into dist/ (for GitHub Pages)
+	npm run build:web
 
 # ──────────────────────────────────────────────────────────────
 # E2E Testing with Maestro (recommended)
@@ -85,6 +95,28 @@ ci: install typecheck ## Run CI checks (install + typecheck)
 ci-e2e-ios: ci build-ios-debug maestro-ios ## Full CI E2E pipeline (iOS)
 
 ci-e2e-android: ci build-android-debug maestro-android ## Full CI E2E pipeline (Android)
+
+ci-e2e-web: ci e2e-web-install e2e-web ## Full CI E2E pipeline (Web/PWA)
+
+# ──────────────────────────────────────────────────────────────
+# E2E Testing on Web / PWA with Playwright
+#
+# Drives the production web build (dist/) in a headless browser, reusing the
+# same testIDs as the Maestro native flows. playwright.config.ts builds + serves
+# the app automatically, so `make e2e-web` is all you need after installing.
+# ──────────────────────────────────────────────────────────────
+
+e2e-web-install: ## Install Playwright's browser binaries (one-time)
+	npx playwright install --with-deps chromium
+
+e2e-web: ## Run the web/PWA E2E suite (builds + serves dist/ automatically)
+	npm run e2e:web
+
+e2e-web-ui: ## Run the web/PWA E2E suite in Playwright's interactive UI mode
+	npm run e2e:web:ui
+
+e2e-web-report: ## Open the last web E2E HTML report
+	npm run e2e:web:report
 
 # ──────────────────────────────────────────────────────────────
 # Utilities

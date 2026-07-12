@@ -10,3 +10,7 @@ brand:
   primary_color: "#E30613"
   secondary_color: "#FDB913"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  android:
+    package: "sk.slovnaft.bonus"

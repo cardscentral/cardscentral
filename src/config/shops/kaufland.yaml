@@ -10,3 +10,9 @@ brand:
   primary_color: "#E30613"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
+# Official "Kaufland" app (Kaufland Card + offers).
+apps:
+  ios:
+    store_id: "1444980076"     # Kaufland on the App Store
+  android:
+    package: "de.kaufland.app"  # Kaufland on Google Play

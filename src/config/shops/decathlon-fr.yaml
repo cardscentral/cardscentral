@@ -10,3 +10,9 @@ brand:
   primary_color: "#0082C3"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  ios:
+    store_id: "446684051"
+  android:
+    package: "com.decathlon.app"

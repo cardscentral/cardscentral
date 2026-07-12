@@ -35,7 +35,14 @@ export type TranslationKeys =
   | 'importButton'
   | 'importPickFile'
   | 'importDone'
-  | 'importEmpty';
+  | 'importEmpty'
+  | 'openApp'
+  | 'installApp'
+  | 'getOnAppStore'
+  | 'getOnPlayStore'
+  | 'appRequiredBanner'
+  | 'appAvailableBanner'
+  | 'couldNotOpenApp';
 
 
 type TranslationMap = Record<TranslationKeys, string>;
@@ -77,6 +84,13 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     importPickFile: 'Pick a file\u2026',
     importDone: 'Done',
     importEmpty: 'Nothing to import yet.',
+    openApp: 'Open app',
+    installApp: 'Install app',
+    getOnAppStore: 'Get on the App Store',
+    getOnPlayStore: 'Get on Google Play',
+    appRequiredBanner: 'This program uses the retailer\u2019s own app. Open it to show your card and collect points \u2014 the number below is a backup.',
+    appAvailableBanner: 'This retailer has an official app with extra features. Open or install it below.',
+    couldNotOpenApp: 'Could not open the app or store.',
   },
 
   sk: {
@@ -115,6 +129,13 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     importPickFile: 'Vybrať súbor\u2026',
     importDone: 'Hotovo',
     importEmpty: 'Zatiaľ niet čo importovať.',
+    openApp: 'Otvoriť aplikáciu',
+    installApp: 'Nainštalovať aplikáciu',
+    getOnAppStore: 'Stiahnuť z App Store',
+    getOnPlayStore: 'Stiahnuť z Google Play',
+    appRequiredBanner: 'Tento program používa vlastnú aplikáciu predajcu. Otvor ju na zobrazenie karty a zbieranie bodov \u2014 číslo nižšie je záloha.',
+    appAvailableBanner: 'Tento predajca má oficiálnu aplikáciu s ďalšími funkciami. Otvor ju alebo nainštaluj nižšie.',
+    couldNotOpenApp: 'Aplikáciu ani obchod sa nepodarilo otvoriť.',
   },
 
   cs: {
@@ -153,6 +174,13 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     importPickFile: 'Vybrat soubor\u2026',
     importDone: 'Hotovo',
     importEmpty: 'Zatím není co importovat.',
+    openApp: 'Otevřít aplikaci',
+    installApp: 'Nainstalovat aplikaci',
+    getOnAppStore: 'Stáhnout z App Store',
+    getOnPlayStore: 'Stáhnout z Google Play',
+    appRequiredBanner: 'Tento program používá vlastní aplikaci prodejce. Otevři ji pro zobrazení karty a sbírání bodů \u2014 číslo níže je záloha.',
+    appAvailableBanner: 'Tento prodejce má oficiální aplikaci s dalšími funkcemi. Otevři ji nebo nainstaluj níže.',
+    couldNotOpenApp: 'Aplikaci ani obchod se nepodařilo otevřít.',
   },
 
   de: {
@@ -191,6 +219,13 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     importPickFile: 'Datei wählen\u2026',
     importDone: 'Fertig',
     importEmpty: 'Noch nichts zu importieren.',
+    openApp: 'App öffnen',
+    installApp: 'App installieren',
+    getOnAppStore: 'Im App Store laden',
+    getOnPlayStore: 'Bei Google Play laden',
+    appRequiredBanner: 'Dieses Programm nutzt die eigene App des Händlers. Öffne sie, um deine Karte zu zeigen und Punkte zu sammeln \u2014 die Nummer unten dient als Sicherung.',
+    appAvailableBanner: 'Dieser Händler hat eine offizielle App mit Zusatzfunktionen. Öffne oder installiere sie unten.',
+    couldNotOpenApp: 'App oder Store konnte nicht geöffnet werden.',
   },
 
   pl: {
@@ -229,6 +264,13 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     importPickFile: 'Wybierz plik\u2026',
     importDone: 'Gotowe',
     importEmpty: 'Nie ma jeszcze nic do zaimportowania.',
+    openApp: 'Otwórz aplikację',
+    installApp: 'Zainstaluj aplikację',
+    getOnAppStore: 'Pobierz z App Store',
+    getOnPlayStore: 'Pobierz z Google Play',
+    appRequiredBanner: 'Ten program korzysta z własnej aplikacji sprzedawcy. Otwórz ją, aby pokazać kartę i zbierać punkty \u2014 numer poniżej jest kopią zapasową.',
+    appAvailableBanner: 'Ten sprzedawca ma oficjalną aplikację z dodatkowymi funkcjami. Otwórz ją lub zainstaluj poniżej.',
+    couldNotOpenApp: 'Nie udało się otworzyć aplikacji ani sklepu.',
   },
 
   hu: {
@@ -267,6 +309,13 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     importPickFile: 'Fájl választása\u2026',
     importDone: 'Kész',
     importEmpty: 'Még nincs mit importálni.',
+    openApp: 'Alkalmazás megnyitása',
+    installApp: 'Alkalmazás telepítése',
+    getOnAppStore: 'Letöltés az App Store-ból',
+    getOnPlayStore: 'Letöltés a Google Play-ről',
+    appRequiredBanner: 'Ez a program a kereskedő saját alkalmazását használja. Nyisd meg a kártya megjelenítéséhez és pontgyűjtéshez \u2014 az alábbi szám tartalék.',
+    appAvailableBanner: 'Ennek a kereskedőnek van hivatalos alkalmazása extra funkciókkal. Nyisd meg vagy telepítsd alább.',
+    couldNotOpenApp: 'Az alkalmazást vagy az áruházat nem sikerült megnyitni.',
   },
 
   fr: {
@@ -305,6 +354,13 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     importPickFile: 'Choisir un fichier\u2026',
     importDone: 'Terminé',
     importEmpty: 'Rien à importer pour le moment.',
+    openApp: 'Ouvrir l\u2019appli',
+    installApp: 'Installer l\u2019appli',
+    getOnAppStore: 'Télécharger sur l\u2019App Store',
+    getOnPlayStore: 'Disponible sur Google Play',
+    appRequiredBanner: 'Ce programme utilise l\u2019appli du commerçant. Ouvrez-la pour afficher votre carte et cumuler des points \u2014 le numéro ci-dessous sert de secours.',
+    appAvailableBanner: 'Ce commerçant propose une appli officielle avec des fonctions supplémentaires. Ouvrez-la ou installez-la ci-dessous.',
+    couldNotOpenApp: 'Impossible d\u2019ouvrir l\u2019appli ou le store.',
   },
 
 };

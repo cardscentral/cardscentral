@@ -10,3 +10,7 @@ brand:
   primary_color: "#009B3A"
   secondary_color: "#FFD200"
   text_color: "#FFD200"
+# Official app store references.
+apps:
+  android:
+    package: "com.bp.bpmedia"

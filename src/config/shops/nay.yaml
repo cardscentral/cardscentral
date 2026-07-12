@@ -9,3 +9,7 @@ brand:
   primary_color: "#ED1C24"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  android:
+    package: "sk.nay.android"

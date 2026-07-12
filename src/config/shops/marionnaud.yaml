@@ -9,3 +9,7 @@ brand:
   primary_color: "#000000"
   secondary_color: "#B48A4C"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  android:
+    package: "com.marionnaud.fidelity"

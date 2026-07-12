@@ -8,3 +8,7 @@ brand:
   primary_color: "#003DA5"
   secondary_color: "#FFD700"
   text_color: "#FFD700"
+# Official app store references.
+apps:
+  android:
+    package: "no.rema.aeg"

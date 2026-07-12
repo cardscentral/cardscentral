@@ -10,3 +10,7 @@ brand:
   primary_color: "#004C97"
   secondary_color: "#ED1C24"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  android:
+    package: "com.carrefour.romania"

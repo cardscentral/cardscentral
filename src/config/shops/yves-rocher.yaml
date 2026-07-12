@@ -9,3 +9,7 @@ brand:
   primary_color: "#00693E"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  android:
+    package: "com.yr.appli.android"

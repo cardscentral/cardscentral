@@ -35,6 +35,29 @@ export interface ShopBrand {
 export type ShopCategory = 'fashion' | 'groceries' | 'electronics' | 'petrol' | 'pharmacy' | 'home' | 'sports' | 'other';
 
 /**
+ * Official retailer app links for a shop.
+ *
+ * When present, the app can offer a one-tap "Open app" action that deep-links
+ * into the installed app (via `scheme`) and falls back to the platform store
+ * page if the app isn't installed.
+ */
+export interface ShopAppLinks {
+  ios?: {
+    /** App Store numeric id (e.g. "351493666" -> apps.apple.com/app/id351493666) */
+    store_id: string;
+    /** Optional URL scheme to deep-link into the installed app (e.g. "tesco://") */
+    scheme?: string;
+  };
+  android?: {
+    /** Play Store package id (e.g. "com.tesco.clubcardmobile") */
+    package: string;
+    /** Optional URL scheme to deep-link into the installed app (e.g. "tesco://") */
+    scheme?: string;
+  };
+}
+
+
+/**
  * Shop configuration (maps to YAML config files)
  */
 export interface ShopConfig {
@@ -47,6 +70,14 @@ export interface ShopConfig {
   category: ShopCategory;
   barcode_type: BarcodeType;
   brand: ShopBrand;
+  /**
+   * When true, this loyalty program primarily works through the retailer's own
+   * app (the stored card number may only be a reference/backup). Drives an
+   * informational banner and prioritizes the "Open app" action.
+   */
+  requires_app?: boolean;
+  /** Official retailer app links (App Store / Play Store + optional deep-link schemes). */
+  apps?: ShopAppLinks;
 }
 
 /**

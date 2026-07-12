@@ -1,0 +1,68 @@
+name: Deploy PWA (GitHub Pages)
+
+# Builds the installable web app (PWA) and publishes it to GitHub Pages for
+# free — no Apple Developer / Play Store fees needed to reach users. iOS/Android
+# users can "Add to Home Screen" and use it like a native app (offline-capable).
+#
+# Publishes ONLY on a published GitHub Release. Releases are cut from a git tag,
+# so the live PWA always corresponds to a tagged, released version rather than
+# every push to main. To ship a new version:
+#   1. git tag vX.Y.Z && git push origin vX.Y.Z
+#   2. Create a GitHub Release for that tag (UI or `gh release create vX.Y.Z`).
+# The `release: published` event then fires this deploy. `workflow_dispatch` is
+# kept for manual re-deploys.
+#
+# One-time setup: repo Settings → Pages → Source = "GitHub Actions".
+# The site is served at https://<owner>.github.io/cardscentral/
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow one concurrent deployment; don't cancel an in-progress run.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build PWA
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build web PWA
+        run: npm run build:web
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

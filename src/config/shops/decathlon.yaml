@@ -10,3 +10,9 @@ brand:
   primary_color: "#0082C3"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
+# Official "Decathlon" app (Decathlon loyalty).
+apps:
+  ios:
+    store_id: "446684051"        # Decathlon on the App Store
+  android:
+    package: "com.decathlon.app"  # Decathlon on Google Play

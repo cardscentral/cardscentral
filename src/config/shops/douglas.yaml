@@ -9,3 +9,7 @@ brand:
   primary_color: "#1D1D1B"
   secondary_color: "#A67C52"
   text_color: "#A67C52"
+# Official app store references.
+apps:
+  android:
+    package: "com.douglas.main"

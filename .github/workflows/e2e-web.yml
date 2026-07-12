@@ -1,0 +1,73 @@
+name: E2E Web
+
+on:
+  push:
+    branches: [main, initial]
+  pull_request:
+    branches: [main, initial]
+
+jobs:
+  # ──────────────────────────────────────────────────────────
+  # E2E Tests - Web / PWA (Playwright)
+  #
+  # Builds the production web bundle (dist/) and drives it with Playwright,
+  # reusing the same testIDs as the native Maestro flows. Far cheaper than the
+  # Android job: no emulator, no native build — just Node + a headless browser,
+  # so it runs in well under a minute and gives fast per-PR feedback on the
+  # shared UI logic (add/view/edit card, search, grid toggle, import, settings,
+  # shop app links).
+  # ──────────────────────────────────────────────────────────
+  e2e-web:
+    name: E2E Tests (Web)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # Restore fetched logos from cache (keyed on the shop YAMLs) so a present
+      # logo is already current — skip the multi-minute network refetch. Mirrors
+      # the Android job.
+      - name: Cache fetched logos
+        uses: actions/cache@v4
+        with:
+          path: assets/logos
+          key: logos-v2-${{ hashFiles('src/config/shops/*.yaml') }}
+
+      - run: npm ci
+      - run: npm run generate:shops
+      - run: npm run generate:icons
+      - run: npm run fetch:logos
+        env:
+          FETCH_LOGOS_SKIP_STALE: '1'
+
+      # Cache the Playwright browser binaries (keyed on the installed version).
+      - name: Get Playwright version
+        id: pw-version
+        run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Playwright browsers
+        id: pw-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.pw-version.outputs.version }}
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      # playwright.config.ts's webServer builds the PWA (npm run build:web) and
+      # serves it at the production base path before the tests start.
+      - name: Run web E2E tests
+        run: npm run e2e:web
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e2e-web-report
+          path: playwright-report/
+          retention-days: 7

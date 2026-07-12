@@ -10,3 +10,15 @@ brand:
   primary_color: "#0050AA"
   secondary_color: "#FFF000"
   text_color: "#FFFFFF"
+# Lidl Plus is an app-first program: the loyalty QR is generated in the Lidl
+# Plus app and the number we store is mainly a backup/reference. requires_app
+# surfaces an informational banner and prioritizes the "Open app" action.
+requires_app: true
+# Official "Lidl Plus" app store references.
+apps:
+  ios:
+    store_id: "1080609808"          # Lidl Plus on the App Store
+    scheme: "lidlplus://"
+  android:
+    package: "com.lidl.eci.lidlplus"  # Lidl Plus on Google Play
+    scheme: "lidlplus://"

@@ -10,3 +10,7 @@ brand:
   primary_color: "#FFD700"
   secondary_color: "#003399"
   text_color: "#003399"
+# Official app store references.
+apps:
+  android:
+    package: "de.edeka.app"

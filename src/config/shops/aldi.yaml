@@ -10,3 +10,7 @@ brand:
   primary_color: "#00447C"
   secondary_color: "#F58220"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  android:
+    package: "com.aldi.mobile"

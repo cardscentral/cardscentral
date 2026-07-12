@@ -9,3 +9,7 @@ brand:
   primary_color: "#86BC25"
   secondary_color: "#004B87"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  android:
+    package: "cz.alza.eshop"

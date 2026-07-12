@@ -10,3 +10,9 @@ brand:
   primary_color: "#222222"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  ios:
+    store_id: "834465911"
+  android:
+    package: "com.hm.goe"

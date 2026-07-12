@@ -10,3 +10,7 @@ brand:
   primary_color: "#00539F"
   secondary_color: "#EE1C2E"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  android:
+    package: "com.tesco.clubcardmobile.hu"

@@ -1,0 +1,38 @@
+appId: com.cardscentral.app
+---
+# Flow: Official retailer app links on the card detail screen
+#
+# Covers the "open the official app / get it from the store" feature. Every
+# shop resolves a store link (from its YAML `apps`, the central appLinks
+# registry, or a name-based store search), and shops with a known native app
+# also get the "app available" badge + banner + "Open app" deep-link button.
+#
+# Tesco has a known native app in the registry, so opening the Tesco card
+# created by flow 02 must show all of these affordances.
+#
+# Precondition: the Tesco card from flow 02 exists (run 01 + 02 first).
+
+- launchApp
+- extendedWaitUntil:
+    visible:
+      text: ".*My Tesco Card.*"
+    timeout: 10000
+
+- tapOn:
+    text: ".*My Tesco Card.*"
+- extendedWaitUntil:
+    visible:
+      id: "card-detail-screen"
+    timeout: 5000
+
+# The official-app section + the single platform store/app button are present.
+- assertVisible:
+    id: "shop-app-section"
+- assertVisible:
+    id: "open-store-button"
+
+# Tesco has a known native app → the shop icon shows the app-available badge.
+# (The button label switches between "Open app"/"Install app" by locale, so we
+# assert the stable testID above rather than brittle localized text here.)
+- assertVisible:
+    id: "shop-app-badge"

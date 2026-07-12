@@ -9,3 +9,7 @@ brand:
   primary_color: "#0066CC"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  android:
+    package: "com.boots.uk.production"

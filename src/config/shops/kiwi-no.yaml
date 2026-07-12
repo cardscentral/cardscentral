@@ -8,3 +8,7 @@ brand:
   primary_color: "#8BC34A"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  android:
+    package: "no.kiwi.kiwiapp"

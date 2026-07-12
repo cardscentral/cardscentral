@@ -9,3 +9,7 @@ brand:
   primary_color: "#C8A96E"
   secondary_color: "#000000"
   text_color: "#000000"
+# Official app store references.
+apps:
+  android:
+    package: "com.lpp.mohito"

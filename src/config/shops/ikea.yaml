@@ -10,3 +10,9 @@ brand:
   primary_color: "#0051BA"
   secondary_color: "#FFDA1A"
   text_color: "#FFDA1A"
+# Official "IKEA" app (IKEA Family).
+apps:
+  ios:
+    store_id: "1452164827"          # IKEA on the App Store
+  android:
+    package: "com.ingka.ikea.app"    # IKEA on Google Play

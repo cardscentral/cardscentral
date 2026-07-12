@@ -9,3 +9,7 @@ brand:
   primary_color: "#F37A1F"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  android:
+    package: "de.saturn.saturn"

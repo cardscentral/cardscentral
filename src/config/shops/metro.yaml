@@ -9,3 +9,7 @@ brand:
   primary_color: "#003D8F"
   secondary_color: "#FFD200"
   text_color: "#FFFFFF"
+# Official app store references.
+apps:
+  android:
+    package: "de.metro.customerapp"
