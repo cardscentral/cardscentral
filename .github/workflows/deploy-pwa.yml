@@ -4,37 +4,61 @@ name: Deploy PWA (GitHub Pages)
 # free — no Apple Developer / Play Store fees needed to reach users. iOS/Android
 # users can "Add to Home Screen" and use it like a native app (offline-capable).
 #
-# Publishes ONLY on a published GitHub Release. Releases are cut from a git tag,
-# so the live PWA always corresponds to a tagged, released version rather than
-# every push to main. To ship a new version:
+# We publish TWO stages to the SAME GitHub Pages site (one Pages site per repo),
+# as sibling paths so they update independently and never clobber each other:
+#
+#   QA   → https://<owner>.github.io/cardscentral/qa/   (deployed on every push
+#          to `main`, so QA always tracks the latest merged code)
+#   Prod → https://<owner>.github.io/cardscentral/      (deployed ONLY when a
+#          GitHub Release is published — releases are cut from a git tag, so the
+#          live prod site always corresponds to a tagged, released version)
+#
+# How it works: instead of the single-artifact `deploy-pages` action (which
+# replaces the whole site on every run), we publish to a `gh-pages` branch with
+# `peaceiris/actions-gh-pages`. QA writes into the `qa/` subdirectory and prod
+# into the root; `keep_files: true` means a QA deploy never removes prod (and
+# vice-versa). GitHub Pages then serves the branch.
+#
+# To ship a new PROD version:
 #   1. git tag vX.Y.Z && git push origin vX.Y.Z
 #   2. Create a GitHub Release for that tag (UI or `gh release create vX.Y.Z`).
-# The `release: published` event then fires this deploy. `workflow_dispatch` is
-# kept for manual re-deploys.
 #
-# One-time setup: repo Settings → Pages → Source = "GitHub Actions".
-# The site is served at https://<owner>.github.io/cardscentral/
+# One-time setup: repo Settings → Pages → Source = "Deploy from a branch",
+# Branch = `gh-pages` / `(root)`.
 
 on:
+  push:
+    branches: [main]
   release:
     types: [published]
   workflow_dispatch:
-
+    inputs:
+      stage:
+        description: 'Which stage to deploy'
+        required: true
+        default: 'qa'
+        type: choice
+        options:
+          - qa
+          - prod
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
-# Allow one concurrent deployment; don't cancel an in-progress run.
 concurrency:
-  group: pages
+  group: pages-${{ github.workflow }}
   cancel-in-progress: false
 
 jobs:
-  build:
-    name: Build PWA
+  # ---------------------------------------------------------------------------
+  # QA — deployed from `main` (latest merged code). Lives under /cardscentral/qa/.
+  # ---------------------------------------------------------------------------
+  deploy-qa:
+    name: Deploy QA (main → /qa/)
     runs-on: ubuntu-latest
+    if: >-
+      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.stage == 'qa')
     steps:
       - uses: actions/checkout@v4
 
@@ -47,22 +71,52 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build web PWA
+      - name: Build web PWA (QA)
         run: npm run build:web
+        env:
+          BASE_PATH: /cardscentral/qa/
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Publish QA to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: dist
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          destination_dir: qa
+          keep_files: true
+          commit_message: 'deploy(qa): ${{ github.sha }}'
 
-  deploy:
-    name: Deploy to GitHub Pages
-    needs: build
+  # ---------------------------------------------------------------------------
+  # Prod — deployed ONLY on a published Release. Lives at /cardscentral/.
+  # ---------------------------------------------------------------------------
+  deploy-prod:
+    name: Deploy Prod (release → /)
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    if: >-
+      github.event_name == 'release' ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.stage == 'prod')
     steps:
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build web PWA (Prod)
+        run: npm run build:web
+        env:
+          BASE_PATH: /cardscentral/
+
+      - name: Publish Prod to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          # Root of the site, but keep the qa/ subdirectory intact.
+          keep_files: true
+          exclude_assets: ''
+          commit_message: 'deploy(prod): ${{ github.ref_name }}'

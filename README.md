@@ -4,7 +4,15 @@ Your loyalty cards in one place. A React Native (Expo) mobile app for storing an
 
 ## 🚀 Try it now (no install needed)
 
-**[▶ Open the web app](https://cardscentral.github.io/cardscentral/)** — it's an installable **PWA**, so there are no App Store / Play Store fees required to use it.
+**[▶ Open the web app (Production)](https://cardscentral.github.io/cardscentral/)** — it's an installable **PWA**, so there are no App Store / Play Store fees required to use it.
+
+> 🧪 Prefer the bleeding edge? Try the **[QA build](https://cardscentral.github.io/cardscentral/qa/)** — it always tracks the latest code merged to `main`.
+
+| Stage | URL | Deployed when |
+|-------|-----|---------------|
+| **Production** | https://cardscentral.github.io/cardscentral/ | A GitHub Release is published |
+| **QA** | https://cardscentral.github.io/cardscentral/qa/ | Every push to `main` |
+
 
 - **iPhone/iPad (Safari):** tap **Share → Add to Home Screen**
 - **Android (Chrome):** tap **⋮ → Install app / Add to Home Screen**
@@ -388,41 +396,60 @@ Triggered on every push and PR to `main`:
 
 ### Web / PWA (`deploy-pwa.yml`)
 
-Ships the app as an **installable Progressive Web App** on **GitHub Pages** — free hosting, no App Store / Play Store fees.
+Ships the app as an **installable Progressive Web App** on **GitHub Pages** — free hosting, no App Store / Play Store fees. There are **two stages**, both served from the same Pages site as sibling paths:
+
+| Stage | URL | Trigger |
+|-------|-----|---------|
+| **QA** | `https://<owner>.github.io/cardscentral/qa/` | Every push to `main` |
+| **Production** | `https://<owner>.github.io/cardscentral/` | A GitHub Release is published |
 
 ```bash
-# Build the PWA locally into dist/
+# Build the PROD PWA locally into dist/
 make build-web        # or: npm run build:web
+
+# Build the QA PWA locally (base path /cardscentral/qa/)
+BASE_PATH=/cardscentral/qa/ npm run build:web
 
 # Preview it (served under the /cardscentral base path)
 npx serve dist -l 3000   # then open http://localhost:3000/cardscentral/
 ```
 
 The build (`scripts/build-web.js`) runs `expo export --platform web`, injects the
-PWA `<head>` tags + service-worker registration, and writes `404.html` (SPA
-fallback) and `.nojekyll`. PWA assets live in `public/` (`manifest.webmanifest`,
-`sw.js`, `icons/`) and are copied into `dist/` by Expo.
+PWA `<head>` tags + service-worker registration, rewrites the base path in the
+manifest + service worker, and writes `404.html` (SPA fallback) and `.nojekyll`.
+The base path is configurable via the `BASE_PATH` env var (default
+`/cardscentral/`), which `app.config.js` feeds into Expo's `experiments.baseUrl`.
+PWA assets live in `public/` (`manifest.webmanifest`, `sw.js`, `icons/`) and are
+copied into `dist/` by Expo.
 
-**One-time GitHub setup:** repo **Settings → Pages → Source = "GitHub Actions"**.
-The workflow deploys **only when a GitHub Release is published** (releases are
-cut from a git tag), so the live site always tracks a tagged, released version:
+**One-time GitHub setup:** repo **Settings → Pages → Source = "Deploy from a
+branch"**, Branch = **`gh-pages`** / **`(root)`**. Both stages publish to the
+`gh-pages` branch — QA into the `qa/` subdirectory, prod into the root — using
+`peaceiris/actions-gh-pages` with `keep_files: true`, so deploying one stage
+never clobbers the other.
+
+- **QA** redeploys automatically on **every push to `main`**, so it always
+  reflects the latest merged code.
+- **Production** deploys **only when a GitHub Release is published** (releases
+  are cut from a git tag), so the live prod site always tracks a tagged version:
 
 ```bash
 # 1. Tag the release commit and push the tag
 git tag v1.2.3
 git push origin v1.2.3
 
-# 2. Publish a GitHub Release for that tag (triggers the deploy)
+# 2. Publish a GitHub Release for that tag (triggers the PROD deploy)
 gh release create v1.2.3 --generate-notes
 ```
 
-`workflow_dispatch` is also enabled for manual re-deploys. The live site is
-`https://<owner>.github.io/cardscentral/`.
+`workflow_dispatch` is also enabled for manual re-deploys of either stage
+(choose `qa` or `prod`).
 
+> The base path defaults to `/cardscentral` (set in `app.json` for native
+> builds; overridden per-stage via `BASE_PATH` for the web export). If you
+> rename the repo or use a custom domain at the root, update these values and
+> the QA sub-path accordingly.
 
-> The base path is set via `experiments.baseUrl` in `app.json` (currently
-> `/cardscentral`). If you rename the repo or use a custom domain at the root,
-> update `baseUrl` (and the `start_url`/`scope` in `public/manifest.webmanifest`).
 
 ### Build & Deploy (`build-deploy.yml`)
 
