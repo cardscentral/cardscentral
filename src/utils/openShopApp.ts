@@ -26,13 +26,27 @@ export function resolveAppLinks(shop: ShopLike): ShopAppLinks | undefined {
 }
 
 /**
+ * Whether the current platform can *detect* and deep-link into an installed
+ * native app. This is a native-only capability: browsers (PWA) deliberately
+ * provide no way to query whether a third-party app is installed (privacy), so
+ * `Linking.canOpenURL` on custom schemes is unreliable there. On web we always
+ * fall back to store/website links instead of pretending we can open the app.
+ */
+export function canDetectInstalledApps(): boolean {
+  return Platform.OS === 'ios' || Platform.OS === 'android';
+}
+
+/**
  * True if the shop declares a *known* native app (via its YAML `apps` block)
  * for the current platform. Drives the "app available" badge and the deep-link
  * button.
-
+ *
+ * Always false on web (PWA): we can't detect or reliably deep-link into
+ * installed apps there, so we don't show the "app available" affordance.
  * Note: even when this is false, getStoreUrl() still returns a search link.
  */
 export function hasShopApp(shop: ShopLike): boolean {
+  if (!canDetectInstalledApps()) return false;
   const apps = resolveAppLinks(shop);
   if (!apps) return false;
   return Platform.OS === 'ios' ? !!apps.ios : !!apps.android;
@@ -104,7 +118,9 @@ function getScheme(shop: ShopLike): string | undefined {
 export async function openShopApp(shop: ShopLike): Promise<boolean> {
   const scheme = getScheme(shop);
 
-  if (scheme) {
+  // On web (PWA) we can't detect or reliably deep-link into a native app, so
+  // skip the scheme attempt entirely and send the user to the store/website.
+  if (scheme && canDetectInstalledApps()) {
     try {
       const canOpen = await Linking.canOpenURL(scheme);
       if (canOpen) {
@@ -127,9 +143,11 @@ export async function openStorePage(shop: ShopLike): Promise<boolean> {
   const apps = resolveAppLinks(shop);
 
   // Native store schemes open the store app directly (nicer than a browser),
-  // but only work when a concrete id/package is known.
-  const nativeStoreUrl =
-    Platform.OS === 'ios'
+  // but only work when a concrete id/package is known — and only on native
+  // (on web these schemes can't be opened, so we skip straight to https).
+  const nativeStoreUrl = !canDetectInstalledApps()
+    ? undefined
+    : Platform.OS === 'ios'
       ? apps?.ios?.store_id
         ? `itms-apps://apps.apple.com/app/id${apps.ios.store_id}`
         : undefined

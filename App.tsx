@@ -4,6 +4,7 @@ import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { CountrySelectScreen } from './src/screens/CountrySelectScreen';
 import { getSelectedCountry } from './src/storage/preferences';
+import { requestPersistentStorage } from './src/storage/persistStorage';
 import { I18nProvider } from './src/i18n/I18nContext';
 
 export default function App() {
@@ -11,6 +12,10 @@ export default function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Ask the browser to keep our storage persistent so an installed PWA
+    // doesn't lose the user's cards to storage eviction. No-op on native.
+    requestPersistentStorage();
+
     getSelectedCountry().then((c) => {
       setCountry(c);
       setLoading(false);

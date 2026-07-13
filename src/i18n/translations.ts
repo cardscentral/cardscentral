@@ -38,6 +38,7 @@ export type TranslationKeys =
   | 'importEmpty'
   | 'openApp'
   | 'installApp'
+  | 'viewInStore'
   | 'getOnAppStore'
   | 'getOnPlayStore'
   | 'appRequiredBanner'
@@ -86,6 +87,7 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     importEmpty: 'Nothing to import yet.',
     openApp: 'Open app',
     installApp: 'Install app',
+    viewInStore: 'View in store',
     getOnAppStore: 'Get on the App Store',
     getOnPlayStore: 'Get on Google Play',
     appRequiredBanner: 'This program uses the retailer\u2019s own app. Open it to show your card and collect points \u2014 the number below is a backup.',
@@ -131,6 +133,7 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     importEmpty: 'Zatiaľ niet čo importovať.',
     openApp: 'Otvoriť aplikáciu',
     installApp: 'Nainštalovať aplikáciu',
+    viewInStore: 'Zobraziť v obchode',
     getOnAppStore: 'Stiahnuť z App Store',
     getOnPlayStore: 'Stiahnuť z Google Play',
     appRequiredBanner: 'Tento program používa vlastnú aplikáciu predajcu. Otvor ju na zobrazenie karty a zbieranie bodov \u2014 číslo nižšie je záloha.',
@@ -176,6 +179,7 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     importEmpty: 'Zatím není co importovat.',
     openApp: 'Otevřít aplikaci',
     installApp: 'Nainstalovat aplikaci',
+    viewInStore: 'Zobrazit v obchodě',
     getOnAppStore: 'Stáhnout z App Store',
     getOnPlayStore: 'Stáhnout z Google Play',
     appRequiredBanner: 'Tento program používá vlastní aplikaci prodejce. Otevři ji pro zobrazení karty a sbírání bodů \u2014 číslo níže je záloha.',
@@ -221,6 +225,7 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     importEmpty: 'Noch nichts zu importieren.',
     openApp: 'App öffnen',
     installApp: 'App installieren',
+    viewInStore: 'Im Store ansehen',
     getOnAppStore: 'Im App Store laden',
     getOnPlayStore: 'Bei Google Play laden',
     appRequiredBanner: 'Dieses Programm nutzt die eigene App des Händlers. Öffne sie, um deine Karte zu zeigen und Punkte zu sammeln \u2014 die Nummer unten dient als Sicherung.',
@@ -266,6 +271,7 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     importEmpty: 'Nie ma jeszcze nic do zaimportowania.',
     openApp: 'Otwórz aplikację',
     installApp: 'Zainstaluj aplikację',
+    viewInStore: 'Zobacz w sklepie',
     getOnAppStore: 'Pobierz z App Store',
     getOnPlayStore: 'Pobierz z Google Play',
     appRequiredBanner: 'Ten program korzysta z własnej aplikacji sprzedawcy. Otwórz ją, aby pokazać kartę i zbierać punkty \u2014 numer poniżej jest kopią zapasową.',
@@ -311,6 +317,7 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     importEmpty: 'Még nincs mit importálni.',
     openApp: 'Alkalmazás megnyitása',
     installApp: 'Alkalmazás telepítése',
+    viewInStore: 'Megtekintés az áruházban',
     getOnAppStore: 'Letöltés az App Store-ból',
     getOnPlayStore: 'Letöltés a Google Play-ről',
     appRequiredBanner: 'Ez a program a kereskedő saját alkalmazását használja. Nyisd meg a kártya megjelenítéséhez és pontgyűjtéshez \u2014 az alábbi szám tartalék.',
@@ -356,6 +363,7 @@ export const translations: Record<SupportedLanguage, TranslationMap> = {
     importEmpty: 'Rien à importer pour le moment.',
     openApp: 'Ouvrir l\u2019appli',
     installApp: 'Installer l\u2019appli',
+    viewInStore: 'Voir dans le store',
     getOnAppStore: 'Télécharger sur l\u2019App Store',
     getOnPlayStore: 'Disponible sur Google Play',
     appRequiredBanner: 'Ce programme utilise l\u2019appli du commerçant. Ouvrez-la pour afficher votre carte et cumuler des points \u2014 le numéro ci-dessous sert de secours.',

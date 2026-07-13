@@ -89,11 +89,25 @@ export function CardDetailScreen() {
     );
   }
 
+  // On web (PWA) we can't detect or deep-link installed apps, so we never show
+  // the "app available" affordance there — hasShopApp() already returns false.
+  const isWeb = Platform.OS === 'web';
   const appAvailable = hasShopApp(shop);
   // Single platform-appropriate store button: App Store on iOS, Google Play on
-  // Android. Label reads "Open" when we know the shop has a native app for the
-  // platform, otherwise "Install".
-  const storeUrl = Platform.OS === 'ios' ? getAppStoreUrl(shop) : getPlayStoreUrl(shop);
+  // Android. On web there's no single "current" store, so prefer whichever
+  // listing the shop declares (Play Store first, then App Store).
+  const storeUrl = isWeb
+    ? getPlayStoreUrl(shop) ?? getAppStoreUrl(shop)
+    : Platform.OS === 'ios'
+      ? getAppStoreUrl(shop)
+      : getPlayStoreUrl(shop);
+  // Button label: "Open" when we can deep-link the native app, "View in store"
+  // on web (the store listing opens as a normal web page), else "Install".
+  const storeButtonLabel = appAvailable
+    ? t('openApp')
+    : isWeb
+      ? t('viewInStore')
+      : t('installApp');
 
   const handleStoreButton = async () => {
     // If the app is known, try to deep-link into it (falls back to the store);
@@ -168,7 +182,7 @@ export function CardDetailScreen() {
               color="#007AFF"
             />
             <Text style={styles.storeButtonText}>
-              {appAvailable ? t('openApp') : t('installApp')}
+              {storeButtonLabel}
             </Text>
           </TouchableOpacity>
         </View>
