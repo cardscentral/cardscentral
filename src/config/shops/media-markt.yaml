@@ -1,8 +1,8 @@
 id: media-markt
-name: "MediaMarkt"
-description: "MediaMarkt Club Card"
+name: MediaMarkt
+description: MediaMarkt Club Card
 country: EU
-domain: "mediamarkt.de"
+domain: mediamarkt.de
 category: electronics
 barcode_type: ean13
 brand:
@@ -10,7 +10,3 @@ brand:
   primary_color: "#DF0000"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "de.mediamarkt.mediamarkt"

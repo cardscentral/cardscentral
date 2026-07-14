@@ -1,8 +1,8 @@
 id: decathlon-fr
-name: "Décathlon"
-description: "Décathlon Card"
+name: Décathlon
+description: Décathlon Card
 country: FR
-domain: "decathlon.fr"
+domain: decathlon.fr
 category: sports
 barcode_type: ean13
 brand:
@@ -10,9 +10,6 @@ brand:
   primary_color: "#0082C3"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
 apps:
-  ios:
-    store_id: "446684051"
   android:
-    package: "com.decathlon.app"
+    package: com.decathlon.app

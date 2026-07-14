@@ -66,7 +66,17 @@ npm run ios
 npm run android
 ```
 
+### Run the PWA locally (for testing)
+
+```bash
+npm install
+npm run build:web && npm run serve:web   # → http://localhost:4173/cardscentral/
+```
+
+Open http://localhost:4173/cardscentral/ (installable, service worker on). For quick UI iteration without the service worker, use `npm run web` instead.
+
 ### Running E2E Tests
+
 
 We use **[Maestro](https://maestro.mobile.dev/)** for E2E testing — YAML-based flows that work identically locally and in CI. No Docker needed.
 
@@ -291,10 +301,14 @@ make e2e-web-ui              # or: npm run e2e:web:ui
 make e2e-web-report          # or: npm run e2e:web:report
 ```
 
-Specs live in `e2e-web/` (`01-*.spec.ts` … `12-*.spec.ts`) and are numbered to match the Maestro flows. A few flows are **native-only** and can't run in a browser:
+Specs live in `e2e-web/` (`01-*.spec.ts` … `16-*.spec.ts`) and are numbered to match the Maestro flows (`.maestro/flows/01-*.yaml` … `14-*.yaml`). Flows `01`–`14` exist on **both** sides; the two remaining web specs cover web-only concerns. Parity notes:
 
 - **`09-scan-barcode`** — needs the device camera / photo-library picker, so it's `test.skip`-ped on web and covered only by Maestro.
-- **Destructive confirms** (delete card, clear data) and the **language switch** use a multi-button `Alert.alert`, which `react-native-web` renders as a no-op. On web those specs assert the reachable affordance (e.g. the delete button, the localized default language) instead of the native confirmation result.
+- **Destructive confirms** (delete card, clear data) use a multi-button `Alert.alert`, which `react-native-web` renders as a no-op. On web those specs assert the reachable affordance (e.g. the delete button) instead of the native confirmation result.
+- **Country / language selection** uses an in-app `Modal` picker (not `Alert.alert`, which was a no-op on web), so it is fully exercised on **both** web (`11-language-change`) and native (`11-language-change`).
+- **`14-theme`** (dark/light/system + persistence) runs on both web and native.
+- **`15-browser-back`** and **`16-responsive-grid`** are **web-only** by nature — browser history navigation and window-resize reflow don't apply to the fixed-size native app — so they have no Maestro counterpart.
+
 
 CI runs this suite via `.github/workflows/e2e-web.yml`; run the full pipeline locally with `make ci-e2e-web`.
 
@@ -386,9 +400,35 @@ npm run generate:shops
 
 This auto-generates the TypeScript registry from YAML. **No manual TypeScript editing needed.**
 
-### 3. Submit a Pull Request
+### 3. (Optional) Add & verify official-app links
+
+If the shop has an official app, add an `apps:` block referencing the real
+store ids, then verify they actually exist on the stores:
+
+```yaml
+apps:
+  ios:
+    store_id: "834465911"        # App Store numeric id
+  android:
+    package: "com.hm.goe"        # Play Store package id
+    scheme: "hmapp://"           # optional deep-link scheme
+```
+
+```bash
+npm run verify:app-links          # HTTP-checks every shop's store refs
+npm run verify:app-links:fix      # removes any dead refs from the YAML
+```
+
+The app only shows a store button for shops with a **verified** reference — it
+does **not** fall back to a name-based store search — so a wrong/guessed
+package id would leave the shop with a dead button. `verify:app-links` checks
+the Play Store (details page 404 = missing) and the iTunes lookup API
+(`resultCount: 0` = missing) and strips invalid refs, hiding the button.
+
+### 4. Submit a Pull Request
 
 That's it! Submit your PR and it will be reviewed.
+
 
 ## CI/CD Pipeline
 

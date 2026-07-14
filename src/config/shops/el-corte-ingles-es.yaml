@@ -1,15 +1,11 @@
 id: el-corte-ingles-es
-name: "El Corte Inglés"
-description: "El Corte Inglés Card"
+name: El Corte Inglés
+description: El Corte Inglés Card
 country: ES
-domain: "elcorteingles.es"
+domain: elcorteingles.es
 category: other
 barcode_type: ean13
 brand:
   primary_color: "#009639"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.elcorteingles.ecommerce"

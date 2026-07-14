@@ -23,14 +23,14 @@ test('edit a card nickname', async ({ page }) => {
 
   await page.getByTestId('save-edit-button').click();
 
-  // Saving returns to the (stale) detail screen via goBack(). React Navigation's
-  // stack history doesn't map cleanly to browser back, so instead reload the
-  // app: with a country already selected it re-reads storage and lands on the
-  // cards list, where the updated nickname must be shown.
+  // Saving returns to the detail screen via goBack(). Navigation is now
+  // URL-synced (linking), so the browser Back button works: use it to return
+  // to the cards list, where the updated nickname must be shown.
   await expect(page.getByTestId('card-detail-screen')).toBeVisible();
-  await page.reload();
+  await page.goBack();
   await expect(page.getByTestId('cards-list-screen')).toBeVisible();
   await expect(page.getByText(/Tesco Bratislava/).first()).toBeVisible();
+
 });
 
 

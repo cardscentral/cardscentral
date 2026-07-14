@@ -1,8 +1,8 @@
 id: leclerc-fr
-name: "E.Leclerc"
-description: "E.Leclerc Loyalty Card"
+name: E.Leclerc
+description: E.Leclerc Loyalty Card
 country: FR
-domain: "e.leclerc"
+domain: e.leclerc
 category: groceries
 barcode_type: ean13
 brand:
@@ -10,7 +10,3 @@ brand:
   primary_color: "#0055A4"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.eleclerc.espaceclient"

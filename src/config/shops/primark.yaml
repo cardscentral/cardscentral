@@ -1,15 +1,11 @@
 id: primark
-name: "Primark"
-description: "Primark Card"
+name: Primark
+description: Primark Card
 country: EU
-domain: "primark.com"
+domain: primark.com
 category: fashion
 barcode_type: ean13
 brand:
   primary_color: "#0A3D6B"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.primark.primark"

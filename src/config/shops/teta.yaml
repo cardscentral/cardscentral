@@ -1,15 +1,11 @@
 id: teta
-name: "Teta Drogerie"
-description: "Teta Club Card"
+name: Teta Drogerie
+description: Teta Club Card
 country: SK
-domain: "tetadrogerie.sk"
+domain: tetadrogerie.sk
 category: pharmacy
 barcode_type: ean13
 brand:
   primary_color: "#7AB51D"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "cz.tetadrogerie.klub"

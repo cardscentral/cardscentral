@@ -1,15 +1,11 @@
 id: konzum-hr
-name: "Konzum"
-description: "MultiPlusCard"
+name: Konzum
+description: MultiPlusCard
 country: HR
-domain: "konzum.hr"
+domain: konzum.hr
 category: groceries
 barcode_type: ean13
 brand:
   primary_color: "#E30613"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "hr.konzum.mobile"

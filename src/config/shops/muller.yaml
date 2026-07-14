@@ -1,16 +1,11 @@
 id: muller
-name: "Müller"
-description: "Müller Loyalty Card"
+name: Müller
+description: Müller Loyalty Card
 country: EU
-domain: "mueller.sk"
+domain: mueller.sk
 category: pharmacy
 barcode_type: ean13
 brand:
   primary_color: "#E30613"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official "Müller" app. (iOS listing id unverified → iOS falls back to a
-# name-based App Store search; the Android package below is the official one.)
-apps:
-  android:
-    package: "de.mueller.app"  # Müller on Google Play

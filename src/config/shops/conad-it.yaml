@@ -1,15 +1,11 @@
 id: conad-it
-name: "Conad"
-description: "Conad Card"
+name: Conad
+description: Conad Card
 country: IT
-domain: "conad.it"
+domain: conad.it
 category: groceries
 barcode_type: ean13
 brand:
   primary_color: "#E30613"
   secondary_color: "#FFD700"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "it.conad.conadmobile"

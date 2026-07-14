@@ -1,19 +1,15 @@
 id: payback-de
-name: "PAYBACK"
-description: "PAYBACK Card"
+name: PAYBACK
+description: PAYBACK Card
 country: DE
-domain: "payback.de"
+domain: payback.de
 category: other
 barcode_type: ean13
 brand:
   primary_color: "#003399"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
 apps:
-  ios:
-    store_id: "395811840"
-    scheme: "payback://"
   android:
-    package: "de.payback.client.android"
-    scheme: "payback://"
+    package: de.payback.client.android
+    scheme: payback://

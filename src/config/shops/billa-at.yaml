@@ -1,15 +1,11 @@
 id: billa-at
-name: "Billa"
-description: "Billa Bonus Card"
+name: Billa
+description: Billa Bonus Card
 country: AT
-domain: "billa.at"
+domain: billa.at
 category: groceries
 barcode_type: ean13
 brand:
   primary_color: "#FFD700"
   secondary_color: "#000000"
   text_color: "#000000"
-# Official app store references.
-apps:
-  android:
-    package: "at.billa.jokerapp"

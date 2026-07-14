@@ -1,8 +1,8 @@
 id: shell
-name: "Shell"
-description: "Shell ClubSmart Card"
+name: Shell
+description: Shell ClubSmart Card
 country: SK
-domain: "shell.sk"
+domain: shell.sk
 category: petrol
 barcode_type: ean13
 brand:
@@ -10,9 +10,3 @@ brand:
   primary_color: "#FFD500"
   secondary_color: "#DD1D21"
   text_color: "#000000"
-# Official app store references.
-apps:
-  ios:
-    store_id: "1458990329"
-  android:
-    package: "com.shell.sitibv.motorist"

@@ -1,8 +1,8 @@
 id: spar
-name: "SPAR"
-description: "SPAR Loyalty Card"
+name: SPAR
+description: SPAR Loyalty Card
 country: EU
-domain: "spar.sk"
+domain: spar.sk
 category: groceries
 barcode_type: ean13
 brand:
@@ -10,7 +10,3 @@ brand:
   primary_color: "#009639"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.spar.sparapp"

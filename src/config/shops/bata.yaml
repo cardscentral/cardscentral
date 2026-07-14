@@ -1,8 +1,8 @@
 id: bata
-name: "Baťa"
-description: "Baťa Club Card"
+name: Baťa
+description: Baťa Club Card
 country: SK
-domain: "bata.sk"
+domain: bata.sk
 category: fashion
 barcode_type: ean13
 brand:
@@ -10,7 +10,3 @@ brand:
   primary_color: "#E4002B"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.bata.club"

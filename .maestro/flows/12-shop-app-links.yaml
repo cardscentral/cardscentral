@@ -2,18 +2,18 @@ appId: com.cardscentral.app
 ---
 # Flow: Official retailer app links on the card detail screen
 #
-# Covers the "open the official app / get it from the store" feature. Every
-# shop resolves a store link (from its YAML `apps`, the central appLinks
-# registry, or a name-based store search), and shops with a known native app
-# also get the "app available" badge + banner + "Open app" deep-link button.
+# Covers the "open the official app / get it from the store" feature. A shop
+# resolves a store link ONLY from a VERIFIED entry in its YAML `apps` block
+# (validated by scripts/verify-app-links.js); shops with no verified app show
+# no store section at all. Shops with a known native app also get the "app
+# available" badge + banner + "Open app" deep-link button.
 #
-# Tesco has a known native app in the registry, so opening a Tesco card must
+# H&M has a verified native app on both platforms, so opening an H&M card must
 # show all of these affordances.
 #
-# This flow is SELF-CONTAINED: it creates its own Tesco card. It must not rely
-# on the card from flow 02, because flow 05 (delete-card) deletes the Tesco card
-# earlier in the sequence, so no Tesco card is guaranteed to exist by the time
-# this flow runs. Precondition: only country selection (flow 01).
+# This flow is SELF-CONTAINED: it creates its own H&M card. Precondition: only
+# country selection (flow 01).
+
 
 - launchApp
 - extendedWaitUntil:
@@ -21,7 +21,7 @@ appId: com.cardscentral.app
       id: "cards-list-screen"
     timeout: 10000
 
-# ── Create a Tesco card so this flow is independent of 02/05 ordering ─────────
+# ── Create an H&M card so this flow is independent of the 02–05 card chain ────
 - tapOn:
     id: "add-card-button"
 - extendedWaitUntil:
@@ -30,10 +30,11 @@ appId: com.cardscentral.app
     timeout: 5000
 - scrollUntilVisible:
     element:
-      id: "shop-select-tesco"
+      id: "shop-select-hm"
     direction: DOWN
 - tapOn:
-    id: "shop-select-tesco"
+    id: "shop-select-hm"
+
 
 - extendedWaitUntil:
     visible:
@@ -45,8 +46,9 @@ appId: com.cardscentral.app
 - pressKey: Enter
 - tapOn:
     id: "nickname-input"
-- inputText: "My Tesco Card"
+- inputText: "My H&M Card"
 - pressKey: Enter
+
 - scrollUntilVisible:
     element:
       id: "save-card-button"
@@ -57,10 +59,11 @@ appId: com.cardscentral.app
 # ── Open the card and assert the official-app affordances ────────────────────
 - extendedWaitUntil:
     visible:
-      text: ".*My Tesco Card.*"
+      text: ".*My H&M Card.*"
     timeout: 10000
 - tapOn:
-    text: ".*My Tesco Card.*"
+    text: ".*My H&M Card.*"
+
 - extendedWaitUntil:
     visible:
       id: "card-detail-screen"
@@ -72,7 +75,8 @@ appId: com.cardscentral.app
 - assertVisible:
     id: "open-store-button"
 
-# Tesco has a known native app → the shop icon shows the app-available badge.
+# H&M has a known native app → the shop icon shows the app-available badge.
+
 # (The button label switches between "Open app"/"Install app" by locale, so we
 # assert the stable testID above rather than brittle localized text here.)
 - assertVisible:

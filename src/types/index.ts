@@ -129,7 +129,13 @@ export type RootStackParamList = {
   CardDetail: { cardId: string };
   ScanBarcode: { shopId?: string };
   Import: undefined;
+  /** Landing screen for a shared-card link (`…/#import=<payload>`). */
+  ImportShared: { payload: string };
+  /** Select cards and generate a share/backup link. */
+  ShareCards: undefined;
 };
+
+
 
 
 export type MainTabParamList = {

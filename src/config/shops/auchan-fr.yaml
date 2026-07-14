@@ -1,8 +1,8 @@
 id: auchan-fr
-name: "Auchan"
-description: "Auchan Loyalty Card"
+name: Auchan
+description: Auchan Loyalty Card
 country: FR
-domain: "auchan.fr"
+domain: auchan.fr
 category: groceries
 barcode_type: ean13
 brand:
@@ -10,7 +10,3 @@ brand:
   primary_color: "#E30613"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.auchan.mobile.android"

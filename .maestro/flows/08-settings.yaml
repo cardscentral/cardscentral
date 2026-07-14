@@ -27,4 +27,9 @@ appId: com.cardscentral.app
 - assertVisible:
     id: "settings-language"
 - assertVisible:
-    id: "settings-clear-data"
+    id: "settings-share-cards"
+- assertVisible:
+    id: "settings-import"
+- assertVisible:
+    id: "settings-version"
+

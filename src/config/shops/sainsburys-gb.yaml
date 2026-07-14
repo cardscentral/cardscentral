@@ -1,15 +1,11 @@
 id: sainsburys-gb
-name: "Sainsbury's"
-description: "Sainsbury's Nectar Card"
+name: Sainsbury's
+description: Sainsbury's Nectar Card
 country: GB
-domain: "sainsburys.co.uk"
+domain: sainsburys.co.uk
 category: groceries
 barcode_type: ean13
 brand:
   primary_color: "#F06C00"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.sainsburys.nectar"

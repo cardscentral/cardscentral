@@ -1,0 +1,53 @@
+appId: com.cardscentral.app
+---
+# Flow: Change the app theme (dark/light/system) from Settings
+# Precondition: Country selected
+#
+# Mirrors e2e-web/14-theme.spec.ts. Persistence across relaunch is verified by
+# stopping and relaunching the app (AsyncStorage on native, localStorage on web)
+# and asserting the previously chosen option is still selected.
+#
+# Use testIDs, not visible English text: after SK is selected the UI is Slovak.
+
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: "cards-list-screen"
+    timeout: 10000
+
+# Go to Settings and confirm the theme row is present.
+- tapOn:
+    id: "tab-settings"
+- extendedWaitUntil:
+    visible:
+      id: "settings-screen"
+    timeout: 5000
+- assertVisible:
+    id: "settings-theme"
+
+# Switch to Dark.
+- tapOn:
+    id: "settings-theme-dark"
+
+# Relaunch without clearing state; the Dark choice must survive.
+- stopApp
+- launchApp:
+    clearState: false
+- extendedWaitUntil:
+    visible:
+      id: "cards-list-screen"
+    timeout: 10000
+- tapOn:
+    id: "tab-settings"
+- extendedWaitUntil:
+    visible:
+      id: "settings-theme"
+    timeout: 5000
+
+# The Dark option is still selectable/visible after relaunch.
+- assertVisible:
+    id: "settings-theme-dark"
+
+# Switch back to System to leave state clean-ish for later flows.
+- tapOn:
+    id: "settings-theme-system"

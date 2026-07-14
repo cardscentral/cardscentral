@@ -48,6 +48,42 @@ const en: FullTranslationMap = {
   appRequiredBanner: 'This program uses the retailer\u2019s own app. Open it to show your card and collect points \u2014 the number below is a backup.',
   appAvailableBanner: 'This retailer has an official app with extra features. Open or install it below.',
   couldNotOpenApp: 'Could not open the app or store.',
+  shareCard: 'Share card',
+  shareCardMessage: 'Add this loyalty card to Cards Central:',
+  shareFailed: 'Could not share the card.',
+  linkCopied: 'Share link copied to clipboard.',
+  addSharedTitle: 'Add shared card',
+  addSharedDescription: 'Someone shared this loyalty card with you. Add it to your wallet?',
+  addSharedButton: 'Add to my wallet',
+  addSharedInvalid: 'This share link is invalid or unsupported.',
+  addSharedDuplicate: 'You already have this card.',
+  addSharedAdded: 'Card added to your wallet.',
+  addSharedDescriptionMany: 'Someone shared {count} cards with you. Review and add them to your wallet.',
+  addSharedButtonMany: 'Add {count} cards',
+  addSharedResult: 'Added {added} card(s). Skipped {skipped} duplicate(s).',
+  sharedByLabel: 'Shared by',
+  shareBackupCards: 'Share cards',
+  shareCardsTitle: 'Share cards',
+  shareCardsMessage: 'Here are {count} loyalty card(s) from Cards Central:',
+  shareCardsDescription:
+    'Select the cards to include in a single shareable link. Send it over any app (Viber, email, …) — no account needed. This is a point-in-time copy, not live sync.',
+
+  shareCardsEmpty: 'You have no cards to share yet.',
+  selectAll: 'Select all',
+  shareSelected: 'Share {count} card(s)',
+  dataSection: 'Data',
+  aboutSection: 'About',
+  version: 'Version',
+  appTagline: 'Cards Central - Your loyalty cards in one place.',
+  appearanceSection: 'Appearance',
+  theme: 'Theme',
+  themeSystem: 'System',
+  themeLight: 'Light',
+  themeDark: 'Dark',
 };
+
+
+
+
 
 export default en;

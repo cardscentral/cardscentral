@@ -1,8 +1,8 @@
 id: fnac-fr
-name: "Fnac"
-description: "Fnac+ Card"
+name: Fnac
+description: Fnac+ Card
 country: FR
-domain: "fnac.com"
+domain: fnac.com
 category: electronics
 barcode_type: ean13
 brand:
@@ -10,7 +10,3 @@ brand:
   primary_color: "#6F4E37"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.fnac.android"

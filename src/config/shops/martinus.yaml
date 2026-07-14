@@ -1,15 +1,11 @@
 id: martinus
-name: "Martinus"
-description: "Martinus Loyalty Card"
+name: Martinus
+description: Martinus Loyalty Card
 country: SK
-domain: "martinus.sk"
+domain: martinus.sk
 category: other
 barcode_type: ean13
 brand:
   primary_color: "#00A6A6"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "sk.martinus.android"

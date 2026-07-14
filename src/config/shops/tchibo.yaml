@@ -1,15 +1,11 @@
 id: tchibo
-name: "Tchibo"
-description: "TchiboCard"
+name: Tchibo
+description: TchiboCard
 country: SK
-domain: "tchibo.sk"
+domain: tchibo.sk
 category: other
 barcode_type: ean13
 brand:
   primary_color: "#003D6B"
   secondary_color: "#E2001A"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.tchibo.tchiboapp"

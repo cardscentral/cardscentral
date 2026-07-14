@@ -1,15 +1,11 @@
 id: intersport
-name: "Intersport"
-description: "Intersport Club Card"
+name: Intersport
+description: Intersport Club Card
 country: EU
-domain: "intersport.sk"
+domain: intersport.sk
 category: sports
 barcode_type: ean13
 brand:
   primary_color: "#E30613"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.intersport.loyalty"

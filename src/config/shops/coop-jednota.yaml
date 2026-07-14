@@ -1,16 +1,11 @@
 id: coop-jednota
-name: "COOP Jednota"
-description: "COOP Jednota Card"
+name: COOP Jednota
+description: COOP Jednota Card
 country: SK
-domain: "jednota.sk"
+domain: jednota.sk
 category: groceries
 barcode_type: ean13
 brand:
   primary_color: "#009A44"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official "COOP Jednota" app. (iOS listing id unverified → iOS falls back to a
-# name-based App Store search; the Android package below is the official one.)
-apps:
-  android:
-    package: "sk.coop.jednota"  # COOP Jednota on Google Play

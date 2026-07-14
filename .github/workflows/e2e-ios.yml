@@ -191,6 +191,10 @@ jobs:
       #   - 09 (scan-barcode): needs an `addMedia` fixture + hardcoded gallery date.
       #   - 11 (language-change): starts with `clearState: true`, which would wipe
       #     the card that flow 12 (shop-app-links) depends on; it's independent.
+      # Flow 14 (theme) runs last: it stops/relaunches the app (without clearing
+      # state) to verify persistence, so it's placed after the card-dependent
+      # chain to avoid disturbing it.
+
 
       - name: Run Maestro E2E Tests
         run: |
@@ -205,7 +209,9 @@ jobs:
             .maestro/flows/08-settings.yaml \
             .maestro/flows/10-import-vouchervault.yaml \
             .maestro/flows/12-shop-app-links.yaml \
+            .maestro/flows/14-theme.yaml \
             --format junit --output report.xml
+
 
 
       - name: Upload test results

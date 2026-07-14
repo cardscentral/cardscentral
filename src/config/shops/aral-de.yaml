@@ -1,15 +1,11 @@
 id: aral-de
-name: "Aral"
-description: "Aral PAYBACK Card"
+name: Aral
+description: Aral PAYBACK Card
 country: DE
-domain: "aral.de"
+domain: aral.de
 category: petrol
 barcode_type: ean13
 brand:
   primary_color: "#0033A0"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "de.aral.fuelandmore"

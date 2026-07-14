@@ -1,15 +1,11 @@
 id: repsol-es
-name: "Repsol"
-description: "Repsol Waylet Card"
+name: Repsol
+description: Repsol Waylet Card
 country: ES
-domain: "repsol.es"
+domain: repsol.es
 category: petrol
 barcode_type: qr
 brand:
   primary_color: "#FF6600"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.repsol.waylet"

@@ -1,15 +1,11 @@
 id: a3-sport
-name: "A3 Sport"
-description: "A3 Sport Club Card"
+name: A3 Sport
+description: A3 Sport Club Card
 country: SK
-domain: "a3sport.sk"
+domain: a3sport.sk
 category: sports
 barcode_type: ean13
 brand:
   primary_color: "#E30613"
   secondary_color: "#000000"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "cz.a3sport.app"

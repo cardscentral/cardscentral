@@ -45,6 +45,9 @@
     "e2e:web:ui": "playwright test --ui",
     "e2e:web:report": "playwright show-report",
     "generate:shops": "node scripts/generate-shops.js",
+    "verify:app-links": "node scripts/verify-app-links.js",
+    "verify:app-links:fix": "node scripts/verify-app-links.js --fix",
+
     "generate:icon": "node scripts/generate-icon.js",
     "generate:landing": "node scripts/generate-landing-screens.js",
 

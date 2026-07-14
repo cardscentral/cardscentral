@@ -3,13 +3,18 @@
  *
  * Helpers for launching a shop's official app or its store listing.
  *
- * Every shop can offer a store link. Resolution precedence:
- *   1. The shop's own YAML `apps` block (the single source of truth for real
- *      App Store / Play Store references — see src/config/shops/*.yaml).
- *   2. A name-based store SEARCH url as a universal fallback, so shops with no
- *      declared app id still get an "open in App Store / Play Store" action.
+ * A shop offers a store link ONLY when its YAML `apps` block declares a
+ * concrete, verified store reference (App Store `store_id` / Play Store
+ * `package`). Those references are validated against the live stores by
+ * `scripts/verify-app-links.js`; dead ones are stripped out.
+ *
+ * We deliberately do NOT fall back to a name-based store *search* URL: pointing
+ * users at a search results page (or, worse, a guessed listing that 404s) is a
+ * poor experience, so when a shop has no verified reference we surface no store
+ * button at all (getStoreUrl returns undefined and the UI hides the section).
  *
  * This uses only React Native's `Linking`; no extra native modules required.
+
  */
 
 import { Linking, Platform } from 'react-native';
@@ -43,8 +48,10 @@ export function canDetectInstalledApps(): boolean {
  *
  * Always false on web (PWA): we can't detect or reliably deep-link into
  * installed apps there, so we don't show the "app available" affordance.
- * Note: even when this is false, getStoreUrl() still returns a search link.
+ * Note: even when this is false, getStoreUrl() may still return a direct store
+ * listing (e.g. on web, or when only the *other* platform declares an app).
  */
+
 export function hasShopApp(shop: ShopLike): boolean {
   if (!canDetectInstalledApps()) return false;
   const apps = resolveAppLinks(shop);
@@ -52,38 +59,32 @@ export function hasShopApp(shop: ShopLike): boolean {
   return Platform.OS === 'ios' ? !!apps.ios : !!apps.android;
 }
 
-/** Name-based store search url for a specific store — universal fallback. */
-function getStoreSearchUrl(shop: ShopLike, store: 'ios' | 'android'): string | undefined {
-  if (!shop.name) return undefined;
-  const term = encodeURIComponent(shop.name);
-  return store === 'ios'
-    ? `https://apps.apple.com/search?term=${term}`
-    : `https://play.google.com/store/search?q=${term}&c=apps`;
-}
-
 /**
- * Build the App Store (iOS) https URL for a shop: a direct listing when a
- * store id is known, otherwise a name-based search. Always returns a link.
+ * Build the App Store (iOS) https URL for a shop — a direct listing to the
+ * shop's verified app. Returns undefined when the shop declares no valid iOS
+ * `store_id` (we don't link to a name-based search; see file header).
  */
 export function getAppStoreUrl(shop: ShopLike): string | undefined {
   const apps = resolveAppLinks(shop);
   if (apps?.ios?.store_id) {
     return `https://apps.apple.com/app/id${apps.ios.store_id}`;
   }
-  return getStoreSearchUrl(shop, 'ios');
+  return undefined;
 }
 
 /**
- * Build the Google Play (Android) https URL for a shop: a direct listing when
- * a package is known, otherwise a name-based search. Always returns a link.
+ * Build the Google Play (Android) https URL for a shop — a direct listing to
+ * the shop's verified app. Returns undefined when the shop declares no valid
+ * Android `package` (we don't link to a name-based search; see file header).
  */
 export function getPlayStoreUrl(shop: ShopLike): string | undefined {
   const apps = resolveAppLinks(shop);
   if (apps?.android?.package) {
     return `https://play.google.com/store/apps/details?id=${apps.android.package}`;
   }
-  return getStoreSearchUrl(shop, 'android');
+  return undefined;
 }
+
 
 /**
  * Build the https store URL for the *current* platform (kept for callers that

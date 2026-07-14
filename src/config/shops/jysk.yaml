@@ -1,15 +1,11 @@
 id: jysk
-name: "JYSK"
-description: "JYSK Card"
+name: JYSK
+description: JYSK Card
 country: EU
-domain: "jysk.sk"
+domain: jysk.sk
 category: home
 barcode_type: ean13
 brand:
   primary_color: "#003DA5"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.jysk.app"

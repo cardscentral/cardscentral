@@ -1,8 +1,8 @@
 id: kik
-name: "KiK"
-description: "KiK Loyalty Card"
+name: KiK
+description: KiK Loyalty Card
 country: SK
-domain: "kik.sk"
+domain: kik.sk
 category: fashion
 barcode_type: ean13
 brand:
@@ -10,7 +10,3 @@ brand:
   primary_color: "#E2001A"
   secondary_color: "#FFF200"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "de.kik.app"

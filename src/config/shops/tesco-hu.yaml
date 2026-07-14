@@ -1,8 +1,8 @@
 id: tesco-hu
-name: "Tesco"
-description: "Tesco ClubCard"
+name: Tesco
+description: Tesco ClubCard
 country: HU
-domain: "tesco.hu"
+domain: tesco.hu
 category: groceries
 barcode_type: ean13
 brand:
@@ -10,7 +10,3 @@ brand:
   primary_color: "#00539F"
   secondary_color: "#EE1C2E"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.tesco.clubcardmobile.hu"

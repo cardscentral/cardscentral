@@ -1,8 +1,8 @@
 id: mol
-name: "MOL"
-description: "MOL Move Loyalty Card"
+name: MOL
+description: MOL Move Loyalty Card
 country: SK
-domain: "mol.sk"
+domain: mol.sk
 category: petrol
 barcode_type: ean13
 brand:
@@ -10,8 +10,3 @@ brand:
   primary_color: "#009640"
   secondary_color: "#E30613"
   text_color: "#FFFFFF"
-# Official "MOL Move" app. (iOS listing id unverified → iOS falls back to a
-# name-based App Store search; the Android package below is the official one.)
-apps:
-  android:
-    package: "hu.mol.movouchers"  # MOL Move on Google Play

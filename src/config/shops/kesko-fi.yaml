@@ -1,15 +1,11 @@
 id: kesko-fi
-name: "K-Ryhmä"
-description: "K-Plussa Card"
+name: K-Ryhmä
+description: K-Plussa Card
 country: FI
-domain: "k-ruoka.fi"
+domain: k-ruoka.fi
 category: groceries
 barcode_type: ean13
 brand:
   primary_color: "#E30613"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "fi.k_ruoka.app"

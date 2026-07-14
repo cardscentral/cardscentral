@@ -1,8 +1,8 @@
 id: aldi
-name: "Aldi"
-description: "Aldi Card"
+name: Aldi
+description: Aldi Card
 country: EU
-domain: "aldi-nord.de"
+domain: aldi-nord.de
 category: groceries
 barcode_type: qr
 brand:
@@ -10,7 +10,3 @@ brand:
   primary_color: "#00447C"
   secondary_color: "#F58220"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.aldi.mobile"

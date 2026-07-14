@@ -1,8 +1,8 @@
 id: carrefour-ro
-name: "Carrefour"
-description: "Carrefour Card"
+name: Carrefour
+description: Carrefour Card
 country: RO
-domain: "carrefour.ro"
+domain: carrefour.ro
 category: groceries
 barcode_type: ean13
 brand:
@@ -10,7 +10,3 @@ brand:
   primary_color: "#004C97"
   secondary_color: "#ED1C24"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.carrefour.romania"

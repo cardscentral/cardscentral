@@ -1,15 +1,11 @@
 id: hornbach
-name: "Hornbach"
-description: "Hornbach ProfiCard"
+name: Hornbach
+description: Hornbach ProfiCard
 country: SK
-domain: "hornbach.sk"
+domain: hornbach.sk
 category: home
 barcode_type: ean13
 brand:
   primary_color: "#F47920"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.hornbach.baumarkt"

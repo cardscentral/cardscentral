@@ -1,15 +1,11 @@
 id: sinsay
-name: "Sinsay"
-description: "Sinsay Club Card"
+name: Sinsay
+description: Sinsay Club Card
 country: SK
-domain: "sinsay.com"
+domain: sinsay.com
 category: fashion
 barcode_type: ean13
 brand:
   primary_color: "#FF69B4"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.lpp.sinsay"

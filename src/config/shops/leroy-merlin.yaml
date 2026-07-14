@@ -1,15 +1,11 @@
 id: leroy-merlin
-name: "Leroy Merlin"
-description: "Leroy Merlin Card"
+name: Leroy Merlin
+description: Leroy Merlin Card
 country: EU
-domain: "leroymerlin.it"
+domain: leroymerlin.it
 category: home
 barcode_type: ean13
 brand:
   primary_color: "#78BE20"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.leroymerlin.corporate.app"

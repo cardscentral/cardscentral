@@ -1,15 +1,11 @@
 id: john-lewis-gb
-name: "John Lewis"
-description: "John Lewis Partnership Card"
+name: John Lewis
+description: John Lewis Partnership Card
 country: GB
-domain: "johnlewis.com"
+domain: johnlewis.com
 category: home
 barcode_type: ean13
 brand:
   primary_color: "#00563B"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.johnlewis.jl"

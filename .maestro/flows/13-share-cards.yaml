@@ -1,0 +1,75 @@
+appId: com.cardscentral.app
+---
+# Flow: Share loyalty cards as a single self-contained link
+# Precondition: Country already selected (relies on flow 01 running first)
+#
+# Use testIDs, not visible English text. After SK is selected the UI is in
+# Slovak, so literal strings never match.
+#
+# Tapping the share button hands off to the native OS share sheet, which is
+# outside the app under test and cannot be asserted by Maestro. We therefore
+# drive the full selection UI and stop at the share affordance.
+
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: "cards-list-screen"
+    timeout: 10000
+
+# Add a card so there is something to share.
+- tapOn:
+    id: "add-card-button"
+- extendedWaitUntil:
+    visible:
+      id: "shop-search-input"
+    timeout: 5000
+- scrollUntilVisible:
+    element:
+      id: "shop-select-tesco"
+    direction: DOWN
+- tapOn:
+    id: "shop-select-tesco"
+- extendedWaitUntil:
+    visible:
+      id: "card-number-input"
+    timeout: 5000
+- tapOn:
+    id: "card-number-input"
+- inputText: "1234567890123"
+- pressKey: Enter
+- scrollUntilVisible:
+    element:
+      id: "save-card-button"
+    direction: DOWN
+- tapOn:
+    id: "save-card-button"
+- extendedWaitUntil:
+    visible:
+      id: "cards-list-screen"
+    timeout: 10000
+
+# Settings → Share cards
+- tapOn:
+    id: "tab-settings"
+- extendedWaitUntil:
+    visible:
+      id: "settings-screen"
+    timeout: 5000
+- tapOn:
+    id: "settings-share-cards"
+
+# Selection screen: the card is listed and the share action is available.
+- extendedWaitUntil:
+    visible:
+      id: "share-cards-screen"
+    timeout: 5000
+- assertVisible:
+    id: "share-card-row"
+- assertVisible:
+    id: "share-select-all"
+- assertVisible:
+    id: "share-cards-button"
+
+# Trigger the OS share sheet (handed off to the system; not asserted here).
+- tapOn:
+    id: "share-cards-button"

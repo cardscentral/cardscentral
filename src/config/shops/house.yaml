@@ -1,8 +1,8 @@
 id: house
-name: "House"
-description: "House Club Card"
+name: House
+description: House Club Card
 country: SK
-domain: "housebrand.com"
+domain: housebrand.com
 category: fashion
 barcode_type: ean13
 brand:
@@ -10,7 +10,3 @@ brand:
   primary_color: "#333333"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.lpp.house"

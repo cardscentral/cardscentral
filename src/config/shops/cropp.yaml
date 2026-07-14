@@ -1,8 +1,8 @@
 id: cropp
-name: "Cropp"
-description: "Cropp Club Card"
+name: Cropp
+description: Cropp Club Card
 country: SK
-domain: "cropp.com"
+domain: cropp.com
 category: fashion
 barcode_type: ean13
 brand:
@@ -10,7 +10,3 @@ brand:
   primary_color: "#1A1A1A"
   secondary_color: "#FF6600"
   text_color: "#FF6600"
-# Official app store references.
-apps:
-  android:
-    package: "com.lpp.cropp"

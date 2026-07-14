@@ -1,15 +1,11 @@
 id: superdrug-gb
-name: "Superdrug"
-description: "Superdrug Health & Beautycard"
+name: Superdrug
+description: Superdrug Health & Beautycard
 country: GB
-domain: "superdrug.com"
+domain: superdrug.com
 category: pharmacy
 barcode_type: ean13
 brand:
   primary_color: "#E4007C"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.superdrug.android"

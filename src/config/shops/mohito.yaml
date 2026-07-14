@@ -1,15 +1,11 @@
 id: mohito
-name: "Mohito"
-description: "Mohito Club Card"
+name: Mohito
+description: Mohito Club Card
 country: SK
-domain: "mohito.com"
+domain: mohito.com
 category: fashion
 barcode_type: ean13
 brand:
   primary_color: "#C8A96E"
   secondary_color: "#000000"
   text_color: "#000000"
-# Official app store references.
-apps:
-  android:
-    package: "com.lpp.mohito"

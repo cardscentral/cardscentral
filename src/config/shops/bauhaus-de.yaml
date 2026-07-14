@@ -1,15 +1,11 @@
 id: bauhaus-de
-name: "Bauhaus"
-description: "Bauhaus Card"
+name: Bauhaus
+description: Bauhaus Card
 country: DE
-domain: "bauhaus.info"
+domain: bauhaus.info
 category: home
 barcode_type: ean13
 brand:
   primary_color: "#E30613"
   secondary_color: "#000000"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "de.bauhaus.app"

@@ -1,15 +1,11 @@
 id: pepco
-name: "Pepco"
-description: "Pepco Card"
+name: Pepco
+description: Pepco Card
 country: SK
-domain: "pepco.sk"
+domain: pepco.sk
 category: fashion
 barcode_type: ean13
 brand:
   primary_color: "#E31E24"
   secondary_color: "#FFD700"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.pepco.pepcoclub"

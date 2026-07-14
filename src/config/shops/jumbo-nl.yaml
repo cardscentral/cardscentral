@@ -1,15 +1,11 @@
 id: jumbo-nl
-name: "Jumbo"
-description: "Jumbo Extra's Card"
+name: Jumbo
+description: Jumbo Extra's Card
 country: NL
-domain: "jumbo.com"
+domain: jumbo.com
 category: groceries
 barcode_type: ean13
 brand:
   primary_color: "#FFD700"
   secondary_color: "#000000"
   text_color: "#000000"
-# Official app store references.
-apps:
-  android:
-    package: "com.jumbo.customerapp"

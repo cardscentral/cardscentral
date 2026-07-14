@@ -43,6 +43,33 @@ const sk: TranslationMap = {
   appRequiredBanner: 'Tento program používa vlastnú aplikáciu predajcu. Otvor ju na zobrazenie karty a zbieranie bodov \u2014 číslo nižšie je záloha.',
   appAvailableBanner: 'Tento predajca má oficiálnu aplikáciu s ďalšími funkciami. Otvor ju alebo nainštaluj nižšie.',
   couldNotOpenApp: 'Aplikáciu ani obchod sa nepodarilo otvoriť.',
+  shareCard: 'Zdieľať kartu',
+  shareCardMessage: 'Pridaj si túto vernostnú kartu do Cards Central:',
+  shareFailed: 'Kartu sa nepodarilo zdieľať.',
+  linkCopied: 'Odkaz na zdieľanie skopírovaný do schránky.',
+  addSharedTitle: 'Pridať zdieľanú kartu',
+  addSharedDescription: 'Niekto s tebou zdieľal túto vernostnú kartu. Pridať ju do peňaženky?',
+  addSharedButton: 'Pridať do peňaženky',
+  addSharedInvalid: 'Tento odkaz na zdieľanie je neplatný alebo nepodporovaný.',
+  addSharedDuplicate: 'Túto kartu už máš.',
+  addSharedAdded: 'Karta pridaná do peňaženky.',
+  addSharedDescriptionMany: 'Niekto s tebou zdieľal {count} kariet. Skontroluj ich a pridaj do peňaženky.',
+  addSharedButtonMany: 'Pridať {count} kariet',
+  addSharedResult: 'Pridané: {added}. Preskočené duplicity: {skipped}.',
+  sharedByLabel: 'Zdieľal(a)',
+  shareBackupCards: 'Zdieľať karty',
+  shareCardsTitle: 'Zdieľať karty',
+  shareCardsMessage: 'Tu je {count} vernostných kariet z Cards Central:',
+  shareCardsDescription:
+    'Vyber karty, ktoré chceš vložiť do jedného zdieľateľného odkazu. Pošli ho cez ľubovoľnú aplikáciu (Viber, e-mail, …) — bez účtu. Je to kópia k danému okamihu, nie živá synchronizácia.',
+  shareCardsEmpty: 'Zatiaľ nemáš žiadne karty na zdieľanie.',
+  selectAll: 'Vybrať všetko',
+  shareSelected: 'Zdieľať {count} kariet',
+  dataSection: 'Údaje',
+  aboutSection: 'O aplikácii',
+  version: 'Verzia',
+  appTagline: 'Cards Central – Tvoje vernostné karty na jednom mieste.',
 };
+
 
 export default sk;

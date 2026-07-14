@@ -1,8 +1,8 @@
 id: kaufland-ro
-name: "Kaufland"
-description: "Kaufland Card"
+name: Kaufland
+description: Kaufland Card
 country: RO
-domain: "kaufland.ro"
+domain: kaufland.ro
 category: groceries
 barcode_type: qr
 brand:
@@ -10,9 +10,3 @@ brand:
   primary_color: "#E30613"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  ios:
-    store_id: "1444980076"
-  android:
-    package: "de.kaufland.app"

@@ -1,9 +1,8 @@
-# Tesco Loyalty Card Configuration
 id: tesco
-name: "Tesco"
-description: "Tesco Clubcard"
+name: Tesco
+description: Tesco Clubcard
 country: SK
-domain: "tesco.com"
+domain: tesco.com
 category: groceries
 barcode_type: ean13
 brand:
@@ -11,10 +10,3 @@ brand:
   primary_color: "#00539F"
   secondary_color: "#EE1C2E"
   text_color: "#FFFFFF"
-# Official "Tesco Clubcard" app.
-apps:
-  ios:
-    store_id: "1163846811"                  # Tesco Clubcard on the App Store
-    scheme: "tesco://"
-  android:
-    package: "com.tesco.clubcardmobile.sk"   # Tesco Clubcard (SK) on Google Play

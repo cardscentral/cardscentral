@@ -1,15 +1,11 @@
 id: kruidvat-nl
-name: "Kruidvat"
-description: "Kruidvat Card"
+name: Kruidvat
+description: Kruidvat Card
 country: NL
-domain: "kruidvat.nl"
+domain: kruidvat.nl
 category: pharmacy
 barcode_type: ean13
 brand:
   primary_color: "#E30613"
   secondary_color: "#003399"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.kruidvat.loyalty"

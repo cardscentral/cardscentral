@@ -1,15 +1,11 @@
 id: intermarche-fr
-name: "Intermarché"
-description: "Intermarché Card"
+name: Intermarché
+description: Intermarché Card
 country: FR
-domain: "intermarche.com"
+domain: intermarche.com
 category: groceries
 barcode_type: ean13
 brand:
   primary_color: "#E30613"
   secondary_color: "#FFD700"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "fr.intermarche.moninter"

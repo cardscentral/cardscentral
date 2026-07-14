@@ -1,15 +1,11 @@
 id: new-yorker
-name: "New Yorker"
-description: "New Yorker Club Card"
+name: New Yorker
+description: New Yorker Club Card
 country: SK
-domain: "newyorker.de"
+domain: newyorker.de
 category: fashion
 barcode_type: code128
 brand:
   primary_color: "#D4001A"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.newyorker.android"

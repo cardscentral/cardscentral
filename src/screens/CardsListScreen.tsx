@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -6,8 +6,9 @@ import {
   FlatList,
   TouchableOpacity,
   RefreshControl,
-  Dimensions,
+  useWindowDimensions,
 } from 'react-native';
+
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { LoyaltyCard, RootStackParamList } from '../types';
@@ -16,26 +17,65 @@ import { getShopById } from '../config/shops';
 import { CardListItem } from '../components/CardListItem';
 import { ShopIcon } from '../components/ShopIcon';
 import { useI18n } from '../i18n/I18nContext';
+import { useTheme } from '../theme/ThemeContext';
+import { getViewMode, setViewMode as persistViewMode } from '../storage/preferences';
+
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 type ViewMode = 'list' | 'grid';
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
-const GRID_COLUMNS = 3;
-const GRID_ITEM_SIZE = (SCREEN_WIDTH - 48) / GRID_COLUMNS;
+
+// Grid sizing is derived from the live window width so the layout reflows when
+// the browser window is resized (useWindowDimensions re-renders on resize, incl.
+// on web). Wider viewports get more columns; each tile targets ~110px.
+const GRID_TILE_TARGET = 110; // px, ideal tile width before gaps
+const GRID_MIN_COLUMNS = 3;
+const GRID_MAX_COLUMNS = 8;
+const GRID_H_PADDING = 16; // matches list horizontal padding
+
+function getGridLayout(width: number) {
+  const usable = Math.max(0, width - GRID_H_PADDING * 2);
+  const columns = Math.min(
+    GRID_MAX_COLUMNS,
+    Math.max(GRID_MIN_COLUMNS, Math.floor(usable / GRID_TILE_TARGET))
+  );
+  // Each tile has 4px horizontal margin on both sides (see styles.gridItem).
+  const itemSize = usable / columns - 8;
+  return { columns, itemSize };
+}
 
 export function CardsListScreen() {
   const navigation = useNavigation<NavigationProp>();
   const { t } = useI18n();
+  const { colors } = useTheme();
+  const { width } = useWindowDimensions();
+  const { columns: gridColumns, itemSize: gridItemSize } = getGridLayout(width);
   const [cards, setCards] = useState<LoyaltyCard[]>([]);
+
+
   const [refreshing, setRefreshing] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>('list');
+
+  // Restore the user's last-used layout on mount so the choice survives reloads
+  // and app restarts (persisted via AsyncStorage / localStorage on web).
+  useEffect(() => {
+    getViewMode().then((stored) => {
+      if (stored) setViewMode(stored);
+    });
+  }, []);
+
+  // Update the layout and remember it for next time.
+  const changeViewMode = useCallback((mode: ViewMode) => {
+    setViewMode(mode);
+    persistViewMode(mode);
+  }, []);
 
   const loadCards = useCallback(async () => {
     const storedCards = await getAllCards();
     setCards(storedCards);
   }, []);
+
 
   useFocusEffect(
     useCallback(() => {
@@ -68,24 +108,27 @@ export function CardsListScreen() {
 
     return (
       <TouchableOpacity
-        style={styles.gridItem}
+        style={[styles.gridItem, { width: gridItemSize, backgroundColor: colors.card }]}
         onPress={() => navigation.navigate('CardDetail', { cardId: item.id })}
+
         activeOpacity={0.7}
         testID={`card-grid-item-${item.id}`}
       >
         <ShopIcon brand={shop.brand} shopId={shop.id} name={shop.name} size={56} />
-        <Text style={styles.gridItemName} numberOfLines={2}>
+        <Text style={[styles.gridItemName, { color: colors.text }]} numberOfLines={2}>
           {shop.name}
         </Text>
       </TouchableOpacity>
+
     );
   };
 
   const renderEmptyState = () => (
-    <View style={styles.emptyContainer}>
+    <View style={styles.emptyContainer} testID="empty-state">
       <Text style={styles.emptyIcon}>🏷️</Text>
-      <Text style={styles.emptyTitle}>{t('noCardsYet')}</Text>
-      <Text style={styles.emptySubtitle}>
+
+      <Text style={[styles.emptyTitle, { color: colors.text }]}>{t('noCardsYet')}</Text>
+      <Text style={[styles.emptySubtitle, { color: colors.textMuted }]}>
         {t('noCardsSubtitle')}
       </Text>
     </View>
@@ -96,32 +139,60 @@ export function CardsListScreen() {
     return (
       <View style={styles.toggleContainer} testID="view-toggle">
         <TouchableOpacity
-          style={[styles.toggleButton, viewMode === 'list' && styles.toggleButtonActive]}
-          onPress={() => setViewMode('list')}
+          style={[
+            styles.toggleButton,
+            { backgroundColor: colors.controlBackground },
+            viewMode === 'list' && { backgroundColor: colors.primary },
+          ]}
+          onPress={() => changeViewMode('list')}
           testID="view-toggle-list"
         >
-          <Text style={[styles.toggleText, viewMode === 'list' && styles.toggleTextActive]}>☰</Text>
+          <Text
+            style={[
+              styles.toggleText,
+              { color: colors.textMuted },
+              viewMode === 'list' && { color: colors.onPrimary },
+            ]}
+          >
+            ☰
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.toggleButton, viewMode === 'grid' && styles.toggleButtonActive]}
-          onPress={() => setViewMode('grid')}
+          style={[
+            styles.toggleButton,
+            { backgroundColor: colors.controlBackground },
+            viewMode === 'grid' && { backgroundColor: colors.primary },
+          ]}
+          onPress={() => changeViewMode('grid')}
           testID="view-toggle-grid"
         >
-          <Text style={[styles.toggleText, viewMode === 'grid' && styles.toggleTextActive]}>⊞</Text>
+          <Text
+            style={[
+              styles.toggleText,
+              { color: colors.textMuted },
+              viewMode === 'grid' && { color: colors.onPrimary },
+            ]}
+          >
+            ⊞
+          </Text>
         </TouchableOpacity>
       </View>
     );
   };
 
   return (
-    <View style={styles.container} testID="cards-list-screen">
+    <View style={[styles.container, { backgroundColor: colors.background }]} testID="cards-list-screen">
+
       {renderViewToggle()}
       <FlatList
-        key={viewMode}
+        // FlatList must remount when numColumns changes, so key on both the
+        // view mode and the (resize-driven) column count.
+        key={viewMode === 'grid' ? `grid-${gridColumns}` : 'list'}
         data={cards}
         keyExtractor={(item) => item.id}
         renderItem={viewMode === 'list' ? renderListItem : renderGridItem}
-        numColumns={viewMode === 'grid' ? GRID_COLUMNS : 1}
+        numColumns={viewMode === 'grid' ? gridColumns : 1}
+
         ListEmptyComponent={renderEmptyState}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
@@ -200,8 +271,9 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   gridItem: {
-    width: GRID_ITEM_SIZE,
+    // width is applied inline (responsive to window size)
     alignItems: 'center',
+
     padding: 12,
     marginHorizontal: 4,
     marginVertical: 8,

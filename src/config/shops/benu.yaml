@@ -1,15 +1,11 @@
 id: benu
-name: "BENU"
-description: "BENU Pharmacy Card"
+name: BENU
+description: BENU Pharmacy Card
 country: SK
-domain: "benu.cz"
+domain: benu.cz
 category: pharmacy
 barcode_type: ean13
 brand:
   primary_color: "#00843D"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "cz.benu.app"

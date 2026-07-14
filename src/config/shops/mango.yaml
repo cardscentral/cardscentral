@@ -1,15 +1,11 @@
 id: mango
-name: "Mango"
-description: "Mango Likes You Card"
+name: Mango
+description: Mango Likes You Card
 country: EU
-domain: "mango.com"
+domain: mango.com
 category: fashion
 barcode_type: qr
 brand:
   primary_color: "#2C2C2C"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.mango.mango"

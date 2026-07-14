@@ -1,15 +1,11 @@
 id: saturn
-name: "Saturn"
-description: "Saturn Card"
+name: Saturn
+description: Saturn Card
 country: EU
-domain: "saturn.de"
+domain: saturn.de
 category: electronics
 barcode_type: ean13
 brand:
   primary_color: "#F37A1F"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "de.saturn.saturn"

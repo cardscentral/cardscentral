@@ -1,15 +1,11 @@
 id: mercator-si
-name: "Mercator"
-description: "Mercator Pika Card"
+name: Mercator
+description: Mercator Pika Card
 country: SI
-domain: "mercator.si"
+domain: mercator.si
 category: groceries
 barcode_type: ean13
 brand:
   primary_color: "#E30613"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "si.mercator.mojmklub"

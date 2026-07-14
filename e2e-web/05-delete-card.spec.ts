@@ -3,19 +3,31 @@ import { bootToCardsList, addCard, openCard } from './helpers';
 
 // Mirrors .maestro/flows/05-delete-card.yaml
 //
-// Deletion is confirmed via a RN `Alert.alert` with buttons. react-native-web
-// renders Alert button lists as a no-op, so the confirmation dialog never
-// appears in the browser and the destructive tap can't be completed on web —
-// the actual delete is covered by the native Maestro suite.
-//
-// On web we verify the delete affordance is present and reachable on the card
-// detail screen (the entry point to the native confirm).
-test('card detail exposes the delete action', async ({ page }) => {
+// Deletion is confirmed before it runs. On web, react-native-web renders a
+// multi-button `Alert.alert` as a no-op, so the screen instead uses the
+// browser's native `window.confirm()` there. Playwright auto-dismisses dialogs
+// by default, so we register a handler that accepts the confirm, then assert
+// the card is actually gone from the list.
+test('card detail deletes the card after confirmation', async ({ page }) => {
   await bootToCardsList(page);
   await addCard(page, { shop: 'tesco', number: '1234567890123', nickname: 'My Tesco Card' });
 
   const detail = await openCard(page, /My Tesco Card/);
 
-  await expect(detail.getByTestId('delete-card-button')).toBeVisible();
-  await expect(detail.getByTestId('delete-card-button')).toBeEnabled();
+  const deleteButton = detail.getByTestId('delete-card-button');
+  await deleteButton.scrollIntoViewIfNeeded();
+  await expect(deleteButton).toBeVisible();
+  await expect(deleteButton).toBeEnabled();
+
+  // Accept the native confirm() that guards the destructive action, and make
+  // sure it actually appears (proves the delete path ran on web).
+  const dialogPromise = page.waitForEvent('dialog').then((dialog) => dialog.accept());
+  await deleteButton.click();
+  await dialogPromise;
+
+  // The card should be gone from the (now empty) cards list.
+  await expect(page.getByTestId('empty-state')).toBeVisible();
+
+
+
 });

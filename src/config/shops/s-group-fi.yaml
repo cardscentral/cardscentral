@@ -1,15 +1,11 @@
 id: s-group-fi
-name: "S-ryhmä"
-description: "S-Etukortti Card"
+name: S-ryhmä
+description: S-Etukortti Card
 country: FI
-domain: "s-kanava.fi"
+domain: s-kanava.fi
 category: groceries
 barcode_type: ean13
 brand:
   primary_color: "#009639"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "fi.sok.sbonus"

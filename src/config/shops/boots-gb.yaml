@@ -1,15 +1,11 @@
 id: boots-gb
-name: "Boots"
-description: "Boots Advantage Card"
+name: Boots
+description: Boots Advantage Card
 country: GB
-domain: "boots.com"
+domain: boots.com
 category: pharmacy
 barcode_type: ean13
 brand:
   primary_color: "#0066CC"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.boots.uk.production"

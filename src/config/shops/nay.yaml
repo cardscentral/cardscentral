@@ -1,15 +1,11 @@
 id: nay
-name: "NAY"
-description: "NAY Loyalty Card"
+name: NAY
+description: NAY Loyalty Card
 country: SK
-domain: "nay.sk"
+domain: nay.sk
 category: electronics
 barcode_type: ean13
 brand:
   primary_color: "#ED1C24"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "sk.nay.android"

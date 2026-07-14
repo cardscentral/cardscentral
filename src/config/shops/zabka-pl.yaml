@@ -1,15 +1,11 @@
 id: zabka-pl
-name: "Żabka"
-description: "Żappka Card"
+name: Żabka
+description: Żappka Card
 country: PL
-domain: "zabka.pl"
+domain: zabka.pl
 category: groceries
 barcode_type: qr
 brand:
   primary_color: "#009639"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "pl.zabka.zappka"

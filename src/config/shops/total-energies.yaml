@@ -1,15 +1,11 @@
 id: total-energies
-name: "TotalEnergies"
-description: "TotalEnergies Card"
+name: TotalEnergies
+description: TotalEnergies Card
 country: EU
-domain: "totalenergies.com"
+domain: totalenergies.com
 category: petrol
 barcode_type: ean13
 brand:
   primary_color: "#ED1C24"
   secondary_color: "#002B5C"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.totalenergies.club"

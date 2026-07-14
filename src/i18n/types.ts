@@ -71,7 +71,41 @@ export type TranslationKeys =
   | 'getOnPlayStore'
   | 'appRequiredBanner'
   | 'appAvailableBanner'
-  | 'couldNotOpenApp';
+  | 'couldNotOpenApp'
+  | 'shareCard'
+  | 'shareCardMessage'
+  | 'shareFailed'
+  | 'linkCopied'
+  | 'addSharedTitle'
+  | 'addSharedDescription'
+  | 'addSharedButton'
+  | 'addSharedInvalid'
+  | 'addSharedDuplicate'
+  | 'addSharedAdded'
+  | 'addSharedDescriptionMany'
+  | 'addSharedButtonMany'
+  | 'addSharedResult'
+  | 'sharedByLabel'
+  | 'shareBackupCards'
+  | 'shareCardsTitle'
+  | 'shareCardsMessage'
+  | 'shareCardsDescription'
+  | 'shareCardsEmpty'
+  | 'selectAll'
+  | 'shareSelected'
+  | 'dataSection'
+  | 'aboutSection'
+  | 'version'
+  | 'appTagline'
+  | 'appearanceSection'
+  | 'theme'
+  | 'themeSystem'
+  | 'themeLight'
+  | 'themeDark';
+
+
+
+
 
 /**
  * A complete set of strings for one language. `en` is the source of truth and

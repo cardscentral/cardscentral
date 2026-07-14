@@ -1,8 +1,8 @@
 id: edeka-de
-name: "Edeka"
-description: "Edeka Genuss+ Card"
+name: Edeka
+description: Edeka Genuss+ Card
 country: DE
-domain: "edeka.de"
+domain: edeka.de
 category: groceries
 barcode_type: ean13
 brand:
@@ -10,7 +10,3 @@ brand:
   primary_color: "#FFD700"
   secondary_color: "#003399"
   text_color: "#003399"
-# Official app store references.
-apps:
-  android:
-    package: "de.edeka.app"

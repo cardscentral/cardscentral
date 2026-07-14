@@ -1,8 +1,8 @@
 id: spar-at
-name: "SPAR"
-description: "SPAR Friends Card"
+name: SPAR
+description: SPAR Friends Card
 country: AT
-domain: "spar.at"
+domain: spar.at
 category: groceries
 barcode_type: ean13
 brand:
@@ -10,7 +10,3 @@ brand:
   primary_color: "#009639"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "at.spar.freecard"

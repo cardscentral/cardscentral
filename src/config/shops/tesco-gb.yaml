@@ -1,8 +1,8 @@
 id: tesco-gb
-name: "Tesco"
-description: "Tesco Clubcard"
+name: Tesco
+description: Tesco Clubcard
 country: GB
-domain: "tesco.com"
+domain: tesco.com
 category: groceries
 barcode_type: ean13
 brand:
@@ -10,10 +10,3 @@ brand:
   primary_color: "#00539F"
   secondary_color: "#EE1C2E"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  ios:
-    store_id: "1163846811"
-    scheme: "tesco://"
-  android:
-    package: "com.tesco.clubcardmobile"

@@ -1,15 +1,11 @@
 id: metro
-name: "Metro"
-description: "METRO Card"
+name: Metro
+description: METRO Card
 country: SK
-domain: "metro.sk"
+domain: metro.sk
 category: groceries
 barcode_type: ean13
 brand:
   primary_color: "#003D8F"
   secondary_color: "#FFD200"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "de.metro.customerapp"

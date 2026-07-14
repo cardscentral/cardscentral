@@ -1,15 +1,11 @@
 id: stradivarius
-name: "Stradivarius"
-description: "Stradivarius Card"
+name: Stradivarius
+description: Stradivarius Card
 country: EU
-domain: "stradivarius.com"
+domain: stradivarius.com
 category: fashion
 barcode_type: qr
 brand:
   primary_color: "#000000"
   secondary_color: "#FFFFFF"
   text_color: "#FFFFFF"
-# Official app store references.
-apps:
-  android:
-    package: "com.sdgroup.stradivarius"
