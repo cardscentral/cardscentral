@@ -1,0 +1,18 @@
+# McDonald's Rewards Configuration
+id: mcdonalds
+name: "McDonald's"
+description: "MyMcDonald's Rewards"
+country: WW
+domain: "mcdonalds.com"
+category: other
+barcode_type: qr
+brand:
+  logo: siMcdonalds
+  primary_color: "#FFC72C"
+  secondary_color: "#DA291C"
+  text_color: "#DA291C"
+apps:
+  ios:
+    store_id: "922103212"
+  android:
+    package: "com.mcdonalds.app"

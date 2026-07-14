@@ -1,0 +1,18 @@
+# IKEA Family (worldwide) Configuration
+id: ikea-ww
+name: "IKEA Family"
+description: "IKEA Family Card"
+country: WW
+domain: "ikea.com"
+category: home
+barcode_type: ean13
+brand:
+  logo: siIkea
+  primary_color: "#0058A3"
+  secondary_color: "#FFDA1A"
+  text_color: "#FFFFFF"
+apps:
+  ios:
+    store_id: "1452164827"
+  android:
+    package: "com.ingka.ikea.app"

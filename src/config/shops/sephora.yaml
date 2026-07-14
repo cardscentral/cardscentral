@@ -1,0 +1,18 @@
+# Sephora Beauty Insider Configuration
+id: sephora
+name: "Sephora"
+description: "Beauty Insider Card"
+country: WW
+domain: "sephora.com"
+category: pharmacy
+barcode_type: code128
+brand:
+  logo: siSephora
+  primary_color: "#000000"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"
+apps:
+  ios:
+    store_id: "393328150"
+  android:
+    package: "com.sephora"

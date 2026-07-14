@@ -1,0 +1,18 @@
+# Nike Membership Configuration
+id: nike
+name: "Nike"
+description: "Nike Membership"
+country: WW
+domain: "nike.com"
+category: sports
+barcode_type: qr
+brand:
+  logo: siNike
+  primary_color: "#111111"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"
+apps:
+  ios:
+    store_id: "1095459556"
+  android:
+    package: "com.nike.omega"

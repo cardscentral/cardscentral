@@ -1,0 +1,18 @@
+# Starbucks Rewards Configuration
+id: starbucks
+name: "Starbucks"
+description: "Starbucks Rewards"
+country: US
+domain: "starbucks.com"
+category: other
+barcode_type: qr
+brand:
+  logo: siStarbucks
+  primary_color: "#00704A"
+  secondary_color: "#FFFFFF"
+  text_color: "#FFFFFF"
+apps:
+  ios:
+    store_id: "331177714"
+  android:
+    package: "com.starbucks.mobilecard"
