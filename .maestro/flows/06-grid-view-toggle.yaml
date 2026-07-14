@@ -25,12 +25,17 @@ appId: com.cardscentral.app
     direction: DOWN
 - tapOn:
     id: "shop-select-tesco"
-- scrollUntilVisible:
-    element:
+# Selecting a shop navigates to the card-details screen. Wait for that
+# navigation to finish before interacting — scrollUntilVisible does not wait
+# for a screen transition and would otherwise scroll past the (already
+# top-of-screen) input before it has rendered.
+- extendedWaitUntil:
+    visible:
       id: "card-number-input"
-    direction: DOWN
+    timeout: 10000
 - tapOn:
     id: "card-number-input"
+
 - inputText: "9999888877776666"
 # `hideKeyboard` can fail on iOS 26.5; pressing Enter is reliable.
 - pressKey: Enter

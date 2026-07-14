@@ -36,11 +36,18 @@ appId: com.cardscentral.app
     id: "import-input"
 - inputText: '[{"merchant":"Tesco","code":"9991234567890","format":"EAN13"}]'
 
-# Dismiss the keyboard so import-button and subsequent elements are reachable
-- hideKeyboard
+# Dismiss the keyboard so import-button and subsequent elements are reachable.
+# `hideKeyboard` is unreliable on iOS 26.x ("Couldn't hide the keyboard"), and
+# the input is multiline so `pressKey: Enter` would corrupt the pasted JSON.
+# Tapping the (non-interactive) title dismisses the keyboard instead — the
+# ScrollView uses keyboardShouldPersistTaps="handled", so this tap only blurs
+# the field without triggering any action.
+- tapOn:
+    id: "import-title"
 # Run the import
 - tapOn:
     id: "import-button"
+
 
 # Success indicator should appear — this confirms the import completed and the
 # card was persisted to storage. The "Done" button is also rendered at this

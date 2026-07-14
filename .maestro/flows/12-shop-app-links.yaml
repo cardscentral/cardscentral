@@ -36,10 +36,14 @@ appId: com.cardscentral.app
     id: "shop-select-hm"
 
 
+# Selecting a shop navigates to the card-details screen; on the Android
+# emulator this transition can take longer than 5s, so allow a generous
+# timeout for the card-number input to render.
 - extendedWaitUntil:
     visible:
       id: "card-number-input"
-    timeout: 5000
+    timeout: 10000
+
 - tapOn:
     id: "card-number-input"
 - inputText: "1234567890123"
