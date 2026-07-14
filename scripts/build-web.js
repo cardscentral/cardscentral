@@ -51,9 +51,14 @@ function run(cmd, extraEnv = {}) {
   execSync(cmd, { cwd: ROOT, stdio: 'inherit', env: { ...process.env, ...extraEnv } });
 }
 
-// 1. Regenerate shop registry + export the web bundle. We pass the base path to
-//    Expo via EXPO_BASE_URL (read by app.config.js) so assets resolve correctly.
-run('npm run generate:shops');
+// 1. Regenerate all generated sources (shop registry, brand icons, logo asset
+//    index) + export the web bundle. These `*.generated.ts` files are gitignored
+//    build artifacts, so on a fresh checkout (e.g. CI) they must be produced
+//    before the export or Metro fails to resolve them (brand-icons.generated,
+//    logo-assets.generated). We pass the base path to Expo via EXPO_BASE_URL
+//    (read by app.config.js) so assets resolve correctly.
+run('npm run generate');
+
 fs.rmSync(DIST, { recursive: true, force: true });
 run('npx expo export --platform web', { EXPO_BASE_URL: BASE_URL });
 
