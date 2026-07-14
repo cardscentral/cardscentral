@@ -1,18 +1,21 @@
 /**
  * VoucherVault import
  *
- * Parses a JSON export produced by a self-hosted VoucherVault instance
- * (Account → "Export Data") and maps each voucher onto a LoyaltyCard.
+ * Parses a JSON export produced by a self-hosted VoucherVault instance and maps
+ * each voucher onto a LoyaltyCard.
  *
- * VoucherVault is open-source (https://github.com/Frooodle/VoucherVault), so
- * its export is a stable, documented JSON file — unlike closed apps such as
- * Klarna, which expose no public export/import API. The export is an array of
- * voucher objects; field names have varied slightly across versions, so we
- * read each value defensively from a few likely keys.
+ * VoucherVault is open-source (https://github.com/Frooodle/VoucherVault). Some
+ * builds expose a data export (the exact menu location has moved between
+ * versions, and not every deployment enables it); when a user does have such a
+ * JSON file, we accept it here. Closed apps such as Klarna expose no public
+ * export/import API. The export is an array of voucher objects; field names
+ * have varied slightly across versions, so we read each value defensively from
+ * a few likely keys.
  *
  * This module is intentionally pure (no I/O) so it is easy to unit-test and so
  * the import screen can show an accurate preview before anything is persisted.
  */
+
 
 import { BarcodeType, LoyaltyCard } from '../types';
 import { getAllShops } from '../config/shops';

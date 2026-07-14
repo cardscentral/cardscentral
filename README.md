@@ -1,17 +1,23 @@
 # Cards Central 💳
 
-Your loyalty cards in one place. A React Native (Expo) mobile app for storing and managing loyalty cards from shops in Slovakia.
+Your loyalty cards in one place. A React Native (Expo) mobile app for storing and managing loyalty cards from retailers across Europe and popular worldwide brands. Pick your country and the app localizes itself and surfaces the shops most relevant to you.
+
 
 ## 🚀 Try it now (no install needed)
 
-**[▶ Open the web app (Production)](https://cardscentral.github.io/cardscentral/)** — it's an installable **PWA**, so there are no App Store / Play Store fees required to use it.
+**[🌐 Visit the site](https://cardscentral.github.io/cardscentral/)** — the marketing landing page that explains what the app does, with screenshots. Every button on it opens the **Production** app.
+
+**[▶ Open the web app (Production)](https://cardscentral.github.io/cardscentral/app/)** — it's an installable **PWA**, so there are no App Store / Play Store fees required to use it.
 
 > 🧪 Prefer the bleeding edge? Try the **[QA build](https://cardscentral.github.io/cardscentral/qa/)** — it always tracks the latest code merged to `main`.
 
 | Stage | URL | Deployed when |
 |-------|-----|---------------|
-| **Production** | https://cardscentral.github.io/cardscentral/ | A GitHub Release is published |
-| **QA** | https://cardscentral.github.io/cardscentral/qa/ | Every push to `main` |
+| **Site (landing)** | https://cardscentral.github.io/cardscentral/ | A GitHub Release is published (links to Production only) |
+| **Production (PWA)** | https://cardscentral.github.io/cardscentral/app/ | A GitHub Release is published |
+| **QA (PWA)** | https://cardscentral.github.io/cardscentral/qa/ | Every push to `main` |
+
+
 
 
 - **iPhone/iPad (Safari):** tap **Share → Add to Home Screen**
@@ -396,23 +402,27 @@ Triggered on every push and PR to `main`:
 
 ### Web / PWA (`deploy-pwa.yml`)
 
-Ships the app as an **installable Progressive Web App** on **GitHub Pages** — free hosting, no App Store / Play Store fees. There are **two stages**, both served from the same Pages site as sibling paths:
+Ships the app as an **installable Progressive Web App** on **GitHub Pages** — free hosting, no App Store / Play Store fees. Everything is served from the same Pages site as sibling paths so each piece updates independently:
 
-| Stage | URL | Trigger |
-|-------|-----|---------|
-| **QA** | `https://<owner>.github.io/cardscentral/qa/` | Every push to `main` |
-| **Production** | `https://<owner>.github.io/cardscentral/` | A GitHub Release is published |
+| Target | URL | Trigger |
+|--------|-----|---------|
+| **Site (landing page)** | `https://<owner>.github.io/cardscentral/` | A GitHub Release is published |
+| **Production (PWA)** | `https://<owner>.github.io/cardscentral/app/` | A GitHub Release is published |
+| **QA (PWA)** | `https://<owner>.github.io/cardscentral/qa/` | Every push to `main` |
+
+The **site root is the marketing landing page** (`landing/`); every call-to-action on it opens the **Production** PWA at `/app/` — never QA. Regenerate its screenshots with `npm run generate:landing`.
 
 ```bash
-# Build the PROD PWA locally into dist/
-make build-web        # or: npm run build:web
+# Build the PROD PWA locally into dist/ (base path /cardscentral/app/)
+BASE_PATH=/cardscentral/app/ npm run build:web
 
 # Build the QA PWA locally (base path /cardscentral/qa/)
 BASE_PATH=/cardscentral/qa/ npm run build:web
 
 # Preview it (served under the /cardscentral base path)
-npx serve dist -l 3000   # then open http://localhost:3000/cardscentral/
+npx serve dist -l 3000   # then open http://localhost:3000/cardscentral/app/
 ```
+
 
 The build (`scripts/build-web.js`) runs `expo export --platform web`, injects the
 PWA `<head>` tags + service-worker registration, rewrites the base path in the
@@ -423,10 +433,11 @@ PWA assets live in `public/` (`manifest.webmanifest`, `sw.js`, `icons/`) and are
 copied into `dist/` by Expo.
 
 **One-time GitHub setup:** repo **Settings → Pages → Source = "Deploy from a
-branch"**, Branch = **`gh-pages`** / **`(root)`**. Both stages publish to the
-`gh-pages` branch — QA into the `qa/` subdirectory, prod into the root — using
-`peaceiris/actions-gh-pages` with `keep_files: true`, so deploying one stage
-never clobbers the other.
+branch"**, Branch = **`gh-pages`** / **`(root)`**. All targets publish to the
+`gh-pages` branch — landing into the root, prod into `app/`, QA into `qa/` —
+using `peaceiris/actions-gh-pages` with `keep_files: true`, so deploying one
+target never clobbers the others.
+
 
 - **QA** redeploys automatically on **every push to `main`**, so it always
   reflects the latest merged code.
@@ -442,8 +453,9 @@ git push origin v1.2.3
 gh release create v1.2.3 --generate-notes
 ```
 
-`workflow_dispatch` is also enabled for manual re-deploys of either stage
-(choose `qa` or `prod`).
+`workflow_dispatch` is also enabled for manual re-deploys of any target
+(choose `qa`, `prod`, or `landing`).
+
 
 > The base path defaults to `/cardscentral` (set in `app.json` for native
 > builds; overridden per-stage via `BASE_PATH` for the web export). If you

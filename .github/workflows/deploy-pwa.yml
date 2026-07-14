@@ -4,22 +4,25 @@ name: Deploy PWA (GitHub Pages)
 # free — no Apple Developer / Play Store fees needed to reach users. iOS/Android
 # users can "Add to Home Screen" and use it like a native app (offline-capable).
 #
-# We publish TWO stages to the SAME GitHub Pages site (one Pages site per repo),
-# as sibling paths so they update independently and never clobber each other:
+# Everything lives on the SAME GitHub Pages site (one Pages site per repo), as
+# sibling paths so each piece updates independently and never clobbers another:
 #
-#   QA   → https://<owner>.github.io/cardscentral/qa/   (deployed on every push
-#          to `main`, so QA always tracks the latest merged code)
-#   Prod → https://<owner>.github.io/cardscentral/      (deployed ONLY when a
-#          GitHub Release is published — releases are cut from a git tag, so the
-#          live prod site always corresponds to a tagged, released version)
+#   Landing → https://<owner>.github.io/cardscentral/       (site root — the
+#             marketing page; every CTA links to the PROD app at /app/. Deployed
+#             ONLY when a GitHub Release is published)
+#   Prod    → https://<owner>.github.io/cardscentral/app/   (the PWA; deployed
+#             ONLY when a GitHub Release is published — releases are cut from a
+#             git tag, so prod always corresponds to a tagged, released version)
+#   QA      → https://<owner>.github.io/cardscentral/qa/    (the PWA; deployed on
+#             every push to `main`, so QA always tracks the latest merged code)
 #
 # How it works: instead of the single-artifact `deploy-pages` action (which
 # replaces the whole site on every run), we publish to a `gh-pages` branch with
-# `peaceiris/actions-gh-pages`. QA writes into the `qa/` subdirectory and prod
-# into the root; `keep_files: true` means a QA deploy never removes prod (and
-# vice-versa). GitHub Pages then serves the branch.
+# `peaceiris/actions-gh-pages`. Each target writes into its own subdirectory
+# (or the root, for landing) and `keep_files: true` means one deploy never
+# removes another. GitHub Pages then serves the branch.
 #
-# To ship a new PROD version:
+# To ship a new PROD version (updates both /app/ and the landing page):
 #   1. git tag vX.Y.Z && git push origin vX.Y.Z
 #   2. Create a GitHub Release for that tag (UI or `gh release create vX.Y.Z`).
 #
@@ -41,6 +44,8 @@ on:
         options:
           - qa
           - prod
+          - landing
+
 
 permissions:
   contents: write
@@ -51,7 +56,7 @@ concurrency:
 
 jobs:
   # ---------------------------------------------------------------------------
-  # QA — deployed from `main` (latest merged code). Lives under /cardscentral/qa/.
+  # QA — deployed from `main` (latest merged code). Lives at /cardscentral/qa/.
   # ---------------------------------------------------------------------------
   deploy-qa:
     name: Deploy QA (main → /qa/)
@@ -86,10 +91,11 @@ jobs:
           commit_message: 'deploy(qa): ${{ github.sha }}'
 
   # ---------------------------------------------------------------------------
-  # Prod — deployed ONLY on a published Release. Lives at /cardscentral/.
+  # Prod — the PWA, deployed ONLY on a published Release. Lives at
+  # /cardscentral/app/ (the site root is the marketing landing page).
   # ---------------------------------------------------------------------------
   deploy-prod:
-    name: Deploy Prod (release → /)
+    name: Deploy Prod (release → /app/)
     runs-on: ubuntu-latest
     if: >-
       github.event_name == 'release' ||
@@ -109,14 +115,49 @@ jobs:
       - name: Build web PWA (Prod)
         run: npm run build:web
         env:
-          BASE_PATH: /cardscentral/
+          BASE_PATH: /cardscentral/app/
 
       - name: Publish Prod to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          # Root of the site, but keep the qa/ subdirectory intact.
+          destination_dir: app
           keep_files: true
-          exclude_assets: ''
           commit_message: 'deploy(prod): ${{ github.ref_name }}'
+
+  # ---------------------------------------------------------------------------
+  # Landing — static marketing site served at the SITE ROOT (/cardscentral/).
+  # Deployed ONLY on a published Release (same cadence as prod) because every
+  # call-to-action links to the PROD app at /app/. Screens are regenerated so
+  # the page always matches the current brand/icon.
+  # ---------------------------------------------------------------------------
+  deploy-landing:
+    name: Deploy Landing (release → /)
+    runs-on: ubuntu-latest
+    if: >-
+      github.event_name == 'release' ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.stage == 'landing')
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Regenerate landing screenshots (brand-consistent)
+        run: npm run generate:landing
+
+      - name: Publish Landing to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./landing
+          # Site root. keep_files:true preserves the app/ and qa/ subdirectories.
+          keep_files: true
+          commit_message: 'deploy(landing): ${{ github.ref_name }}'

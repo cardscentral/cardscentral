@@ -1,127 +1,119 @@
 /**
- * Generate app icon for Cards Central
- * 
- * Design: Stacked loyalty cards with a price tag overlay
- * Colors: Blue gradient background, white card shapes, gold tag
- * 
+ * Generate the Cards Central app icon (and all derived PNGs).
+ *
+ * Design goal: a modern, premium home-screen tile that reads instantly at small
+ * sizes. A single card floats on a rich diagonal indigo→violet→fuchsia gradient
+ * with a soft radial highlight for depth. The card has a fresh mint accent chip
+ * and a clean rounded barcode — no tiny text, no fanned stack, no dated gold.
+ *
  * Run: node scripts/generate-icon.js
- * Requires: No dependencies (creates SVG, convert with any tool)
+ * If `rsvg-convert` (librsvg) is installed, all PNGs are exported automatically;
+ * otherwise conversion hints are printed.
  */
 
 const fs = require('fs');
 const path = require('path');
+const { execFileSync } = require('child_process');
 
 const SIZE = 1024;
+const ROOT = path.join(__dirname, '..');
 
-// SVG icon design: Loyalty cards fan with a tag
+// Rounded barcode bars — varied widths, generous rounding for a soft, modern feel.
+const barWidths = [14, 8, 20, 10, 8, 18, 10, 24, 8, 14, 10];
+let barX = 0;
+const bars = barWidths
+  .map((w) => {
+    const rect = `<rect x="${barX}" y="0" width="${w}" height="150" rx="${Math.min(w, 8) / 2 + 2}" fill="#4338CA"/>`;
+    barX += w + 16;
+    return rect;
+  })
+  .join('\n        ');
+const barcodeWidth = barX - 16;
+
 const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}" xmlns="http://www.w3.org/2000/svg">
-  <!-- Background: Rounded blue gradient -->
   <defs>
+    <!-- Rich diagonal brand gradient -->
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1a73e8"/>
-      <stop offset="100%" style="stop-color:#0d47a1"/>
+      <stop offset="0%" stop-color="#6D28D9"/>
+      <stop offset="55%" stop-color="#4F46E5"/>
+      <stop offset="100%" stop-color="#DB2777"/>
     </linearGradient>
-    <linearGradient id="card1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.9"/>
-      <stop offset="100%" style="stop-color:#f0f0f0;stop-opacity:0.9"/>
+    <!-- Soft top-left highlight for depth -->
+    <radialGradient id="glow" cx="28%" cy="22%" r="80%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.28"/>
+      <stop offset="55%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Subtle card sheen -->
+    <linearGradient id="cardSheen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#EEF2FF"/>
     </linearGradient>
-    <linearGradient id="card2" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.7"/>
-      <stop offset="100%" style="stop-color:#e8e8e8;stop-opacity:0.7"/>
+    <!-- Mint accent -->
+    <linearGradient id="chip" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34D399"/>
+      <stop offset="100%" stop-color="#14B8A6"/>
     </linearGradient>
-    <linearGradient id="tag" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#FFD700"/>
-      <stop offset="100%" style="stop-color:#FFA000"/>
-    </linearGradient>
+    <filter id="cardShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="26" stdDeviation="34" flood-color="#1E1B4B" flood-opacity="0.35"/>
+    </filter>
   </defs>
-  
-  <!-- Background -->
-  <rect width="${SIZE}" height="${SIZE}" rx="220" fill="url(#bg)"/>
-  
-  <!-- Back card (rotated slightly) -->
-  <g transform="translate(512, 520) rotate(-8)">
-    <rect x="-200" y="-130" width="400" height="260" rx="24" fill="url(#card2)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
-    <!-- Barcode lines on back card -->
-    <g transform="translate(-80, 30)">
-      <rect x="0" y="0" width="4" height="40" fill="rgba(0,0,0,0.15)"/>
-      <rect x="8" y="0" width="2" height="40" fill="rgba(0,0,0,0.15)"/>
-      <rect x="14" y="0" width="6" height="40" fill="rgba(0,0,0,0.15)"/>
-      <rect x="24" y="0" width="3" height="40" fill="rgba(0,0,0,0.15)"/>
-      <rect x="30" y="0" width="5" height="40" fill="rgba(0,0,0,0.15)"/>
-      <rect x="38" y="0" width="2" height="40" fill="rgba(0,0,0,0.15)"/>
-      <rect x="44" y="0" width="4" height="40" fill="rgba(0,0,0,0.15)"/>
-      <rect x="52" y="0" width="6" height="40" fill="rgba(0,0,0,0.15)"/>
-      <rect x="62" y="0" width="3" height="40" fill="rgba(0,0,0,0.15)"/>
-      <rect x="68" y="0" width="2" height="40" fill="rgba(0,0,0,0.15)"/>
-      <rect x="74" y="0" width="5" height="40" fill="rgba(0,0,0,0.15)"/>
-      <rect x="82" y="0" width="4" height="40" fill="rgba(0,0,0,0.15)"/>
-      <rect x="90" y="0" width="6" height="40" fill="rgba(0,0,0,0.15)"/>
-      <rect x="100" y="0" width="3" height="40" fill="rgba(0,0,0,0.15)"/>
-      <rect x="106" y="0" width="4" height="40" fill="rgba(0,0,0,0.15)"/>
-      <rect x="114" y="0" width="2" height="40" fill="rgba(0,0,0,0.15)"/>
-      <rect x="120" y="0" width="5" height="40" fill="rgba(0,0,0,0.15)"/>
-      <rect x="128" y="0" width="6" height="40" fill="rgba(0,0,0,0.15)"/>
-      <rect x="138" y="0" width="3" height="40" fill="rgba(0,0,0,0.15)"/>
-      <rect x="144" y="0" width="4" height="40" fill="rgba(0,0,0,0.15)"/>
+
+  <!-- Modern squircle background -->
+  <rect width="${SIZE}" height="${SIZE}" rx="248" fill="url(#bg)"/>
+  <rect width="${SIZE}" height="${SIZE}" rx="248" fill="url(#glow)"/>
+
+  <!-- One bold card, gentle tilt, soft shadow -->
+  <g transform="translate(512, 520) rotate(-5)" filter="url(#cardShadow)">
+    <!-- Card body -->
+    <rect x="-320" y="-210" width="640" height="420" rx="60" fill="url(#cardSheen)"/>
+
+    <!-- Mint accent chip (top-left), like a smart-card contact pad -->
+    <rect x="-268" y="-150" width="120" height="92" rx="22" fill="url(#chip)"/>
+    <rect x="-236" y="-150" width="8" height="92" fill="#0EA5A0" opacity="0.35"/>
+    <rect x="-268" y="-110" width="120" height="8" fill="#0EA5A0" opacity="0.35"/>
+
+    <!-- Brand dot -->
+    <circle cx="250" cy="-104" r="34" fill="#DB2777"/>
+
+    <!-- Clean rounded barcode -->
+    <g transform="translate(${-barcodeWidth / 2}, 30)">
+        ${bars}
     </g>
-  </g>
-  
-  <!-- Front card -->
-  <g transform="translate(512, 500) rotate(3)">
-    <rect x="-200" y="-130" width="400" height="260" rx="24" fill="url(#card1)" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
-    <!-- Shop circle indicator -->
-    <circle cx="-130" cy="-70" r="30" fill="#E53935"/>
-    <text x="-130" y="-62" font-family="Arial,sans-serif" font-size="22" font-weight="bold" fill="white" text-anchor="middle">H&amp;M</text>
-    <!-- Barcode lines -->
-    <g transform="translate(-100, 20)">
-      <rect x="0" y="0" width="4" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="8" y="0" width="2" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="14" y="0" width="6" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="24" y="0" width="3" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="30" y="0" width="5" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="38" y="0" width="2" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="44" y="0" width="4" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="52" y="0" width="6" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="62" y="0" width="3" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="68" y="0" width="2" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="74" y="0" width="5" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="82" y="0" width="4" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="90" y="0" width="6" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="100" y="0" width="3" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="106" y="0" width="4" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="114" y="0" width="2" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="120" y="0" width="5" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="128" y="0" width="6" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="138" y="0" width="3" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="144" y="0" width="4" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="152" y="0" width="2" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="158" y="0" width="5" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="166" y="0" width="6" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="176" y="0" width="3" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="182" y="0" width="4" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="190" y="0" width="2" height="50" fill="rgba(0,0,0,0.7)"/>
-      <rect x="196" y="0" width="5" height="50" fill="rgba(0,0,0,0.7)"/>
-    </g>
-    <!-- Card number text -->
-    <text x="0" y="100" font-family="monospace" font-size="16" fill="rgba(0,0,0,0.5)" text-anchor="middle">2901 4567 8901 2345</text>
-  </g>
-  
-  <!-- Price tag / loyalty tag in top-right -->
-  <g transform="translate(720, 260)">
-    <path d="M-30,-60 L50,-60 L80,-30 L80,30 L50,60 L-30,60 Z" fill="url(#tag)" stroke="rgba(0,0,0,0.1)" stroke-width="2"/>
-    <circle cx="60" cy="0" r="10" fill="white" opacity="0.8"/>
-    <!-- Tag string -->
-    <line x1="-30" y1="-60" x2="-60" y2="-90" stroke="rgba(255,255,255,0.6)" stroke-width="3" stroke-linecap="round"/>
   </g>
 </svg>`;
 
-// Write SVG
-const svgPath = path.join(__dirname, '..', 'assets', 'icon.svg');
+const svgPath = path.join(ROOT, 'assets', 'icon.svg');
 fs.writeFileSync(svgPath, svg);
 console.log(`✅ Icon SVG written to: ${svgPath}`);
-console.log('');
-console.log('To convert to PNG (1024x1024), use one of:');
-console.log('  npx sharp-cli -i assets/icon.svg -o assets/icon.png resize 1024 1024');
-console.log('  OR open assets/icon.svg in a browser and take a screenshot');
-console.log('  OR use: rsvg-convert -w 1024 -h 1024 assets/icon.svg > assets/icon.png');
+
+// --- Auto-export PNGs if rsvg-convert (librsvg) is available -----------------
+function rsvg(outPath, size) {
+  execFileSync('rsvg-convert', ['-w', String(size), '-h', String(size), svgPath, '-o', outPath]);
+  console.log(`   ↳ ${path.relative(ROOT, outPath)} (${size}px)`);
+}
+
+const targets = [
+  ['assets/icon.png', 1024],
+  ['assets/favicon.png', 48],
+  ['public/icons/icon-192.png', 192],
+  ['public/icons/icon-512.png', 512],
+  ['public/icons/apple-touch-icon.png', 180],
+];
+
+try {
+  execFileSync('rsvg-convert', ['--version'], { stdio: 'ignore' });
+  console.log('🎨 Exporting PNGs via rsvg-convert:');
+  for (const [rel, size] of targets) {
+    const out = path.join(ROOT, rel);
+    fs.mkdirSync(path.dirname(out), { recursive: true });
+    rsvg(out, size);
+  }
+  console.log('✅ All icon PNGs regenerated.');
+} catch {
+  console.log('');
+  console.log('ℹ️  rsvg-convert not found — convert manually, e.g.:');
+  for (const [rel, size] of targets) {
+    console.log(`  rsvg-convert -w ${size} -h ${size} assets/icon.svg -o ${rel}`);
+  }
+}

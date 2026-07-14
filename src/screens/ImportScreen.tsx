@@ -20,9 +20,10 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Import'>;
 /**
  * One-time import of loyalty cards from a VoucherVault export.
  *
- * VoucherVault (open-source, self-hosted) can export all vouchers as JSON
- * (Account → Export Data). The user pastes that JSON here; we parse it locally
- * and add each voucher as a card. Pasting is the primary, fully E2E-testable
+ * If a self-hosted VoucherVault (open-source) deployment offers a data export,
+ * it produces a JSON list of vouchers. The user pastes that JSON here; we parse
+ * it locally and add each voucher as a card. Pasting is the primary, fully E2E-testable
+
  * path — a native file picker can't be reliably driven by Maestro in CI, so it
  * is offered only as an optional convenience and degrades gracefully when
  * `expo-document-picker` isn't installed.

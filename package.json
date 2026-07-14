@@ -45,6 +45,9 @@
     "e2e:web:ui": "playwright test --ui",
     "e2e:web:report": "playwright show-report",
     "generate:shops": "node scripts/generate-shops.js",
+    "generate:icon": "node scripts/generate-icon.js",
+    "generate:landing": "node scripts/generate-landing-screens.js",
+
     "typecheck": "npm run generate:shops && npm run generate:icons && npm run fetch:logos && tsc --noEmit",
     "prebuild": "expo prebuild --clean",
     "prebuild:ios": "expo prebuild --platform ios --clean",
