@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#4338CA"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#EEF2FF"/>
+    </linearGradient>
+    <linearGradient id="band" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#DB2777"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+    <linearGradient id="chip" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+    <filter id="shadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="22" stdDeviation="30" flood-color="#1E1B4B" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" rx="224" fill="url(#bg)"/>
+  <g transform="translate(512, 512) rotate(-8)" filter="url(#shadow)">
+    <rect x="-340" y="-232" width="680" height="464" rx="56" fill="url(#card)"/>
+    <path d="M -340 -176 A 56 56 0 0 1 -284 -232 L 284 -232 A 56 56 0 0 1 340 -176 Z" fill="url(#band)"/>
+    <rect x="-286" y="-138" width="128" height="98" rx="20" fill="url(#chip)"/>
+    <rect x="-286" y="-100" width="128" height="7" fill="#B45309" opacity="0.45"/>
+    <rect x="-250" y="-138" width="7" height="98" fill="#B45309" opacity="0.45"/>
+    <circle cx="268" cy="-176" r="34" fill="#FFFFFF" opacity="0.9"/>
+    <g transform="translate(-140, 40)">
+          <rect x="0" y="0" width="26" height="150" rx="7" fill="#312E81"/>
+          <rect x="46" y="0" width="14" height="150" rx="7" fill="#312E81"/>
+          <rect x="80" y="0" width="34" height="150" rx="7" fill="#312E81"/>
+          <rect x="134" y="0" width="16" height="150" rx="7" fill="#312E81"/>
+          <rect x="170" y="0" width="26" height="150" rx="7" fill="#312E81"/>
+          <rect x="216" y="0" width="14" height="150" rx="7" fill="#312E81"/>
+          <rect x="250" y="0" width="30" height="150" rx="7" fill="#312E81"/>
+    </g>
+  </g>
+</svg>

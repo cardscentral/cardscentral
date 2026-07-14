@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="390" height="844" viewBox="0 0 390 844" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7C3AED"/>
+      <stop offset="1" stop-color="#4338CA"/>
+    </linearGradient>
+    <clipPath id="screen"><rect x="10" y="10" width="370" height="824" rx="46"/></clipPath>
+  </defs>
+  <rect x="2" y="2" width="386" height="840" rx="54" fill="#0b0b12"/>
+  <rect x="10" y="10" width="370" height="824" rx="46" fill="#ffffff"/>
+  <g clip-path="url(#screen)">
+    
+  <rect x="0" y="0" width="390" height="844" fill="#f4f3fa"/>
+  <rect x="0" y="0" width="390" height="120" fill="url(#brand)"/>
+
+  <text x="26" y="96" font-family="Arial" font-size="26" font-weight="800" fill="#ffffff">Add Card</text>
+  <text x="30" y="170" font-family="Arial" font-size="13" font-weight="700" fill="#8b869c">SHOP</text>
+  <rect x="26" y="182" width="338" height="56" rx="14" fill="#ffffff" stroke="#e7e4f0"/>
+  <rect x="40" y="196" width="28" height="28" rx="8" fill="#E4002B"/>
+  <text x="82" y="216" font-family="Arial" font-size="16" font-weight="700" fill="#1e1b2e">H&amp;M</text>
+  <text x="30" y="280" font-family="Arial" font-size="13" font-weight="700" fill="#8b869c">CARD NUMBER</text>
+  <rect x="26" y="292" width="338" height="56" rx="14" fill="#ffffff" stroke="#e7e4f0"/>
+  <text x="42" y="326" font-family="monospace" font-size="16" fill="#1e1b2e">2901 4567 8901</text>
+  <text x="30" y="390" font-family="Arial" font-size="13" font-weight="700" fill="#8b869c">NICKNAME (OPTIONAL)</text>
+  <rect x="26" y="402" width="338" height="56" rx="14" fill="#ffffff" stroke="#e7e4f0"/>
+  <rect x="26" y="724" width="338" height="58" rx="16" fill="url(#brand)"/>
+  <text x="195" y="761" font-family="Arial" font-size="18" font-weight="800" fill="#ffffff" text-anchor="middle">Save Card</text>
+
+    <!-- status bar -->
+    <text x="34" y="44" font-family="Arial" font-size="15" font-weight="700" fill="#1e1b2e">9:41</text>
+    <rect x="312" y="30" width="22" height="12" rx="3" fill="#1e1b2e"/>
+    <rect x="340" y="30" width="16" height="12" rx="3" fill="#1e1b2e"/>
+  </g>
+  <rect x="135" y="26" width="120" height="26" rx="13" fill="#0b0b12"/>
+  <rect x="140" y="818" width="110" height="5" rx="2.5" fill="#c8c8d0"/>
+</svg>

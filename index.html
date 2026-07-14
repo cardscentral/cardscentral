@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cards Central — all your loyalty cards in one place</title>
+  <meta name="description" content="Cards Central keeps every loyalty and membership card in one tidy app. Add a card, show the barcode at the till, collect your points. Free, installable, works offline." />
+
+  <!-- Open Graph / social preview -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Cards Central — your loyalty cards in one place" />
+  <meta property="og:description" content="Add a card, show the barcode at the till, collect your points. Free, installable PWA — works offline." />
+  <meta property="og:image" content="./assets/icon.svg" />
+
+  <link rel="icon" href="./assets/icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <!-- This landing page IS the site root (/cardscentral/). The PROD PWA lives at
+       /cardscentral/app/, so every CTA points to "./app/". QA (/qa/) is never
+       linked from here on purpose. -->
+  <header class="nav">
+    <a class="brand" href="#top">
+      <img src="./assets/icon.svg" alt="Cards Central logo" width="36" height="36" />
+      <span>Cards Central</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#screens">Screens</a>
+      <a class="btn btn-small" href="./app/">Open the app</a>
+    </nav>
+  </header>
+
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="pill">Free · Installable · Works offline</span>
+        <h1>All your loyalty cards,<br /><span class="grad">in one place.</span></h1>
+        <p class="lead">
+          Stop digging through your wallet. Add every store, gym and café card once,
+          then just show the barcode at the till and collect your points.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="./app/">▶ Open the app</a>
+          <a class="btn btn-ghost" href="#how">See how it works</a>
+        </div>
+
+        <p class="fine">No account needed. Your cards stay on your device.</p>
+      </div>
+      <div class="hero-art">
+        <img src="./assets/screen-cards.svg" alt="Cards Central card list on a phone" class="phone phone-back" />
+        <img src="./assets/screen-barcode.svg" alt="Card detail with barcode and an open-in-app button" class="phone phone-front" />
+
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="section">
+      <h2>Everything your wallet can't do</h2>
+      <div class="grid">
+        <article class="card">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="5" width="18" height="14" rx="3"/><path d="M7 10h6M7 14h4"/><circle cx="17.5" cy="12" r="1.2" fill="currentColor" stroke="none"/>
+            </svg>
+          </span>
+          <h3>One tap to your card</h3>
+          <p>Open the app, tap the store, and the barcode fills the screen — ready to scan.</p>
+        </article>
+        <article class="card">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 8h3l1.5-2h7L18 8h2a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="3.2"/>
+            </svg>
+          </span>
+          <h3>Scan to add</h3>
+          <p>Point your camera at the physical card's barcode and it's saved in seconds.</p>
+        </article>
+        <article class="card">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/><circle cx="8.5" cy="9.5" r="1.3" fill="currentColor" stroke="none"/><circle cx="15" cy="8.8" r="1.3" fill="currentColor" stroke="none"/><circle cx="16" cy="14" r="1.3" fill="currentColor" stroke="none"/><path d="M12 21a3 3 0 0 1 0-6 2 2 0 0 0 0-4"/>
+            </svg>
+          </span>
+          <h3>Brand-accurate</h3>
+          <p>Each card shows in the store's real colours and logo, so it's easy to spot.</p>
+        </article>
+        <article class="card">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.7 3.8 9S14.5 18.5 12 21C9.5 18.5 8.2 15.3 8.2 12S9.5 5.5 12 3Z"/>
+            </svg>
+          </span>
+          <h3>Local + worldwide</h3>
+          <p>Pick your country and see the shops that matter to you — plus global brands.</p>
+        </article>
+        <article class="card">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5" y="10" width="14" height="10" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1.3" fill="currentColor" stroke="none"/>
+            </svg>
+          </span>
+          <h3>Private by default</h3>
+          <p>Cards are stored on your device. No sign-up, no tracking, works offline.</p>
+        </article>
+        <article class="card">
+          <span class="ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3v11m0 0-4-4m4 4 4-4"/><path d="M5 17v2a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2"/>
+            </svg>
+          </span>
+          <h3>Bring your own data</h3>
+          <p>Already have a JSON export of your cards (e.g. from a self-hosted VoucherVault)? Import it in one paste — otherwise adding cards by hand takes seconds.</p>
+        </article>
+      </div>
+
+    </section>
+
+    <!-- How it works -->
+    <section id="how" class="section section-alt">
+      <h2>Up and running in under a minute</h2>
+      <ol class="steps">
+        <li>
+          <span class="step-n">1</span>
+          <div>
+            <h3>Open the app</h3>
+            <p>It's a web app — nothing to download. Add it to your home screen to launch it full-screen like a native app.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-n">2</span>
+          <div>
+            <h3>Add your cards</h3>
+            <p>Pick a store and type or scan the number. Repeat for every card in your wallet.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-n">3</span>
+          <div>
+            <h3>Show &amp; collect</h3>
+            <p>At the till, open the card and hold up the barcode. That's it — points collected.</p>
+          </div>
+        </li>
+      </ol>
+      <div class="cta-row center">
+        <a class="btn btn-primary" href="./app/">Open Cards Central</a>
+      </div>
+
+    </section>
+
+    <!-- Screens -->
+    <section id="screens" class="section">
+      <h2>A peek inside</h2>
+      <div class="shots">
+        <figure>
+          <img src="./assets/screen-cards.svg" alt="Card list screen" />
+          <figcaption>Your cards at a glance</figcaption>
+        </figure>
+        <figure>
+          <img src="./assets/screen-barcode.svg" alt="Card detail with barcode and open-in-app button" />
+          <figcaption>Barcode + one-tap to the store's app</figcaption>
+
+        </figure>
+        <figure>
+          <img src="./assets/screen-add.svg" alt="Add card screen" />
+          <figcaption>Add a card in seconds</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Install -->
+    <section class="section section-alt install">
+      <h2>Install it like a real app</h2>
+      <div class="grid grid-3">
+        <article class="card">
+          <h3>iPhone / iPad</h3>
+          <p>Open in Safari → tap <strong>Share</strong> → <strong>Add to Home Screen</strong>.</p>
+        </article>
+        <article class="card">
+          <h3>Android</h3>
+          <p>Open in Chrome → tap <strong>⋮</strong> → <strong>Install app</strong>.</p>
+        </article>
+        <article class="card">
+          <h3>Desktop</h3>
+          <p>Chrome / Edge → click the <strong>install</strong> icon in the address bar.</p>
+        </article>
+      </div>
+      <div class="cta-row center">
+        <a class="btn btn-primary" href="./app/">▶ Open the app now</a>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>
+      <img src="./assets/icon.svg" alt="" width="24" height="24" />
+      Cards Central — free &amp; open source.
+    </p>
+    <nav>
+      <a href="./app/">Open app</a>
+      <a href="https://github.com/cardscentral/cardscentral">GitHub</a>
+    </nav>
+
+  </footer>
+</body>
+</html>
