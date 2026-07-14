@@ -43,9 +43,6 @@
       "scope": "/cardscentral/",
       "orientation": "portrait"
     },
-    "experiments": {
-      "baseUrl": "/cardscentral"
-    },
     "plugins": [
       [
         "expo-camera",

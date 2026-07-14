@@ -7,17 +7,58 @@ appId: com.cardscentral.app
 # registry, or a name-based store search), and shops with a known native app
 # also get the "app available" badge + banner + "Open app" deep-link button.
 #
-# Tesco has a known native app in the registry, so opening the Tesco card
-# created by flow 02 must show all of these affordances.
+# Tesco has a known native app in the registry, so opening a Tesco card must
+# show all of these affordances.
 #
-# Precondition: the Tesco card from flow 02 exists (run 01 + 02 first).
+# This flow is SELF-CONTAINED: it creates its own Tesco card. It must not rely
+# on the card from flow 02, because flow 05 (delete-card) deletes the Tesco card
+# earlier in the sequence, so no Tesco card is guaranteed to exist by the time
+# this flow runs. Precondition: only country selection (flow 01).
 
 - launchApp
 - extendedWaitUntil:
     visible:
-      text: ".*My Tesco Card.*"
+      id: "cards-list-screen"
     timeout: 10000
 
+# ── Create a Tesco card so this flow is independent of 02/05 ordering ─────────
+- tapOn:
+    id: "add-card-button"
+- extendedWaitUntil:
+    visible:
+      id: "shop-search-input"
+    timeout: 5000
+- scrollUntilVisible:
+    element:
+      id: "shop-select-tesco"
+    direction: DOWN
+- tapOn:
+    id: "shop-select-tesco"
+
+- extendedWaitUntil:
+    visible:
+      id: "card-number-input"
+    timeout: 5000
+- tapOn:
+    id: "card-number-input"
+- inputText: "1234567890123"
+- pressKey: Enter
+- tapOn:
+    id: "nickname-input"
+- inputText: "My Tesco Card"
+- pressKey: Enter
+- scrollUntilVisible:
+    element:
+      id: "save-card-button"
+    direction: DOWN
+- tapOn:
+    id: "save-card-button"
+
+# ── Open the card and assert the official-app affordances ────────────────────
+- extendedWaitUntil:
+    visible:
+      text: ".*My Tesco Card.*"
+    timeout: 10000
 - tapOn:
     text: ".*My Tesco Card.*"
 - extendedWaitUntil:
