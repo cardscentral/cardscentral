@@ -4,30 +4,44 @@ name: Deploy PWA (GitHub Pages)
 # free — no Apple Developer / Play Store fees needed to reach users. iOS/Android
 # users can "Add to Home Screen" and use it like a native app (offline-capable).
 #
-# Everything lives on the SAME GitHub Pages site (one Pages site per repo), as
-# sibling paths so each piece updates independently and never clobbers another:
+# The site is served at the ORG ROOT via a dedicated GitHub Pages repository
+# named `cardscentral.github.io`. Source code lives here (the `cardscentral`
+# repo); this workflow pushes the *built* output cross-repo into
+# `cardscentral/cardscentral.github.io`, whose Pages site is served at the root
+# domain. Everything lives as sibling paths so each piece updates independently
+# and never clobbers another:
 #
-#   Landing → https://<owner>.github.io/cardscentral/       (site root — the
-#             marketing page; every CTA links to the PROD app at /app/. Deployed
-#             ONLY when a GitHub Release is published)
-#   Prod    → https://<owner>.github.io/cardscentral/app/   (the PWA; deployed
-#             ONLY when a GitHub Release is published — releases are cut from a
-#             git tag, so prod always corresponds to a tagged, released version)
-#   QA      → https://<owner>.github.io/cardscentral/qa/    (the PWA; deployed on
-#             every push to `main`, so QA always tracks the latest merged code)
+#   Landing → https://cardscentral.github.io/        (site root — the marketing
+#             page; every CTA links to the PROD app at /app/. Deployed ONLY when
+#             a GitHub Release is published)
+#   Prod    → https://cardscentral.github.io/app/    (the PWA; deployed ONLY when
+#             a GitHub Release is published — releases are cut from a git tag, so
+#             prod always corresponds to a tagged, released version)
+#   QA      → https://cardscentral.github.io/qa/     (the PWA; deployed on every
+#             push to `main`, so QA always tracks the latest merged code)
 #
-# How it works: instead of the single-artifact `deploy-pages` action (which
-# replaces the whole site on every run), we publish to a `gh-pages` branch with
-# `peaceiris/actions-gh-pages`. Each target writes into its own subdirectory
-# (or the root, for landing) and `keep_files: true` means one deploy never
-# removes another. GitHub Pages then serves the branch.
+# How it works: we publish to the `cardscentral.github.io` repo with
+# `peaceiris/actions-gh-pages` using `external_repository` + a personal access
+# token (secret `PAGES_DEPLOY_TOKEN`), because the default GITHUB_TOKEN cannot
+# push to another repository. Each target writes into its own subdirectory (or
+# the root, for landing) and `keep_files: true` means one deploy never removes
+# another. GitHub Pages then serves the target repo's default branch.
+#
+# ---------------------------------------------------------------------------
+# One-time setup (MANUAL):
+#   1. Create a Personal Access Token (classic) with `repo` scope, OR a
+#      fine-grained token with "Contents: Read and write" on
+#      cardscentral/cardscentral.github.io.
+#   2. Add it to THIS repo as an Actions secret named `PAGES_DEPLOY_TOKEN`
+#      (Settings → Secrets and variables → Actions → New repository secret).
+#   3. In the cardscentral.github.io repo: Settings → Pages → Source =
+#      "Deploy from a branch", Branch = `main` / `(root)` (peaceiris defaults to
+#      publishing to `main` for *.github.io repos).
+# ---------------------------------------------------------------------------
 #
 # To ship a new PROD version (updates both /app/ and the landing page):
 #   1. git tag vX.Y.Z && git push origin vX.Y.Z
 #   2. Create a GitHub Release for that tag (UI or `gh release create vX.Y.Z`).
-#
-# One-time setup: repo Settings → Pages → Source = "Deploy from a branch",
-# Branch = `gh-pages` / `(root)`.
 
 on:
   push:
@@ -48,15 +62,19 @@ on:
 
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: pages-${{ github.workflow }}
   cancel-in-progress: false
 
+env:
+  # The external repo that IS the org GitHub Pages site (served at the root).
+  PAGES_REPO: cardscentral/cardscentral.github.io
+
 jobs:
   # ---------------------------------------------------------------------------
-  # QA — deployed from `main` (latest merged code). Lives at /cardscentral/qa/.
+  # QA — deployed from `main` (latest merged code). Lives at the site root /qa/.
   # ---------------------------------------------------------------------------
   deploy-qa:
     name: Deploy QA (main → /qa/)
@@ -79,20 +97,22 @@ jobs:
       - name: Build web PWA (QA)
         run: npm run build:web
         env:
-          BASE_PATH: /cardscentral/qa/
+          BASE_PATH: /qa/
 
       - name: Publish QA to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          personal_token: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+          external_repository: ${{ env.PAGES_REPO }}
+          publish_branch: main
           publish_dir: ./dist
           destination_dir: qa
           keep_files: true
           commit_message: 'deploy(qa): ${{ github.sha }}'
 
   # ---------------------------------------------------------------------------
-  # Prod — the PWA, deployed ONLY on a published Release. Lives at
-  # /cardscentral/app/ (the site root is the marketing landing page).
+  # Prod — the PWA, deployed ONLY on a published Release. Lives at the site root
+  # /app/ (the site root itself is the marketing landing page).
   # ---------------------------------------------------------------------------
   deploy-prod:
     name: Deploy Prod (release → /app/)
@@ -115,19 +135,21 @@ jobs:
       - name: Build web PWA (Prod)
         run: npm run build:web
         env:
-          BASE_PATH: /cardscentral/app/
+          BASE_PATH: /app/
 
       - name: Publish Prod to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          personal_token: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+          external_repository: ${{ env.PAGES_REPO }}
+          publish_branch: main
           publish_dir: ./dist
           destination_dir: app
           keep_files: true
           commit_message: 'deploy(prod): ${{ github.ref_name }}'
 
   # ---------------------------------------------------------------------------
-  # Landing — static marketing site served at the SITE ROOT (/cardscentral/).
+  # Landing — static marketing site served at the SITE ROOT (/).
   # Deployed ONLY on a published Release (same cadence as prod) because every
   # call-to-action links to the PROD app at /app/. Screens are regenerated so
   # the page always matches the current brand/icon.
@@ -156,7 +178,9 @@ jobs:
       - name: Publish Landing to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          personal_token: ${{ secrets.PAGES_DEPLOY_TOKEN }}
+          external_repository: ${{ env.PAGES_REPO }}
+          publish_branch: main
           publish_dir: ./landing
           # Site root. keep_files:true preserves the app/ and qa/ subdirectories.
           keep_files: true
