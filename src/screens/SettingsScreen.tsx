@@ -11,10 +11,14 @@ import { getSupportedLanguages, getLanguageForCountry, SupportedLanguage } from 
 import { useI18n } from '../i18n/I18nContext';
 import { useTheme } from '../theme/ThemeContext';
 import { ThemePreference } from '../storage/preferences';
+import { storageKey } from '../storage/storageKey';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const LANGUAGE_STORAGE_KEY = '@cardscentral/language';
+// Stage-namespaced (see storageKey.ts) so QA (/qa/) and prod (/app/) keep
+// separate language preferences on the shared web origin/localStorage.
+const LANGUAGE_STORAGE_KEY = storageKey('language');
+
 
 const APP_VERSION = '1.0.0';
 // Release notes for the current version on GitHub. Tags follow the `vX.Y.Z`

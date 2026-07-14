@@ -2,10 +2,14 @@
  * User Preferences Storage
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { storageKey } from './storageKey';
 
-const COUNTRY_KEY = '@cardscentral/country';
-const VIEW_MODE_KEY = '@cardscentral/viewMode';
-const THEME_KEY = '@cardscentral/theme';
+// Stage-namespaced (see storageKey.ts) so QA (/qa/) and prod (/app/) — which
+// share the same web origin/localStorage — keep fully separate preferences.
+const COUNTRY_KEY = storageKey('country');
+const VIEW_MODE_KEY = storageKey('viewMode');
+const THEME_KEY = storageKey('theme');
+
 
 
 export async function getSelectedCountry(): Promise<string | null> {

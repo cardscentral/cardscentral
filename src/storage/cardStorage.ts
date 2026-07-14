@@ -7,8 +7,12 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LoyaltyCard } from '../types';
+import { storageKey } from './storageKey';
 
-const CARDS_STORAGE_KEY = '@cardscentral/cards';
+// Stage-namespaced so the QA deployment (/qa/) never touches production cards
+// (/app/), which share the same web origin/localStorage.
+const CARDS_STORAGE_KEY = storageKey('cards');
+
 
 /**
  * Get all stored loyalty cards
