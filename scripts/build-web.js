@@ -5,13 +5,16 @@
  * Builds the installable PWA that we host for free on GitHub Pages (so there's
  * no Apple Developer fee to reach iOS users — they "Add to Home Screen").
  *
- * We publish TWO stages of the PWA to the same GitHub Pages site:
- *   - Prod: https://<owner>.github.io/cardscentral/      (base /cardscentral/)
- *   - QA:   https://<owner>.github.io/cardscentral/qa/   (base /cardscentral/qa/)
- * The base path is configurable via the BASE_PATH env var (default is the prod
- * path). Everything that hard-codes the base path (Expo baseUrl, the manifest
- * start_url/scope/icons, and the service-worker scope) is rewritten here so a
- * single build script can produce either stage.
+ * The site is served at the org root (https://cardscentral.github.io/) by a
+ * dedicated Pages repo. We publish the PWA in stages under different base paths:
+ *   - Prod: https://cardscentral.github.io/app/   (base /app/)
+ *   - QA:   https://cardscentral.github.io/qa/    (base /qa/)
+ * The base path is configurable via the BASE_PATH env var. Everything that
+ * hard-codes the base path (Expo baseUrl, the manifest start_url/scope/icons,
+ * and the service-worker scope) is authored with the DEFAULT_BASE placeholder
+ * (/cardscentral/) below and rewritten to the target here, so a single build
+ * script can produce any stage. The default (/cardscentral/) is only used for
+ * local builds + the Playwright E2E server (scripts/serve-web.js).
  *
  * Steps:
  *   1. `expo export --platform web` → produces dist/ (a single-page web build,
@@ -24,8 +27,9 @@
  *   5. Write dist/404.html (GitHub Pages SPA fallback) and dist/.nojekyll.
  *
  * Usage:
- *   node scripts/build-web.js                       # prod build (/cardscentral/)
- *   BASE_PATH=/cardscentral/qa/ node scripts/build-web.js   # QA build
+ *   node scripts/build-web.js                # local build (default /cardscentral/)
+ *   BASE_PATH=/app/ node scripts/build-web.js   # prod build (served at /app/)
+ *   BASE_PATH=/qa/  node scripts/build-web.js   # QA build (served at /qa/)
  */
 
 const { execSync } = require('child_process');

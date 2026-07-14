@@ -1,0 +1,85 @@
+name: Notify Pages site to rebuild
+
+# The GitHub Pages site is built and published by a SEPARATE repository:
+#   cardscentral/cardscentral.github.io  (served at the org root, https://cardscentral.github.io/)
+#
+# That repo's `.github/workflows/build-site.yml` checks out THIS source repo,
+# builds the PWA + landing page, and publishes them to itself:
+#   Landing → https://cardscentral.github.io/       (from the latest RELEASE)
+#   Prod    → https://cardscentral.github.io/app/   (from the latest RELEASE tag)
+#   QA      → https://cardscentral.github.io/qa/     (from `main`)
+#
+# It rebuilds on its own schedule, but this workflow pings it via
+# `repository_dispatch` so a push to `main` (QA) or a published Release
+# (prod + landing) is reflected immediately instead of waiting for the cron.
+#
+# ---------------------------------------------------------------------------
+# One-time setup (MANUAL):
+#   1. Create a Personal Access Token that can dispatch events to
+#      cardscentral/cardscentral.github.io:
+#        - Classic token: `repo` scope, OR
+#        - Fine-grained token: "Contents: Read and write" (or the "Actions"
+#          / "Metadata" scope that grants repository_dispatch) on
+#          cardscentral/cardscentral.github.io.
+#   2. Add it to THIS repo as an Actions secret named `PAGES_DISPATCH_TOKEN`
+#      (Settings → Secrets and variables → Actions → New repository secret).
+# ---------------------------------------------------------------------------
+#
+# If the secret is absent (e.g. on forks) the job is skipped, and the Pages
+# site simply refreshes on its next scheduled run — no failure.
+
+on:
+  push:
+    branches: [main]
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      event:
+        description: 'Which rebuild to trigger on the Pages repo'
+        required: true
+        default: 'qa'
+        type: choice
+        options:
+          - qa
+          - release
+
+permissions:
+  contents: read
+
+concurrency:
+  group: notify-pages
+  cancel-in-progress: false
+
+env:
+  PAGES_REPO: cardscentral/cardscentral.github.io
+
+jobs:
+  notify:
+    name: Dispatch rebuild to the Pages repo
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve dispatch event type
+        id: which
+        run: |
+          set -euo pipefail
+          case "${{ github.event_name }}" in
+            release)  EVENT=release ;;
+            push)     EVENT=qa ;;
+            workflow_dispatch) EVENT="${{ github.event.inputs.event }}" ;;
+            *)        EVENT=qa ;;
+          esac
+          echo "event=$EVENT" >> "$GITHUB_OUTPUT"
+          echo "Will dispatch '$EVENT' to $PAGES_REPO"
+
+      - name: Send repository_dispatch to the Pages repo
+        env:
+          GH_TOKEN: ${{ secrets.PAGES_DISPATCH_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "PAGES_DISPATCH_TOKEN not set — skipping (Pages site will refresh on its schedule)."
+            exit 0
+          fi
+          gh api "repos/${PAGES_REPO}/dispatches" \
+            -f "event_type=${{ steps.which.outputs.event }}"

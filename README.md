@@ -5,17 +5,17 @@ Your loyalty cards in one place. A React Native (Expo) mobile app for storing an
 
 ## 🚀 Try it now (no install needed)
 
-**[🌐 Visit the site](https://cardscentral.github.io/cardscentral/)** — the marketing landing page that explains what the app does, with screenshots. Every button on it opens the **Production** app.
+**[🌐 Visit the site](https://cardscentral.github.io/)** — the marketing landing page that explains what the app does, with screenshots. Every button on it opens the **Production** app.
 
-**[▶ Open the web app (Production)](https://cardscentral.github.io/cardscentral/app/)** — it's an installable **PWA**, so there are no App Store / Play Store fees required to use it.
+**[▶ Open the web app (Production)](https://cardscentral.github.io/app/)** — it's an installable **PWA**, so there are no App Store / Play Store fees required to use it.
 
-> 🧪 Prefer the bleeding edge? Try the **[QA build](https://cardscentral.github.io/cardscentral/qa/)** — it always tracks the latest code merged to `main`.
+> 🧪 Prefer the bleeding edge? Try the **[QA build](https://cardscentral.github.io/qa/)** — it always tracks the latest code merged to `main`.
 
 | Stage | URL | Deployed when |
 |-------|-----|---------------|
-| **Site (landing)** | https://cardscentral.github.io/cardscentral/ | A GitHub Release is published (links to Production only) |
-| **Production (PWA)** | https://cardscentral.github.io/cardscentral/app/ | A GitHub Release is published |
-| **QA (PWA)** | https://cardscentral.github.io/cardscentral/qa/ | Every push to `main` |
+| **Site (landing)** | https://cardscentral.github.io/ | A GitHub Release is published (links to Production only) |
+| **Production (PWA)** | https://cardscentral.github.io/app/ | A GitHub Release is published |
+| **QA (PWA)** | https://cardscentral.github.io/qa/ | Every push to `main` |
 
 
 
@@ -400,67 +400,72 @@ Triggered on every push and PR to `main`:
 2. **E2E Tests (iOS)** - Runs Detox tests on iOS simulator
 3. **E2E Tests (Android)** - Runs Detox tests on Android emulator
 
-### Web / PWA (`deploy-pwa.yml`)
+### Web / PWA (published from the `cardscentral.github.io` repo)
 
-Ships the app as an **installable Progressive Web App** on **GitHub Pages** — free hosting, no App Store / Play Store fees. Everything is served from the same Pages site as sibling paths so each piece updates independently:
+Ships the app as an **installable Progressive Web App** on **GitHub Pages** — free hosting, no App Store / Play Store fees. The site is served at the **org root** by a dedicated Pages repository, [`cardscentral/cardscentral.github.io`](https://github.com/cardscentral/cardscentral.github.io). Everything is served as sibling paths so each piece updates independently:
 
 | Target | URL | Trigger |
 |--------|-----|---------|
-| **Site (landing page)** | `https://<owner>.github.io/cardscentral/` | A GitHub Release is published |
-| **Production (PWA)** | `https://<owner>.github.io/cardscentral/app/` | A GitHub Release is published |
-| **QA (PWA)** | `https://<owner>.github.io/cardscentral/qa/` | Every push to `main` |
+| **Site (landing page)** | `https://cardscentral.github.io/` | A GitHub Release is published |
+| **Production (PWA)** | `https://cardscentral.github.io/app/` | A GitHub Release is published |
+| **QA (PWA)** | `https://cardscentral.github.io/qa/` | Every push to `main` |
 
 The **site root is the marketing landing page** (`landing/`); every call-to-action on it opens the **Production** PWA at `/app/` — never QA. Regenerate its screenshots with `npm run generate:landing`.
 
 ```bash
-# Build the PROD PWA locally into dist/ (base path /cardscentral/app/)
-BASE_PATH=/cardscentral/app/ npm run build:web
+# Build the PROD PWA locally into dist/ (base path /app/)
+BASE_PATH=/app/ npm run build:web
 
-# Build the QA PWA locally (base path /cardscentral/qa/)
-BASE_PATH=/cardscentral/qa/ npm run build:web
+# Build the QA PWA locally (base path /qa/)
+BASE_PATH=/qa/ npm run build:web
 
-# Preview it (served under the /cardscentral base path)
-npx serve dist -l 3000   # then open http://localhost:3000/cardscentral/app/
+# Preview it locally (the E2E server serves under /cardscentral/)
+npm run build:web && node scripts/serve-web.js 3000   # http://localhost:3000/cardscentral/
 ```
 
 
 The build (`scripts/build-web.js`) runs `expo export --platform web`, injects the
 PWA `<head>` tags + service-worker registration, rewrites the base path in the
 manifest + service worker, and writes `404.html` (SPA fallback) and `.nojekyll`.
-The base path is configurable via the `BASE_PATH` env var (default
-`/cardscentral/`), which `app.config.js` feeds into Expo's `experiments.baseUrl`.
-PWA assets live in `public/` (`manifest.webmanifest`, `sw.js`, `icons/`) and are
-copied into `dist/` by Expo.
+The base path is configurable via the `BASE_PATH` env var (each deploy stage sets
+its own: `/` for landing, `/app/` for prod, `/qa/` for QA), which `app.config.js`
+feeds into Expo's `experiments.baseUrl`. PWA assets live in `public/`
+(`manifest.webmanifest`, `sw.js`, `icons/`) and are copied into `dist/` by Expo.
 
-**One-time GitHub setup:** repo **Settings → Pages → Source = "Deploy from a
-branch"**, Branch = **`gh-pages`** / **`(root)`**. All targets publish to the
-`gh-pages` branch — landing into the root, prod into `app/`, QA into `qa/` —
-using `peaceiris/actions-gh-pages` with `keep_files: true`, so deploying one
-target never clobbers the others.
+**How deploys work:** the Pages repo owns the deployment. Its
+`.github/workflows/build-site.yml` checks out **this** source repo, builds each
+stage with the right base path, and publishes into its own `main` branch (which
+GitHub Pages serves at the root). Because it publishes to *itself*, it needs no
+personal access token — just the built-in `GITHUB_TOKEN`. Each stage writes into
+its own subdirectory (`app/`, `qa/`) or the root (landing) with `keep_files: true`,
+so one stage never clobbers another.
 
+This repo only **notifies** the Pages repo to rebuild immediately, via
+`.github/workflows/notify-pages.yml`, which sends a `repository_dispatch`:
 
-- **QA** redeploys automatically on **every push to `main`**, so it always
-  reflects the latest merged code.
-- **Production** deploys **only when a GitHub Release is published** (releases
-  are cut from a git tag), so the live prod site always tracks a tagged version:
+- **QA** on every **push to `main`** — so QA always reflects the latest merged code.
+- **Production + landing** when a **GitHub Release is published** (releases are cut
+  from a git tag), so the live prod site always tracks a tagged version:
 
 ```bash
 # 1. Tag the release commit and push the tag
 git tag v1.2.3
 git push origin v1.2.3
 
-# 2. Publish a GitHub Release for that tag (triggers the PROD deploy)
+# 2. Publish a GitHub Release for that tag (notifies the Pages repo to deploy prod)
 gh release create v1.2.3 --generate-notes
 ```
 
-`workflow_dispatch` is also enabled for manual re-deploys of any target
-(choose `qa`, `prod`, or `landing`).
+The Pages repo also refreshes on a daily schedule, and can be rebuilt manually from
+its **Actions → Build & Publish Site → Run workflow** (choose which stages).
 
-
-> The base path defaults to `/cardscentral` (set in `app.json` for native
-> builds; overridden per-stage via `BASE_PATH` for the web export). If you
-> rename the repo or use a custom domain at the root, update these values and
-> the QA sub-path accordingly.
+**One-time setup:**
+> - In `cardscentral.github.io`: **Settings → Pages → Source = "Deploy from a
+>   branch"**, Branch = `main` / `(root)`.
+> - In **this** repo: add an Actions secret `PAGES_DISPATCH_TOKEN` — a PAT that can
+>   send `repository_dispatch` events to `cardscentral.github.io` (see
+>   `.github/workflows/notify-pages.yml`). Without it, the site simply refreshes on
+>   its next scheduled run instead of immediately.
 
 
 ### Build & Deploy (`build-deploy.yml`)
