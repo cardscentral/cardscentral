@@ -1,0 +1,31 @@
+{
+  "name": "Cards Central",
+  "short_name": "Cards",
+  "description": "All your loyalty cards in one place — offline, private, installable.",
+  "start_url": "/cardscentral/qa/",
+  "scope": "/cardscentral/qa/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#007AFF",
+  "theme_color": "#007AFF",
+  "icons": [
+    {
+      "src": "/cardscentral/qa/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/cardscentral/qa/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/cardscentral/qa/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
