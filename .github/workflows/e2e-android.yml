@@ -176,7 +176,16 @@ jobs:
             # not run this as a normal multi-line bash script, so backslash line
             # continuations get mangled (Maestro then sees a literal `\` flow
             # path: "Flow path does not exist: …/\").
-            maestro test .maestro/flows/01-country-selection.yaml .maestro/flows/02-add-card.yaml .maestro/flows/03-view-card-detail.yaml .maestro/flows/04-edit-card.yaml .maestro/flows/05-delete-card.yaml .maestro/flows/06-grid-view-toggle.yaml .maestro/flows/07-search-shops.yaml .maestro/flows/08-settings.yaml .maestro/flows/10-import-vouchervault.yaml .maestro/flows/12-shop-app-links.yaml .maestro/flows/14-theme.yaml --format junit --output report.xml
+
+            # `--retry-if-failed=2` retries an individual flow (up to 2 extra
+            # times) before marking it failed. The emulator occasionally races on
+            # a cold navigation transition (e.g. an `extendedWaitUntil` on
+            # `card-number-input` times out even though the screen renders moments
+            # later); these are environment timing flakes, not app regressions,
+            # and they surface intermittently on different flows per run. A retry
+            # lets a transient flake self-heal while a genuine failure still fails
+            # all attempts and breaks the build.
+            maestro test .maestro/flows/01-country-selection.yaml .maestro/flows/02-add-card.yaml .maestro/flows/03-view-card-detail.yaml .maestro/flows/04-edit-card.yaml .maestro/flows/05-delete-card.yaml .maestro/flows/06-grid-view-toggle.yaml .maestro/flows/07-search-shops.yaml .maestro/flows/08-settings.yaml .maestro/flows/10-import-vouchervault.yaml .maestro/flows/12-shop-app-links.yaml .maestro/flows/14-theme.yaml --retry-if-failed=2 --format junit --output report.xml
 
 
 

@@ -196,6 +196,14 @@ jobs:
       # chain to avoid disturbing it.
 
 
+      # `--retry-if-failed=2` retries an individual flow (up to 2 extra times)
+      # before marking it failed. The simulator occasionally races on a cold app
+      # relaunch/navigation transition (e.g. an `extendedWaitUntil` on
+      # `cards-list-screen` times out even though the screen renders moments
+      # later); these are environment timing flakes, not app regressions, and
+      # they surface intermittently on different flows per run. A retry lets a
+      # transient flake self-heal while a genuine failure still fails all
+      # attempts and breaks the build.
       - name: Run Maestro E2E Tests
         run: |
           maestro test \
@@ -210,6 +218,7 @@ jobs:
             .maestro/flows/10-import-vouchervault.yaml \
             .maestro/flows/12-shop-app-links.yaml \
             .maestro/flows/14-theme.yaml \
+            --retry-if-failed=2 \
             --format junit --output report.xml
 
 
