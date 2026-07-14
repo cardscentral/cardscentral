@@ -27,6 +27,8 @@ import { SettingsScreen } from '../screens/SettingsScreen';
 import { ImportScreen } from '../screens/ImportScreen';
 import { ImportSharedScreen } from '../screens/ImportSharedScreen';
 import { ShareCardsScreen } from '../screens/ShareCardsScreen';
+import { HeaderLogo } from '../components/HeaderLogo';
+
 
 
 
@@ -154,7 +156,11 @@ function MainTabs() {
         name="Cards"
         component={CardsListScreen}
         options={{
-          title: t('myCards'),
+          // The header shows the brand (logo + "Cards Central") instead of the
+          // plain "My Cards" title; the bottom-tab label keeps the localized
+          // text via tabBarLabel.
+          headerTitle: () => <HeaderLogo />,
+          tabBarLabel: t('myCards'),
           // Stable testID so E2E flows can find the tab regardless of the
           // localized title (the UI switches to Slovak once SK is selected).
           tabBarButtonTestID: 'tab-cards',
@@ -162,6 +168,7 @@ function MainTabs() {
             <MaterialIcons name="loyalty" size={size} color={color} />
           ),
         }}
+
       />
       <Tab.Screen
         name="Settings"
