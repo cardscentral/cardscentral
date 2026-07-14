@@ -21,7 +21,7 @@
       <feDropShadow dx="0" dy="22" stdDeviation="30" flood-color="#1E1B4B" flood-opacity="0.35"/>
     </filter>
   </defs>
-  <rect width="1024" height="1024" rx="224" fill="url(#bg)"/>
+  <rect width="1024" height="1024" fill="url(#bg)"/>
   <g transform="translate(512, 512) rotate(-8)" filter="url(#shadow)">
     <rect x="-340" y="-232" width="680" height="464" rx="56" fill="url(#card)"/>
     <path d="M -340 -176 A 56 56 0 0 1 -284 -232 L 284 -232 A 56 56 0 0 1 340 -176 Z" fill="url(#band)"/>

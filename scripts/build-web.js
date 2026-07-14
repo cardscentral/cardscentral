@@ -69,7 +69,10 @@ if (!html.includes('rel="manifest"')) {
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Cards" />
+    <link rel="icon" type="image/png" sizes="32x32" href="${BASE}favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="${BASE}favicon-16.png" />
     <link rel="apple-touch-icon" href="${BASE}icons/apple-touch-icon.png" />
+
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {

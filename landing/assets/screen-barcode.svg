@@ -11,13 +11,30 @@
   <rect x="10" y="10" width="370" height="824" rx="46" fill="#ffffff"/>
   <g clip-path="url(#screen)">
     
-  <rect x="0" y="0" width="390" height="844" fill="#E4002B"/>
-  <rect x="30" y="150" width="330" height="420" rx="28" fill="#ffffff"/>
-  <text x="195" y="210" font-family="Arial" font-size="24" font-weight="800" fill="#1e1b2e" text-anchor="middle">H&amp;M</text>
-  <text x="195" y="238" font-family="Arial" font-size="13" fill="#8b869c" text-anchor="middle">Loyalty card</text>
-  <g transform="translate(65, 300)"><rect x="0" y="0" width="3" height="150" fill="#1e1b2e"/><rect x="6" y="0" width="2" height="150" fill="#1e1b2e"/><rect x="11" y="0" width="5" height="150" fill="#1e1b2e"/><rect x="19" y="0" width="2" height="150" fill="#1e1b2e"/><rect x="24" y="0" width="4" height="150" fill="#1e1b2e"/><rect x="31" y="0" width="2" height="150" fill="#1e1b2e"/><rect x="36" y="0" width="6" height="150" fill="#1e1b2e"/><rect x="45" y="0" width="3" height="150" fill="#1e1b2e"/><rect x="51" y="0" width="2" height="150" fill="#1e1b2e"/><rect x="56" y="0" width="5" height="150" fill="#1e1b2e"/><rect x="64" y="0" width="2" height="150" fill="#1e1b2e"/><rect x="69" y="0" width="3" height="150" fill="#1e1b2e"/><rect x="75" y="0" width="6" height="150" fill="#1e1b2e"/><rect x="84" y="0" width="2" height="150" fill="#1e1b2e"/><rect x="89" y="0" width="4" height="150" fill="#1e1b2e"/><rect x="96" y="0" width="2" height="150" fill="#1e1b2e"/><rect x="101" y="0" width="5" height="150" fill="#1e1b2e"/><rect x="109" y="0" width="3" height="150" fill="#1e1b2e"/><rect x="115" y="0" width="2" height="150" fill="#1e1b2e"/><rect x="120" y="0" width="4" height="150" fill="#1e1b2e"/><rect x="127" y="0" width="6" height="150" fill="#1e1b2e"/><rect x="136" y="0" width="2" height="150" fill="#1e1b2e"/><rect x="141" y="0" width="3" height="150" fill="#1e1b2e"/><rect x="147" y="0" width="5" height="150" fill="#1e1b2e"/><rect x="155" y="0" width="2" height="150" fill="#1e1b2e"/><rect x="160" y="0" width="4" height="150" fill="#1e1b2e"/></g>
-  <text x="195" y="500" font-family="monospace" font-size="18" fill="#1e1b2e" text-anchor="middle">2901 4567 8901</text>
-  <text x="195" y="620" font-family="Arial" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">Show this at the till</text>
+  <rect x="0" y="0" width="390" height="844" fill="#f4f3fa"/>
+
+  <!-- Branded header -->
+  <rect x="0" y="0" width="390" height="250" fill="#E4002B"/>
+  <circle cx="195" cy="120" r="40" fill="#ffffff"/>
+  <text x="195" y="134" font-family="Arial" font-size="30" font-weight="800" fill="#E4002B" text-anchor="middle">H&amp;M</text>
+  <text x="195" y="200" font-family="Arial" font-size="24" font-weight="800" fill="#ffffff" text-anchor="middle">H&amp;M</text>
+
+  <!-- Barcode card -->
+  <rect x="26" y="286" width="338" height="220" rx="18" fill="#ffffff" stroke="#e7e4f0"/>
+  <g transform="translate(75, 320)"><rect x="0" y="0" width="3" height="110" fill="#1e1b2e"/><rect x="6" y="0" width="2" height="110" fill="#1e1b2e"/><rect x="11" y="0" width="5" height="110" fill="#1e1b2e"/><rect x="19" y="0" width="2" height="110" fill="#1e1b2e"/><rect x="24" y="0" width="4" height="110" fill="#1e1b2e"/><rect x="31" y="0" width="2" height="110" fill="#1e1b2e"/><rect x="36" y="0" width="6" height="110" fill="#1e1b2e"/><rect x="45" y="0" width="3" height="110" fill="#1e1b2e"/><rect x="51" y="0" width="2" height="110" fill="#1e1b2e"/><rect x="56" y="0" width="5" height="110" fill="#1e1b2e"/><rect x="64" y="0" width="2" height="110" fill="#1e1b2e"/><rect x="69" y="0" width="3" height="110" fill="#1e1b2e"/><rect x="75" y="0" width="6" height="110" fill="#1e1b2e"/><rect x="84" y="0" width="2" height="110" fill="#1e1b2e"/><rect x="89" y="0" width="4" height="110" fill="#1e1b2e"/><rect x="96" y="0" width="2" height="110" fill="#1e1b2e"/><rect x="101" y="0" width="5" height="110" fill="#1e1b2e"/><rect x="109" y="0" width="3" height="110" fill="#1e1b2e"/><rect x="115" y="0" width="2" height="110" fill="#1e1b2e"/><rect x="120" y="0" width="4" height="110" fill="#1e1b2e"/><rect x="127" y="0" width="6" height="110" fill="#1e1b2e"/><rect x="136" y="0" width="2" height="110" fill="#1e1b2e"/><rect x="141" y="0" width="3" height="110" fill="#1e1b2e"/><rect x="147" y="0" width="5" height="110" fill="#1e1b2e"/><rect x="155" y="0" width="2" height="110" fill="#1e1b2e"/><rect x="160" y="0" width="4" height="110" fill="#1e1b2e"/></g>
+  <text x="195" y="470" font-family="monospace" font-size="18" fill="#1e1b2e" text-anchor="middle">2901 4567 8901</text>
+
+  <!-- "App available" info banner (matches CardDetailScreen) -->
+  <rect x="26" y="528" width="338" height="70" rx="12" fill="#EAF3FF" stroke="#B9D8FF"/>
+  <circle cx="52" cy="563" r="11" fill="none" stroke="#0A5BBF" stroke-width="2"/>
+  <text x="52" y="568" font-family="Arial" font-size="13" font-weight="800" fill="#0A5BBF" text-anchor="middle">i</text>
+  <text x="76" y="556" font-family="Arial" font-size="12.5" fill="#0A5BBF">This retailer has an official app with</text>
+  <text x="76" y="574" font-family="Arial" font-size="12.5" fill="#0A5BBF">extra features. Open or install it below.</text>
+
+  <!-- "Open app" button -->
+  <rect x="26" y="616" width="338" height="56" rx="12" fill="#ffffff" stroke="#007AFF"/>
+  <circle cx="150" cy="644" r="9" fill="#007AFF"/>
+  <text x="176" y="650" font-family="Arial" font-size="16" font-weight="700" fill="#007AFF">Open app</text>
 
     <!-- status bar -->
     <text x="34" y="44" font-family="Arial" font-size="15" font-weight="700" fill="#1e1b2e">9:41</text>

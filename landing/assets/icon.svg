@@ -1,62 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="1024" height="1024" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <!-- Rich diagonal brand gradient -->
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#6D28D9"/>
-      <stop offset="55%" stop-color="#4F46E5"/>
-      <stop offset="100%" stop-color="#DB2777"/>
+      <stop offset="0%" stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#4338CA"/>
     </linearGradient>
-    <!-- Soft top-left highlight for depth -->
-    <radialGradient id="glow" cx="28%" cy="22%" r="80%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.28"/>
-      <stop offset="55%" stop-color="#FFFFFF" stop-opacity="0"/>
-    </radialGradient>
-    <!-- Subtle card sheen -->
-    <linearGradient id="cardSheen" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="card" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#FFFFFF"/>
       <stop offset="100%" stop-color="#EEF2FF"/>
     </linearGradient>
-    <!-- Mint accent -->
-    <linearGradient id="chip" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#34D399"/>
-      <stop offset="100%" stop-color="#14B8A6"/>
+    <linearGradient id="band" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#DB2777"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
     </linearGradient>
-    <filter id="cardShadow" x="-30%" y="-30%" width="160%" height="160%">
-      <feDropShadow dx="0" dy="26" stdDeviation="34" flood-color="#1E1B4B" flood-opacity="0.35"/>
+    <linearGradient id="chip" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+    <filter id="shadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="22" stdDeviation="30" flood-color="#1E1B4B" flood-opacity="0.35"/>
     </filter>
   </defs>
-
-  <!-- Modern squircle background -->
-  <rect width="1024" height="1024" rx="248" fill="url(#bg)"/>
-  <rect width="1024" height="1024" rx="248" fill="url(#glow)"/>
-
-  <!-- One bold card, gentle tilt, soft shadow -->
-  <g transform="translate(512, 520) rotate(-5)" filter="url(#cardShadow)">
-    <!-- Card body -->
-    <rect x="-320" y="-210" width="640" height="420" rx="60" fill="url(#cardSheen)"/>
-
-    <!-- Mint accent chip (top-left), like a smart-card contact pad -->
-    <rect x="-268" y="-150" width="120" height="92" rx="22" fill="url(#chip)"/>
-    <rect x="-236" y="-150" width="8" height="92" fill="#0EA5A0" opacity="0.35"/>
-    <rect x="-268" y="-110" width="120" height="8" fill="#0EA5A0" opacity="0.35"/>
-
-    <!-- Brand dot -->
-    <circle cx="250" cy="-104" r="34" fill="#DB2777"/>
-
-    <!-- Clean rounded barcode -->
-    <g transform="translate(-152, 30)">
-        <rect x="0" y="0" width="14" height="150" rx="6" fill="#4338CA"/>
-        <rect x="30" y="0" width="8" height="150" rx="6" fill="#4338CA"/>
-        <rect x="54" y="0" width="20" height="150" rx="6" fill="#4338CA"/>
-        <rect x="90" y="0" width="10" height="150" rx="6" fill="#4338CA"/>
-        <rect x="116" y="0" width="8" height="150" rx="6" fill="#4338CA"/>
-        <rect x="140" y="0" width="18" height="150" rx="6" fill="#4338CA"/>
-        <rect x="174" y="0" width="10" height="150" rx="6" fill="#4338CA"/>
-        <rect x="200" y="0" width="24" height="150" rx="6" fill="#4338CA"/>
-        <rect x="240" y="0" width="8" height="150" rx="6" fill="#4338CA"/>
-        <rect x="264" y="0" width="14" height="150" rx="6" fill="#4338CA"/>
-        <rect x="294" y="0" width="10" height="150" rx="6" fill="#4338CA"/>
+  <rect width="1024" height="1024" rx="224" fill="url(#bg)"/>
+  <g transform="translate(512, 512) rotate(-8)" filter="url(#shadow)">
+    <rect x="-340" y="-232" width="680" height="464" rx="56" fill="url(#card)"/>
+    <path d="M -340 -176 A 56 56 0 0 1 -284 -232 L 284 -232 A 56 56 0 0 1 340 -176 Z" fill="url(#band)"/>
+    <rect x="-286" y="-138" width="128" height="98" rx="20" fill="url(#chip)"/>
+    <rect x="-286" y="-100" width="128" height="7" fill="#B45309" opacity="0.45"/>
+    <rect x="-250" y="-138" width="7" height="98" fill="#B45309" opacity="0.45"/>
+    <circle cx="268" cy="-176" r="34" fill="#FFFFFF" opacity="0.9"/>
+    <g transform="translate(-140, 40)">
+          <rect x="0" y="0" width="26" height="150" rx="7" fill="#312E81"/>
+          <rect x="46" y="0" width="14" height="150" rx="7" fill="#312E81"/>
+          <rect x="80" y="0" width="34" height="150" rx="7" fill="#312E81"/>
+          <rect x="134" y="0" width="16" height="150" rx="7" fill="#312E81"/>
+          <rect x="170" y="0" width="26" height="150" rx="7" fill="#312E81"/>
+          <rect x="216" y="0" width="14" height="150" rx="7" fill="#312E81"/>
+          <rect x="250" y="0" width="30" height="150" rx="7" fill="#312E81"/>
     </g>
   </g>
 </svg>

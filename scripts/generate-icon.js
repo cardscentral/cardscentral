@@ -1,10 +1,18 @@
 /**
  * Generate the Cards Central app icon (and all derived PNGs).
  *
- * Design goal: a modern, premium home-screen tile that reads instantly at small
- * sizes. A single card floats on a rich diagonal indigo→violet→fuchsia gradient
- * with a soft radial highlight for depth. The card has a fresh mint accent chip
- * and a clean rounded barcode — no tiny text, no fanned stack, no dated gold.
+ * Design: a recognisable *loyalty card* on a bold violet→indigo tile — a gently
+ * tilted rounded card with a pink→violet top band, a gold chip, a brand dot and
+ * a clean barcode. Large, high-contrast shapes so it still reads as a small
+ * favicon/domain icon.
+ *
+ * Two variants are produced from the same artwork:
+ *   1. ROUNDED (squircle) — assets/icon.svg. Used by the website, favicon and
+ *      PWA icons. Its corners are transparent so it shows as a rounded tile.
+ *   2. SQUARE / full-bleed OPAQUE — used only for the iOS app icon
+ *      (assets/icon.png). iOS app icons must have NO alpha channel (Xcode's
+ *      `actool` fails the build otherwise) and iOS masks the corners itself, so
+ *      this variant fills the whole canvas and we strip any alpha on export.
  *
  * Run: node scripts/generate-icon.js
  * If `rsvg-convert` (librsvg) is installed, all PNGs are exported automatically;
@@ -16,104 +24,130 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 
 const SIZE = 1024;
+const RADIUS = 224; // squircle corner radius for the rounded variant
 const ROOT = path.join(__dirname, '..');
 
-// Rounded barcode bars — varied widths, generous rounding for a soft, modern feel.
-const barWidths = [14, 8, 20, 10, 8, 18, 10, 24, 8, 14, 10];
+// Barcode bars inside the card — a few varied widths so it reads as a barcode
+// while staying legible when the whole icon is scaled down to 16px.
+const barWidths = [26, 14, 34, 16, 26, 14, 30];
 let barX = 0;
 const bars = barWidths
   .map((w) => {
-    const rect = `<rect x="${barX}" y="0" width="${w}" height="150" rx="${Math.min(w, 8) / 2 + 2}" fill="#4338CA"/>`;
-    barX += w + 16;
+    const rect = `<rect x="${barX}" y="0" width="${w}" height="150" rx="7" fill="#312E81"/>`;
+    barX += w + 20;
     return rect;
   })
-  .join('\n        ');
-const barcodeWidth = barX - 16;
+  .join('\n          ');
+const barcodeWidth = barX - 20;
 
-const svg = `<?xml version="1.0" encoding="UTF-8"?>
-<svg width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}" xmlns="http://www.w3.org/2000/svg">
+// Shared defs + foreground artwork (identical for both variants). The only
+// difference between variants is the background rect's corner radius.
+const DEFS = `
   <defs>
-    <!-- Rich diagonal brand gradient -->
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#6D28D9"/>
-      <stop offset="55%" stop-color="#4F46E5"/>
-      <stop offset="100%" stop-color="#DB2777"/>
+      <stop offset="0%" stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#4338CA"/>
     </linearGradient>
-    <!-- Soft top-left highlight for depth -->
-    <radialGradient id="glow" cx="28%" cy="22%" r="80%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.28"/>
-      <stop offset="55%" stop-color="#FFFFFF" stop-opacity="0"/>
-    </radialGradient>
-    <!-- Subtle card sheen -->
-    <linearGradient id="cardSheen" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="card" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#FFFFFF"/>
       <stop offset="100%" stop-color="#EEF2FF"/>
     </linearGradient>
-    <!-- Mint accent -->
-    <linearGradient id="chip" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#34D399"/>
-      <stop offset="100%" stop-color="#14B8A6"/>
+    <linearGradient id="band" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#DB2777"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
     </linearGradient>
-    <filter id="cardShadow" x="-30%" y="-30%" width="160%" height="160%">
-      <feDropShadow dx="0" dy="26" stdDeviation="34" flood-color="#1E1B4B" flood-opacity="0.35"/>
+    <linearGradient id="chip" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+    <filter id="shadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="22" stdDeviation="30" flood-color="#1E1B4B" flood-opacity="0.35"/>
     </filter>
-  </defs>
+  </defs>`;
 
-  <!-- Modern squircle background -->
-  <rect width="${SIZE}" height="${SIZE}" rx="248" fill="url(#bg)"/>
-  <rect width="${SIZE}" height="${SIZE}" rx="248" fill="url(#glow)"/>
-
-  <!-- One bold card, gentle tilt, soft shadow -->
-  <g transform="translate(512, 520) rotate(-5)" filter="url(#cardShadow)">
-    <!-- Card body -->
-    <rect x="-320" y="-210" width="640" height="420" rx="60" fill="url(#cardSheen)"/>
-
-    <!-- Mint accent chip (top-left), like a smart-card contact pad -->
-    <rect x="-268" y="-150" width="120" height="92" rx="22" fill="url(#chip)"/>
-    <rect x="-236" y="-150" width="8" height="92" fill="#0EA5A0" opacity="0.35"/>
-    <rect x="-268" y="-110" width="120" height="8" fill="#0EA5A0" opacity="0.35"/>
-
-    <!-- Brand dot -->
-    <circle cx="250" cy="-104" r="34" fill="#DB2777"/>
-
-    <!-- Clean rounded barcode -->
-    <g transform="translate(${-barcodeWidth / 2}, 30)">
-        ${bars}
+const CARD = `
+  <g transform="translate(512, 512) rotate(-8)" filter="url(#shadow)">
+    <rect x="-340" y="-232" width="680" height="464" rx="56" fill="url(#card)"/>
+    <path d="M -340 -176 A 56 56 0 0 1 -284 -232 L 284 -232 A 56 56 0 0 1 340 -176 Z" fill="url(#band)"/>
+    <rect x="-286" y="-138" width="128" height="98" rx="20" fill="url(#chip)"/>
+    <rect x="-286" y="-100" width="128" height="7" fill="#B45309" opacity="0.45"/>
+    <rect x="-250" y="-138" width="7" height="98" fill="#B45309" opacity="0.45"/>
+    <circle cx="268" cy="-176" r="34" fill="#FFFFFF" opacity="0.9"/>
+    <g transform="translate(${-barcodeWidth / 2}, 40)">
+          ${bars}
     </g>
-  </g>
+  </g>`;
+
+function makeSvg({ rounded }) {
+  const bgRx = rounded ? ` rx="${RADIUS}"` : '';
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="${SIZE}" height="${SIZE}" viewBox="0 0 ${SIZE} ${SIZE}" xmlns="http://www.w3.org/2000/svg">${DEFS}
+  <rect width="${SIZE}" height="${SIZE}"${bgRx} fill="url(#bg)"/>${CARD}
 </svg>`;
-
-const svgPath = path.join(ROOT, 'assets', 'icon.svg');
-fs.writeFileSync(svgPath, svg);
-console.log(`✅ Icon SVG written to: ${svgPath}`);
-
-// --- Auto-export PNGs if rsvg-convert (librsvg) is available -----------------
-function rsvg(outPath, size) {
-  execFileSync('rsvg-convert', ['-w', String(size), '-h', String(size), svgPath, '-o', outPath]);
-  console.log(`   ↳ ${path.relative(ROOT, outPath)} (${size}px)`);
 }
 
+// Canonical (rounded) icon — this is what the website + favicon + PWA use.
+const svgPath = path.join(ROOT, 'assets', 'icon.svg');
+fs.writeFileSync(svgPath, makeSvg({ rounded: true }));
+console.log(`✅ Icon SVG (rounded) written to: ${svgPath}`);
+
+// Square, full-bleed variant for the opaque iOS app icon.
+const svgSquarePath = path.join(ROOT, 'assets', 'icon-ios.svg');
+fs.writeFileSync(svgSquarePath, makeSvg({ rounded: false }));
+console.log(`✅ Icon SVG (square/opaque) written to: ${svgSquarePath}`);
+
+// --- Auto-export PNGs if rsvg-convert (librsvg) is available -----------------
+function rsvg(srcSvg, outPath, size, opaque) {
+  const args = ['-w', String(size), '-h', String(size)];
+  if (opaque) args.push('--background-color', 'white');
+  args.push(srcSvg, '-o', outPath);
+  execFileSync('rsvg-convert', args);
+  console.log(`   ↳ ${path.relative(ROOT, outPath)} (${size}px${opaque ? ', opaque' : ''})`);
+}
+
+// Strip the alpha channel (iOS app icon must be opaque). Prefer macOS `sips`;
+// fall back to ImageMagick `convert`.
+function stripAlpha(outPath) {
+  try {
+    execFileSync('sips', ['-s', 'format', 'png', '--setProperty', 'hasAlpha', 'no', outPath, '--out', outPath], { stdio: 'ignore' });
+    return true;
+  } catch {}
+  try {
+    execFileSync('convert', [outPath, '-background', 'white', '-alpha', 'remove', '-alpha', 'off', outPath], { stdio: 'ignore' });
+    return true;
+  } catch {}
+  return false;
+}
+
+// [relPath, size, { opaque }] — opaque targets are rendered from the square SVG
+// with alpha stripped; the rest keep the rounded (transparent-corner) look.
 const targets = [
-  ['assets/icon.png', 1024],
-  ['assets/favicon.png', 48],
-  ['public/icons/icon-192.png', 192],
-  ['public/icons/icon-512.png', 512],
-  ['public/icons/apple-touch-icon.png', 180],
+  ['assets/icon.png', 1024, { opaque: true }], // iOS app icon → must be opaque
+  ['assets/favicon.png', 48, {}],
+  ['public/favicon-16.png', 16, {}],
+  ['public/favicon-32.png', 32, {}],
+  ['public/icons/icon-192.png', 192, {}],
+  ['public/icons/icon-512.png', 512, {}],
+  ['public/icons/apple-touch-icon.png', 180, {}],
 ];
 
 try {
   execFileSync('rsvg-convert', ['--version'], { stdio: 'ignore' });
   console.log('🎨 Exporting PNGs via rsvg-convert:');
-  for (const [rel, size] of targets) {
+  let ok = true;
+  for (const [rel, size, opts] of targets) {
     const out = path.join(ROOT, rel);
     fs.mkdirSync(path.dirname(out), { recursive: true });
-    rsvg(out, size);
+    rsvg(opts.opaque ? svgSquarePath : svgPath, out, size, !!opts.opaque);
+    if (opts.opaque && !stripAlpha(out)) ok = false;
   }
   console.log('✅ All icon PNGs regenerated.');
+  if (!ok) {
+    console.log('⚠️  Could not strip alpha from the iOS icon (no sips/convert). Install one so the iOS build accepts assets/icon.png.');
+  }
 } catch {
   console.log('');
   console.log('ℹ️  rsvg-convert not found — convert manually, e.g.:');
-  for (const [rel, size] of targets) {
-    console.log(`  rsvg-convert -w ${size} -h ${size} assets/icon.svg -o ${rel}`);
-  }
+  console.log('  rsvg-convert -w 1024 -h 1024 --background-color white assets/icon-ios.svg -o assets/icon.png');
+  console.log('  rsvg-convert -w 512  -h 512  assets/icon.svg -o public/icons/icon-512.png');
 }

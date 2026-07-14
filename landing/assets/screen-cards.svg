@@ -19,7 +19,7 @@
     <rect x="26" y="150" width="338" height="76" rx="16" fill="#ffffff" stroke="#e7e4f0"/>
     <rect x="40" y="164" width="48" height="48" rx="12" fill="#E4002B"/>
     <text x="64" y="196" font-family="Arial" font-size="22" font-weight="800" fill="#ffffff" text-anchor="middle">H</text>
-    <text x="104" y="184" font-family="Arial" font-size="17" font-weight="700" fill="#1e1b2e">H&M</text>
+    <text x="104" y="184" font-family="Arial" font-size="17" font-weight="700" fill="#1e1b2e">H&amp;M</text>
     <text x="104" y="206" font-family="Arial" font-size="13" fill="#8b869c">Fashion</text>
     <rect x="240" y="180" width="3" height="20" fill="#c9c6d6"/><rect x="246" y="180" width="2" height="20" fill="#c9c6d6"/><rect x="251" y="180" width="5" height="20" fill="#c9c6d6"/><rect x="259" y="180" width="2" height="20" fill="#c9c6d6"/><rect x="264" y="180" width="4" height="20" fill="#c9c6d6"/><rect x="271" y="180" width="2" height="20" fill="#c9c6d6"/><rect x="276" y="180" width="6" height="20" fill="#c9c6d6"/><rect x="285" y="180" width="3" height="20" fill="#c9c6d6"/><rect x="291" y="180" width="2" height="20" fill="#c9c6d6"/><rect x="296" y="180" width="5" height="20" fill="#c9c6d6"/><rect x="304" y="180" width="2" height="20" fill="#c9c6d6"/><rect x="309" y="180" width="3" height="20" fill="#c9c6d6"/><rect x="315" y="180" width="6" height="20" fill="#c9c6d6"/><rect x="324" y="180" width="2" height="20" fill="#c9c6d6"/><rect x="329" y="180" width="4" height="20" fill="#c9c6d6"/><rect x="336" y="180" width="2" height="20" fill="#c9c6d6"/>
   
@@ -31,11 +31,12 @@
     <rect x="240" y="268" width="3" height="20" fill="#c9c6d6"/><rect x="246" y="268" width="2" height="20" fill="#c9c6d6"/><rect x="251" y="268" width="5" height="20" fill="#c9c6d6"/><rect x="259" y="268" width="2" height="20" fill="#c9c6d6"/><rect x="264" y="268" width="4" height="20" fill="#c9c6d6"/><rect x="271" y="268" width="2" height="20" fill="#c9c6d6"/><rect x="276" y="268" width="6" height="20" fill="#c9c6d6"/><rect x="285" y="268" width="3" height="20" fill="#c9c6d6"/><rect x="291" y="268" width="2" height="20" fill="#c9c6d6"/><rect x="296" y="268" width="5" height="20" fill="#c9c6d6"/><rect x="304" y="268" width="2" height="20" fill="#c9c6d6"/><rect x="309" y="268" width="3" height="20" fill="#c9c6d6"/><rect x="315" y="268" width="6" height="20" fill="#c9c6d6"/><rect x="324" y="268" width="2" height="20" fill="#c9c6d6"/><rect x="329" y="268" width="4" height="20" fill="#c9c6d6"/><rect x="336" y="268" width="2" height="20" fill="#c9c6d6"/>
   
     <rect x="26" y="326" width="338" height="76" rx="16" fill="#ffffff" stroke="#e7e4f0"/>
-    <rect x="40" y="340" width="48" height="48" rx="12" fill="#F39200"/>
-    <text x="64" y="372" font-family="Arial" font-size="22" font-weight="800" fill="#ffffff" text-anchor="middle">D</text>
-    <text x="104" y="360" font-family="Arial" font-size="17" font-weight="700" fill="#1e1b2e">dm</text>
-    <text x="104" y="382" font-family="Arial" font-size="13" fill="#8b869c">Pharmacy</text>
+    <rect x="40" y="340" width="48" height="48" rx="12" fill="#0046AA"/>
+    <text x="64" y="372" font-family="Arial" font-size="22" font-weight="800" fill="#ffffff" text-anchor="middle">P</text>
+    <text x="104" y="360" font-family="Arial" font-size="17" font-weight="700" fill="#1e1b2e">Payback</text>
+    <text x="104" y="382" font-family="Arial" font-size="13" fill="#8b869c">Rewards</text>
     <rect x="240" y="356" width="3" height="20" fill="#c9c6d6"/><rect x="246" y="356" width="2" height="20" fill="#c9c6d6"/><rect x="251" y="356" width="5" height="20" fill="#c9c6d6"/><rect x="259" y="356" width="2" height="20" fill="#c9c6d6"/><rect x="264" y="356" width="4" height="20" fill="#c9c6d6"/><rect x="271" y="356" width="2" height="20" fill="#c9c6d6"/><rect x="276" y="356" width="6" height="20" fill="#c9c6d6"/><rect x="285" y="356" width="3" height="20" fill="#c9c6d6"/><rect x="291" y="356" width="2" height="20" fill="#c9c6d6"/><rect x="296" y="356" width="5" height="20" fill="#c9c6d6"/><rect x="304" y="356" width="2" height="20" fill="#c9c6d6"/><rect x="309" y="356" width="3" height="20" fill="#c9c6d6"/><rect x="315" y="356" width="6" height="20" fill="#c9c6d6"/><rect x="324" y="356" width="2" height="20" fill="#c9c6d6"/><rect x="329" y="356" width="4" height="20" fill="#c9c6d6"/><rect x="336" y="356" width="2" height="20" fill="#c9c6d6"/>
+
   
     <rect x="26" y="414" width="338" height="76" rx="16" fill="#ffffff" stroke="#e7e4f0"/>
     <rect x="40" y="428" width="48" height="48" rx="12" fill="#00843D"/>

@@ -57,16 +57,27 @@ function barcode(x, y, w, h, dark = '#1e1b2e') {
   return out;
 }
 
+// Escape XML special characters. SVGs are loaded via <img>, which parses them
+// as strict XML — a bare "&" (e.g. in "H&M") is a fatal parse error and makes
+// the whole image render blank, so every dynamic text value must be escaped.
+function esc(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
 // A single list row: coloured chip + name + subtitle.
 function row(y, color, letter, name, sub) {
   return `
     <rect x="26" y="${y}" width="${W - 52}" height="76" rx="16" fill="#ffffff" stroke="#e7e4f0"/>
     <rect x="40" y="${y + 14}" width="48" height="48" rx="12" fill="${color}"/>
-    <text x="64" y="${y + 46}" font-family="Arial" font-size="22" font-weight="800" fill="#ffffff" text-anchor="middle">${letter}</text>
-    <text x="104" y="${y + 34}" font-family="Arial" font-size="17" font-weight="700" fill="#1e1b2e">${name}</text>
-    <text x="104" y="${y + 56}" font-family="Arial" font-size="13" fill="#8b869c">${sub}</text>
+    <text x="64" y="${y + 46}" font-family="Arial" font-size="22" font-weight="800" fill="#ffffff" text-anchor="middle">${esc(letter)}</text>
+    <text x="104" y="${y + 34}" font-family="Arial" font-size="17" font-weight="700" fill="#1e1b2e">${esc(name)}</text>
+    <text x="104" y="${y + 56}" font-family="Arial" font-size="13" fill="#8b869c">${esc(sub)}</text>
     ${barcode(W - 150, y + 30, 96, 20, '#c9c6d6')}`;
 }
+
 
 // 1) Card list
 const cards = frame(`
@@ -76,23 +87,44 @@ const cards = frame(`
 
   ${row(150, '#E4002B', 'H', 'H&M', 'Fashion')}
   ${row(238, '#0B57A4', 'T', 'Tesco Clubcard', 'Groceries')}
-  ${row(326, '#F39200', 'D', 'dm', 'Pharmacy')}
+  ${row(326, '#0046AA', 'P', 'Payback', 'Rewards')}
+
   ${row(414, '#00843D', 'S', 'Starbucks', 'Café')}
   ${row(502, '#111111', 'N', 'Nike', 'Sports')}
   <circle cx="${W - 60}" cy="${H - 70}" r="30" fill="url(#brand)"/>
   <text x="${W - 60}" y="${H - 60}" font-family="Arial" font-size="34" font-weight="700" fill="#ffffff" text-anchor="middle">+</text>
 `);
 
-// 2) Full-screen barcode
+// 2) Card detail — branded header, barcode card, and the "open in official app"
+// affordance (info banner + button) that the real CardDetailScreen shows for
+// shops that have a native app. Keep this in sync with that screen.
 const bc = frame(`
-  <rect x="0" y="0" width="${W}" height="${H}" fill="#E4002B"/>
-  <rect x="30" y="150" width="${W - 60}" height="420" rx="28" fill="#ffffff"/>
-  <text x="${W / 2}" y="210" font-family="Arial" font-size="24" font-weight="800" fill="#1e1b2e" text-anchor="middle">H&amp;M</text>
-  <text x="${W / 2}" y="238" font-family="Arial" font-size="13" fill="#8b869c" text-anchor="middle">Loyalty card</text>
-  <g transform="translate(${W / 2 - 130}, 300)">${barcode(0, 0, 260, 150)}</g>
-  <text x="${W / 2}" y="500" font-family="monospace" font-size="18" fill="#1e1b2e" text-anchor="middle">2901 4567 8901</text>
-  <text x="${W / 2}" y="620" font-family="Arial" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">Show this at the till</text>
+  <rect x="0" y="0" width="${W}" height="${H}" fill="#f4f3fa"/>
+
+  <!-- Branded header -->
+  <rect x="0" y="0" width="${W}" height="250" fill="#E4002B"/>
+  <circle cx="${W / 2}" cy="120" r="40" fill="#ffffff"/>
+  <text x="${W / 2}" y="134" font-family="Arial" font-size="30" font-weight="800" fill="#E4002B" text-anchor="middle">H&amp;M</text>
+  <text x="${W / 2}" y="200" font-family="Arial" font-size="24" font-weight="800" fill="#ffffff" text-anchor="middle">H&amp;M</text>
+
+  <!-- Barcode card -->
+  <rect x="26" y="286" width="${W - 52}" height="220" rx="18" fill="#ffffff" stroke="#e7e4f0"/>
+  <g transform="translate(${W / 2 - 120}, 320)">${barcode(0, 0, 240, 110)}</g>
+  <text x="${W / 2}" y="470" font-family="monospace" font-size="18" fill="#1e1b2e" text-anchor="middle">2901 4567 8901</text>
+
+  <!-- "App available" info banner (matches CardDetailScreen) -->
+  <rect x="26" y="528" width="${W - 52}" height="70" rx="12" fill="#EAF3FF" stroke="#B9D8FF"/>
+  <circle cx="52" cy="563" r="11" fill="none" stroke="#0A5BBF" stroke-width="2"/>
+  <text x="52" y="568" font-family="Arial" font-size="13" font-weight="800" fill="#0A5BBF" text-anchor="middle">i</text>
+  <text x="76" y="556" font-family="Arial" font-size="12.5" fill="#0A5BBF">This retailer has an official app with</text>
+  <text x="76" y="574" font-family="Arial" font-size="12.5" fill="#0A5BBF">extra features. Open or install it below.</text>
+
+  <!-- "Open app" button -->
+  <rect x="26" y="616" width="${W - 52}" height="56" rx="12" fill="#ffffff" stroke="#007AFF"/>
+  <circle cx="150" cy="644" r="9" fill="#007AFF"/>
+  <text x="176" y="650" font-family="Arial" font-size="16" font-weight="700" fill="#007AFF">Open app</text>
 `);
+
 
 // 3) Add card form
 const add = frame(`
