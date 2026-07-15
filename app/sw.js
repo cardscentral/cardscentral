@@ -9,7 +9,7 @@
  * cleaned up. Nothing here is app-specific beyond the base scope.
  */
 
-const CACHE = 'cardscentral-20260715092934';
+const CACHE = 'cardscentral-20260715094919';
 const BASE = '/cardscentral/app/';
 const APP_SHELL = BASE + 'index.html';
 
