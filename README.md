@@ -31,7 +31,9 @@ Once added, it launches full-screen like a native app and works offline.
 - **Scan barcodes** with your camera to add cards instantly
 - **Shop branding** — each card displays in the shop's brand colors
 - **Multiple barcode types** — EAN-13, Code 128, QR codes, and more
+- **Share your cards** — send a card or your whole set to family and friends via a link
 - **Community-driven shop list** — anyone can add a new shop with a single file
+
 
 ## Add a shop (the easy way to contribute!)
 
