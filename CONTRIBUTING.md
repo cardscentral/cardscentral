@@ -115,7 +115,8 @@ npm run web              # run in the browser
 npm run build:web && npm run serve:web   # → http://localhost:4173/cardscentral/
 ```
 
-The build (`scripts/build-web.js`) runs `expo export --platform web`, injects the PWA `<head>` tags + service-worker registration, rewrites the base path in the manifest + service worker, and writes an SPA fallback. The base path is configurable via the `BASE_PATH` env var (`/` for the landing page, `/app/` for prod, `/qa/` for QA).
+The build (`scripts/build-web.js`) runs `expo export --platform web`, injects the PWA `<head>` tags + service-worker registration, rewrites the base path in the manifest + service worker, and writes an SPA fallback. The base path is configurable via the `BASE_PATH` env var (`/cardscentral/app/` for prod, `/cardscentral/qa/` for QA; it defaults to `/cardscentral/` for local builds).
+
 
 ## Testing
 
@@ -170,7 +171,8 @@ Specs live in `e2e-web/` and are numbered to match the Maestro flows in `.maestr
 ## CI/CD & Releases
 
 - **CI** runs on every push and PR to `main` (typecheck + E2E suites).
-- **Web / PWA** is published as an installable Progressive Web App on GitHub Pages from the [`cardscentral/cardscentral.github.io`](https://github.com/cardscentral/cardscentral.github.io) repo: QA (`/qa/`) refreshes on every push to `main`, and Production (`/app/`) plus the landing page redeploy when a GitHub Release is published.
+- **Web / PWA** is published as an installable Progressive Web App on this repo's own GitHub Pages site by [`deploy-web.yml`](.github/workflows/deploy-web.yml) (built-in `GITHUB_TOKEN`, no cross-repo access): QA at [`/cardscentral/qa/`](https://cardscentral.github.io/cardscentral/qa/) refreshes on every push to `main`, and Production at [`/cardscentral/app/`](https://cardscentral.github.io/cardscentral/app/) redeploys on every `v*` tag. The landing page lives in the separate [`cardscentral.github.io`](https://github.com/cardscentral/cardscentral.github.io) repo and is served straight from its `main` branch.
+
 
 Cutting a versioned release (tags, native store builds, and the prod web deploy) is a maintainer task — see **[RELEASING.md](RELEASING.md)** for the full checklist.
 

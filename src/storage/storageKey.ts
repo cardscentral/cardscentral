@@ -6,11 +6,12 @@
  *
  * Why this exists: the web PWA is hosted for prod and QA on the SAME origin,
  * only under different base paths:
- *   - Prod: https://cardscentral.github.io/app/
- *   - QA:   https://cardscentral.github.io/qa/
+ *   - Prod: https://cardscentral.github.io/cardscentral/app/
+ *   - QA:   https://cardscentral.github.io/cardscentral/qa/
  * On the web, AsyncStorage is backed by `localStorage`, which is keyed by
- * ORIGIN (not path). That means /app/ and /qa/ would otherwise share the exact
+ * ORIGIN (not path). That means app/ and qa/ would otherwise share the exact
  * same storage — so testing something on QA would clobber the user's real cards
+
  * on prod. To keep them isolated we prefix every stored key with a stage
  * namespace derived from the current URL.
  *
@@ -29,8 +30,8 @@ type Stage = 'default' | 'qa';
 /**
  * Detect the deployment stage from the current web URL.
  *
- * Prod (`/app/`) and native both map to `default` (historical, unprefixed
- * keys). Only a `/qa/` base path maps to the isolated `qa` sandbox. Anything
+ * Prod (`…/app/`) and native both map to `default` (historical, unprefixed
+ * keys). Only a `…/qa/` base path maps to the isolated `qa` sandbox. Anything
  * unexpected falls back to `default` so we never accidentally strand a user's
  * data behind a mystery namespace.
  */
@@ -39,11 +40,14 @@ function detectStage(): Stage {
   if (typeof window === 'undefined' || !window.location) return 'default';
 
   const path = window.location.pathname || '';
-  // Match a `/qa` or `/qa/…` segment anywhere at the start of the path.
-  if (/^\/qa(\/|$)/.test(path)) return 'qa';
+  // The PWA is served under a project-Pages base path
+  // (https://cardscentral.github.io/cardscentral/{app,qa}/), so match a `qa`
+  // path segment anywhere — e.g. `/cardscentral/qa/…` or a bare `/qa/…`.
+  if (/(^|\/)qa(\/|$)/.test(path)) return 'qa';
 
   return 'default';
 }
+
 
 // Computed once at module load — the base path can't change without a full
 // page reload, so there's no need to re-evaluate it per call.

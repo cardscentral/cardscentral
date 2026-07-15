@@ -14,7 +14,7 @@ Your loyalty cards in one place. A mobile app for storing and managing loyalty c
 
 ## Try it now (no install needed)
 
-Head to **[cardscentral.github.io](https://cardscentral.github.io/)** and tap **[Open the web app](https://cardscentral.github.io/app/)** — it's an installable **PWA**, so there's nothing to download and no app store account required. Your data stays on your device.
+Head to **[cardscentral.github.io](https://cardscentral.github.io/)** and tap **[Open the web app](https://cardscentral.github.io/cardscentral/app/)** — it's an installable **PWA**, so there's nothing to download and no app store account required. Your data stays on your device.
 
 To install it on your phone:
 

@@ -6,16 +6,25 @@ contributing (adding shops, running the app/tests) see
 
 ## How releases flow
 
-A release is driven by **a git tag** and **a published GitHub Release**, which
-trigger two independent pipelines:
+A release is driven by **a git tag**, which triggers the pipelines below
+(publishing a GitHub Release afterwards is optional, for readable notes):
+
 
 | Trigger | Workflow | What it ships |
 |---------|----------|---------------|
 | Push a `v*` tag | [`build-deploy.yml`](.github/workflows/build-deploy.yml) | Native apps — EAS builds iOS + Android and submits to **TestFlight** and the **Play Store internal track** |
-| Publish a GitHub **Release** | [`notify-pages.yml`](.github/workflows/notify-pages.yml) | Web — rebuilds **Prod PWA** (`/app/`) and the **landing page** (`/`) on the [`cardscentral.github.io`](https://github.com/cardscentral/cardscentral.github.io) repo |
-| Push to `main` | [`notify-pages.yml`](.github/workflows/notify-pages.yml) | Web — refreshes **QA** (`/qa/`) only; no tag/release needed |
+| Push a `v*` tag | [`deploy-web.yml`](.github/workflows/deploy-web.yml) | Web — builds the **Prod PWA** and publishes it to this repo's own Pages site at `https://cardscentral.github.io/cardscentral/app/` |
+| Push to `main` | [`deploy-web.yml`](.github/workflows/deploy-web.yml) | Web — refreshes **QA** at `https://cardscentral.github.io/cardscentral/qa/`; no tag/release needed |
 
-So a full release is: **bump the version → push the tag → publish the Release.**
+Everything runs inside this repo with the built-in `GITHUB_TOKEN` — no
+cross-repo tokens or dispatches. The **landing page** is not built here: its
+sources live in the separate [`cardscentral.github.io`](https://github.com/cardscentral/cardscentral.github.io)
+repo and are served straight from its `main` branch, so editing it there
+publishes instantly.
+
+So a full release is: **bump the version → push the tag** (publishing the
+GitHub Release is still nice for notes, but the web deploy only needs the tag).
+
 
 ## Versioning
 
@@ -46,7 +55,8 @@ app, stores and release notes agree:
 > applies automatically if/when you switch to PRs later.
 
 1. **Make sure `main` is green.** All checks and E2E suites should pass, and QA
-   (`https://cardscentral.github.io/qa/`) should look right.
+   (`https://cardscentral.github.io/cardscentral/qa/`) should look right.
+
 
 2. **Bump the version** in the files listed above and commit it directly to
    `main`:
@@ -66,8 +76,9 @@ app, stores and release notes agree:
    git push origin v1.2.3
    ```
 
-4. **Publish the GitHub Release** for that tag — this rebuilds the Prod web app
-   and the landing page:
+4. **(Optional) Publish the GitHub Release** for that tag — this is only for
+   human-readable release notes; the web + native deploys are already triggered
+   by the tag push in step 3:
 
    ```bash
    gh release create v1.2.3 --title "v1.2.3" --generate-notes
@@ -82,10 +93,11 @@ app, stores and release notes agree:
 5. **Verify the deploys:**
    - Native: EAS build finishes and the new build appears in TestFlight /
      Play Console internal track. Promote to the public tracks from there.
-   - Web: `https://cardscentral.github.io/app/` and the landing page
-     `https://cardscentral.github.io/` show the new version. (The Pages repo
-     rebuilds immediately when `PAGES_DISPATCH_TOKEN` is configured, otherwise
-     on its next scheduled run.)
+   - Web: `https://cardscentral.github.io/cardscentral/app/` shows the new
+     version (published by [`deploy-web.yml`](.github/workflows/deploy-web.yml)
+     on the tag push). The landing page at `https://cardscentral.github.io/` is
+     independent — edit it in the `cardscentral.github.io` repo.
+
 
 ## Hotfixes
 
@@ -102,6 +114,9 @@ fix on `main`, then repeat the steps above with the next PATCH version
   entries into labeled categories (Features, Bug Fixes, Shops, Translations, …)
   automatically — that grouping kicks in once the project moves to pull
   requests with labels.
-- **Forks** without the `PAGES_DISPATCH_TOKEN` / EAS secrets simply skip the
-  deploy jobs — no failures.
+- **Web deploy** needs no secrets — [`deploy-web.yml`](.github/workflows/deploy-web.yml)
+  uses the built-in `GITHUB_TOKEN` to publish to this repo's own `gh-pages`
+  branch. **Forks** without the EAS secrets simply skip the native build/submit
+  jobs — no failures.
+
 

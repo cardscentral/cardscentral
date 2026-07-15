@@ -1,0 +1,97 @@
+name: Deploy Web (PWA)
+
+# Builds the installable web PWA and publishes it to THIS repo's own GitHub
+# Pages site (project pages), served at:
+#
+#   Prod → https://cardscentral.github.io/cardscentral/app/   (built from a v* tag)
+#   QA   → https://cardscentral.github.io/cardscentral/qa/    (built from `main`)
+#
+# Everything runs inside this repo using the built-in GITHUB_TOKEN — there is NO
+# cross-repo access, no PAT, and no dispatch to another repository. Pushing a
+# `v*` tag (a release) rebuilds Prod; pushing to `main` refreshes QA. Each stage
+# publishes into its own subdirectory of the `gh-pages` branch with keep_files
+# so one never clobbers the other.
+#
+# The org landing page lives entirely in the separate `cardscentral.github.io`
+# repo and is served from its `main` branch — it is NOT built or touched here.
+#
+# One-time setup: Settings → Pages → Source = "Deploy from a branch",
+# Branch = `gh-pages` / `(root)`.
+
+on:
+  push:
+    branches: [main]
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: 'Which stage to (re)build'
+        required: true
+        default: 'auto'
+        type: choice
+        options:
+          - auto   # tag → prod, main → qa
+          - prod
+          - qa
+
+permissions:
+  contents: write
+
+concurrency:
+  group: deploy-web
+  cancel-in-progress: false
+
+jobs:
+  deploy-web:
+    name: Build & publish PWA
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve target stage
+        id: stage
+        run: |
+          set -euo pipefail
+          INPUT="${{ github.event.inputs.stage }}"
+          if [ "$INPUT" = "prod" ] || [ "$INPUT" = "qa" ]; then
+            STAGE="$INPUT"
+          elif [ "${GITHUB_REF}" != "${GITHUB_REF#refs/tags/}" ]; then
+            STAGE="prod"
+          else
+            STAGE="qa"
+          fi
+          if [ "$STAGE" = "prod" ]; then
+            DIR="app"; BASE="/cardscentral/app/"
+          else
+            DIR="qa";  BASE="/cardscentral/qa/"
+          fi
+          echo "stage=$STAGE" >> "$GITHUB_OUTPUT"
+          echo "dir=$DIR"     >> "$GITHUB_OUTPUT"
+          echo "base=$BASE"   >> "$GITHUB_OUTPUT"
+          echo "Building '$STAGE' → gh-pages/$DIR (base $BASE)"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build web PWA
+        run: npm run build:web
+        env:
+          BASE_PATH: ${{ steps.stage.outputs.base }}
+
+      - name: Publish to GitHub Pages (gh-pages branch)
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./dist
+          destination_dir: ${{ steps.stage.outputs.dir }}
+          keep_files: true
+          commit_message: 'deploy(${{ steps.stage.outputs.stage }}): ${{ github.ref_name }}'

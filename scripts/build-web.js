@@ -5,16 +5,21 @@
  * Builds the installable PWA that we host for free on GitHub Pages (so there's
  * no Apple Developer fee to reach iOS users — they "Add to Home Screen").
  *
- * The site is served at the org root (https://cardscentral.github.io/) by a
- * dedicated Pages repo. We publish the PWA in stages under different base paths:
- *   - Prod: https://cardscentral.github.io/app/   (base /app/)
- *   - QA:   https://cardscentral.github.io/qa/    (base /qa/)
+ * The PWA is published by THIS repo's own project Pages site (served under
+ * https://cardscentral.github.io/cardscentral/). We publish in stages under
+ * different base paths:
+ *   - Prod: https://cardscentral.github.io/cardscentral/app/   (base /cardscentral/app/)
+ *   - QA:   https://cardscentral.github.io/cardscentral/qa/    (base /cardscentral/qa/)
  * The base path is configurable via the BASE_PATH env var. Everything that
  * hard-codes the base path (Expo baseUrl, the manifest start_url/scope/icons,
  * and the service-worker scope) is authored with the DEFAULT_BASE placeholder
  * (/cardscentral/) below and rewritten to the target here, so a single build
  * script can produce any stage. The default (/cardscentral/) is only used for
  * local builds + the Playwright E2E server (scripts/serve-web.js).
+ *
+ * The org landing page lives in the separate cardscentral.github.io repo and is
+ * served from its main branch — it is not produced by this script.
+
  *
  * Steps:
  *   1. `expo export --platform web` → produces dist/ (a single-page web build,
@@ -27,10 +32,11 @@
  *   5. Write dist/404.html (GitHub Pages SPA fallback) and dist/.nojekyll.
  *
  * Usage:
- *   node scripts/build-web.js                # local build (default /cardscentral/)
- *   BASE_PATH=/app/ node scripts/build-web.js   # prod build (served at /app/)
- *   BASE_PATH=/qa/  node scripts/build-web.js   # QA build (served at /qa/)
+ *   node scripts/build-web.js                             # local build (default /cardscentral/)
+ *   BASE_PATH=/cardscentral/app/ node scripts/build-web.js  # prod build (served at /cardscentral/app/)
+ *   BASE_PATH=/cardscentral/qa/  node scripts/build-web.js  # QA build (served at /cardscentral/qa/)
  */
+
 
 const { execSync } = require('child_process');
 const fs = require('fs');

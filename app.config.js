@@ -1,10 +1,11 @@
 // Dynamic Expo config.
 //
-// We ship the web PWA in two stages that live on the same GitHub Pages site
-// (served at the org root, https://cardscentral.github.io/) under different
-// base paths:
-//   - Prod: /app   → https://cardscentral.github.io/app/
-//   - QA:   /qa    → https://cardscentral.github.io/qa/
+// We ship the web PWA in two stages that live on this repo's own project Pages
+// site (served under https://cardscentral.github.io/cardscentral/) under
+// different base paths:
+//   - Prod: /cardscentral/app   → https://cardscentral.github.io/cardscentral/app/
+//   - QA:   /cardscentral/qa    → https://cardscentral.github.io/cardscentral/qa/
+
 //
 // IMPORTANT: `experiments.baseUrl` must ONLY ever be set for the *web* export.
 // If it leaks into a native (iOS/Android) build, the React Native asset bundler

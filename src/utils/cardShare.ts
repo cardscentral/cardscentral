@@ -59,7 +59,8 @@ export const SHARE_FRAGMENT_KEY = 'import';
  * still fall back to the public PWA URL so a shared link always resolves
  * somewhere the recipient can open.
  */
-const DEFAULT_APP_URL = 'https://cardscentral.github.io/app/';
+const DEFAULT_APP_URL = 'https://cardscentral.github.io/cardscentral/app/';
+
 
 // ---------------------------------------------------------------------------
 // base64url helpers (work in browsers and RN/Hermes without Buffer)
