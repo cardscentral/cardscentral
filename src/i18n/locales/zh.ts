@@ -24,8 +24,6 @@ const zh: TranslationMap = {
   chooseCountry: '选择你的国家/地区',
   language: '语言',
   country: '国家/地区',
-  premium: '高级版',
-  premiumDescription: '在设备之间同步卡片（即将推出）',
   listView: '列表视图',
   gridView: '网格视图',
   import: '导入卡片',

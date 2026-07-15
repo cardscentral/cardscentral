@@ -52,8 +52,6 @@ export type TranslationKeys =
   | 'chooseCountry'
   | 'language'
   | 'country'
-  | 'premium'
-  | 'premiumDescription'
   | 'listView'
   | 'gridView'
   | 'import'

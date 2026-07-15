@@ -2,8 +2,8 @@
  * Card Storage Service
  *
  * Manages loyalty cards in local AsyncStorage.
- * Prepared for future backend sync (premium feature).
  */
+
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LoyaltyCard } from '../types';

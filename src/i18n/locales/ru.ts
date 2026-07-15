@@ -24,8 +24,6 @@ const ru: TranslationMap = {
   chooseCountry: 'Выберите свою страну',
   language: 'Язык',
   country: 'Страна',
-  premium: 'Премиум',
-  premiumDescription: 'Синхронизация карт между устройствами (скоро)',
   listView: 'Список',
   gridView: 'Сетка',
   import: 'Импорт карт',

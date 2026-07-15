@@ -24,8 +24,6 @@ const sk: TranslationMap = {
   chooseCountry: 'Vyber si krajinu',
   language: 'Jazyk',
   country: 'Krajina',
-  premium: 'Premium',
-  premiumDescription: 'Synchronizácia kariet medzi zariadeniami (už čoskoro)',
   listView: 'Zoznam',
   gridView: 'Mriežka',
   import: 'Importovať karty',

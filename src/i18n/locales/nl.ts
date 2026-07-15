@@ -24,8 +24,6 @@ const nl: TranslationMap = {
     chooseCountry: 'Kies je land',
     language: 'Taal',
     country: 'Land',
-    premium: 'Premium',
-    premiumDescription: 'Kaarten synchroniseren tussen apparaten (binnenkort)',
     listView: 'Lijst',
     gridView: 'Raster',
     import: 'Kaarten importeren',

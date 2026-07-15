@@ -24,8 +24,6 @@ const fi: TranslationMap = {
     chooseCountry: 'Valitse maasi',
     language: 'Kieli',
     country: 'Maa',
-    premium: 'Premium',
-    premiumDescription: 'Synkronoi kortit laitteiden välillä (tulossa pian)',
     listView: 'Lista',
     gridView: 'Ruudukko',
     import: 'Tuo kortteja',

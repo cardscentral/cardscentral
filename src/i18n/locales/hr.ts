@@ -24,8 +24,6 @@ const hr: TranslationMap = {
     chooseCountry: 'Odaberi svoju državu',
     language: 'Jezik',
     country: 'Država',
-    premium: 'Premium',
-    premiumDescription: 'Sinkronizacija kartica među uređajima (uskoro)',
     listView: 'Popis',
     gridView: 'Mreža',
     import: 'Uvezi kartice',

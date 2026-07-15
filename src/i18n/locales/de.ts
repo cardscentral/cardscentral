@@ -24,8 +24,6 @@ const de: TranslationMap = {
     chooseCountry: 'Wähle dein Land',
     language: 'Sprache',
     country: 'Land',
-    premium: 'Premium',
-    premiumDescription: 'Karten geräteübergreifend synchronisieren (demnächst)',
     listView: 'Liste',
     gridView: 'Raster',
     import: 'Karten importieren',

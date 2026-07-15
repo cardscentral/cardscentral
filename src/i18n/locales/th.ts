@@ -24,8 +24,6 @@ const th: TranslationMap = {
   chooseCountry: 'เลือกประเทศของคุณ',
   language: 'ภาษา',
   country: 'ประเทศ',
-  premium: 'พรีเมียม',
-  premiumDescription: 'ซิงค์บัตรระหว่างอุปกรณ์ (เร็วๆ นี้)',
   listView: 'มุมมองรายการ',
   gridView: 'มุมมองตาราง',
   import: 'นำเข้าบัตร',

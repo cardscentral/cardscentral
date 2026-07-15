@@ -24,8 +24,6 @@ const pt: TranslationMap = {
     chooseCountry: 'Seleciona o teu país',
     language: 'Idioma',
     country: 'País',
-    premium: 'Premium',
-    premiumDescription: 'Sincroniza cartões entre dispositivos (em breve)',
     listView: 'Lista',
     gridView: 'Grelha',
     import: 'Importar cartões',

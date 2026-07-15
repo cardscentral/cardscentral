@@ -24,8 +24,6 @@ const sv: TranslationMap = {
     chooseCountry: 'Välj ditt land',
     language: 'Språk',
     country: 'Land',
-    premium: 'Premium',
-    premiumDescription: 'Synka kort mellan enheter (kommer snart)',
     listView: 'Lista',
     gridView: 'Rutnät',
     import: 'Importera kort',

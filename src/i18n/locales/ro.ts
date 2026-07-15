@@ -24,8 +24,6 @@ const ro: TranslationMap = {
     chooseCountry: 'Selectează-ți țara',
     language: 'Limbă',
     country: 'Țară',
-    premium: 'Premium',
-    premiumDescription: 'Sincronizează cardurile între dispozitive (în curând)',
     listView: 'Listă',
     gridView: 'Grilă',
     import: 'Importă carduri',

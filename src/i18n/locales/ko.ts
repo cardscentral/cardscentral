@@ -24,8 +24,6 @@ const ko: TranslationMap = {
   chooseCountry: '국가를 선택하세요',
   language: '언어',
   country: '국가',
-  premium: '프리미엄',
-  premiumDescription: '기기 간 카드 동기화 (곧 제공)',
   listView: '목록 보기',
   gridView: '그리드 보기',
   import: '카드 가져오기',

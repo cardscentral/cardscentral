@@ -24,8 +24,6 @@ const hu: TranslationMap = {
     chooseCountry: 'Válaszd ki az országod',
     language: 'Nyelv',
     country: 'Ország',
-    premium: 'Prémium',
-    premiumDescription: 'Kártyák szinkronizálása eszközök között (hamarosan)',
     listView: 'Lista',
     gridView: 'Rács',
     import: 'Kártyák importálása',

@@ -24,8 +24,6 @@ const el: TranslationMap = {
     chooseCountry: 'Επίλεξε τη χώρα σου',
     language: 'Γλώσσα',
     country: 'Χώρα',
-    premium: 'Premium',
-    premiumDescription: 'Συγχρονισμός καρτών μεταξύ συσκευών (σύντομα)',
     listView: 'Λίστα',
     gridView: 'Πλέγμα',
     import: 'Εισαγωγή καρτών',

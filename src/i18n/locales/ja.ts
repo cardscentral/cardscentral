@@ -24,8 +24,6 @@ const ja: TranslationMap = {
   chooseCountry: '国を選択してください',
   language: '言語',
   country: '国',
-  premium: 'プレミアム',
-  premiumDescription: 'デバイス間でカードを同期（近日公開）',
   listView: 'リスト表示',
   gridView: 'グリッド表示',
   import: 'カードをインポート',

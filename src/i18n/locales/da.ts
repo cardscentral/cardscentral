@@ -24,8 +24,6 @@ const da: TranslationMap = {
     chooseCountry: 'Vælg dit land',
     language: 'Sprog',
     country: 'Land',
-    premium: 'Premium',
-    premiumDescription: 'Synkroniser kort mellem enheder (kommer snart)',
     listView: 'Liste',
     gridView: 'Gitter',
     import: 'Importer kort',

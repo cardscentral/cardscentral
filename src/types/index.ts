@@ -110,17 +110,9 @@ export interface LoyaltyCard {
 
 
 /**
- * Premium sync status (placeholder for future backend integration)
- */
-export interface SyncStatus {
-  isPremium: boolean;
-  lastSyncedAt?: string;
-  syncEnabled: boolean;
-}
-
-/**
  * Navigation param types
  */
+
 export type RootStackParamList = {
   Main: undefined;
   AddCard: { shopId?: string };

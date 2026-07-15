@@ -27,8 +27,6 @@ const en: FullTranslationMap = {
   chooseCountry: 'Select your country',
   language: 'Language',
   country: 'Country',
-  premium: 'Premium',
-  premiumDescription: 'Sync cards across devices (coming soon)',
   listView: 'List view',
   gridView: 'Grid view',
   import: 'Import cards',
