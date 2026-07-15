@@ -95,3 +95,25 @@ jobs:
           destination_dir: ${{ steps.stage.outputs.dir }}
           keep_files: true
           commit_message: 'deploy(${{ steps.stage.outputs.stage }}): ${{ github.ref_name }}'
+
+      # GitHub Pages only honours ONE custom 404 per site, at the gh-pages ROOT
+      # (/cardscentral/404.html). It's served for any missing path across the
+      # whole project site, so both /cardscentral/app/* and /cardscentral/qa/*
+      # deep links rely on it. Publish the SPA-redirect 404 there (it keeps the
+      # /<repo>/<stage>/ base and works for either stage). keep_files preserves
+      # the app/ and qa/ builds.
+      - name: Publish site-level SPA 404 to gh-pages root
+        run: |
+          set -euo pipefail
+          mkdir -p site-root
+          cp dist/404.html site-root/404.html
+      - name: Publish 404 fallback
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./site-root
+          destination_dir: .
+          keep_files: true
+          commit_message: 'deploy(${{ steps.stage.outputs.stage }}): site 404 fallback'
+

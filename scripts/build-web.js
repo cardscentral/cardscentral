@@ -100,6 +100,36 @@ if (!html.includes('rel="manifest"')) {
   fs.writeFileSync(indexPath, html, 'utf8');
 }
 
+// 2b. SPA deep-link support on GitHub Pages. Pages has no server-side rewrite,
+//     so a direct hit on e.g. `${BASE}card/123` returns the site's 404.html
+//     instead of the app. We use the well-known "spa-github-pages" trick: the
+//     404 page (written below + at the gh-pages root by the deploy workflow)
+//     rewrites `${BASE}card/123` → `${BASE}?/card/123` and redirects to the app
+//     base, and this snippet in index.html turns that query back into the real
+//     path via history.replaceState BEFORE React Navigation reads the URL.
+if (!html.includes('__spa_redirect__')) {
+  const decoder = `
+    <script>
+      // __spa_redirect__ — restore a deep link encoded by 404.html as ?/path.
+      (function () {
+        var l = window.location;
+        if (l.search && l.search[1] === '/') {
+          var decoded = l.search.slice(1).split('&').map(function (s) {
+            return s.replace(/~and~/g, '&');
+          }).join('?');
+          window.history.replaceState(
+            null, null,
+            l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      })();
+    </script>
+  `;
+  html = html.replace('<head>', '<head>' + decoder);
+  fs.writeFileSync(indexPath, html, 'utf8');
+}
+
+
 // 3. Rewrite the base path in the manifest + service worker. Both files are
 //    authored with the prod default (/cardscentral/); swap it for the target.
 const DEFAULT_BASE = '/cardscentral/';
@@ -127,8 +157,45 @@ if (fs.existsSync(swPath)) {
   fs.writeFileSync(swPath, sw, 'utf8');
 }
 
-// 5. GitHub Pages: SPA fallback + disable Jekyll (so _expo/ is served as-is).
-fs.copyFileSync(indexPath, path.join(DIST, '404.html'));
+// 5. GitHub Pages SPA fallback. Pages serves the SITE-LEVEL 404.html (at the
+//    gh-pages root, e.g. /cardscentral/404.html) for ANY missing path across
+//    the whole project site — subdirectory 404s are ignored for the fallback.
+//    So instead of copying index.html (which only helps at this stage's own
+//    path), we write the "spa-github-pages" redirect page: it keeps the first
+//    `pathSegmentsToKeep` path segments as the app base (e.g. /cardscentral/app)
+//    and turns the rest into a `?/...` query, then redirects there. The decoder
+//    injected into index.html (step 2b) restores the real URL on load.
+//
+//    pathSegmentsToKeep = 2 keeps `/<repo>/<stage>/` (e.g. /cardscentral/app/)
+//    as the base, so a single 404.html works for BOTH /cardscentral/app/* and
+//    /cardscentral/qa/*. The deploy workflow also copies this file to the
+//    gh-pages root so Pages actually serves it as the site 404.
+const spa404 = `<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Cards Central</title>
+    <script>
+      // spa-github-pages redirect. Keep the repo + stage segments as the base
+      // and encode the deep path as ?/... so index.html can restore it.
+      (function () {
+        var pathSegmentsToKeep = 2;
+        var l = window.location;
+        l.replace(
+          l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+          l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
+          l.pathname.split('/').slice(1 + pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
+          (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+          l.hash
+        );
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
+`;
+fs.writeFileSync(path.join(DIST, '404.html'), spa404, 'utf8');
 fs.writeFileSync(path.join(DIST, '.nojekyll'), '', 'utf8');
 
 console.log('\n✅ PWA built to dist/ (base path ' + BASE + ')');
+
