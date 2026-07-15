@@ -83,7 +83,12 @@ function row(y, color, letter, name, sub) {
 const cards = frame(`
   <rect x="0" y="0" width="${W}" height="${H}" fill="#f4f3fa"/>
   <rect x="0" y="0" width="${W}" height="120" fill="url(#brand)"/>
-  <text x="26" y="96" font-family="Arial" font-size="26" font-weight="800" fill="#ffffff">My Cards</text>
+  <!-- Branded header: logo chip + "Cards Central" wordmark, matching the
+       in-app HeaderLogo (which replaced the old plain "My Cards" title). -->
+  <rect x="26" y="70" width="34" height="34" rx="8" fill="#ffffff"/>
+  <text x="43" y="94" font-family="Arial" font-size="20" font-weight="800" fill="#4338CA" text-anchor="middle">C</text>
+  <text x="72" y="96" font-family="Arial" font-size="24" font-weight="800" fill="#ffffff">Cards Central</text>
+
 
   ${row(150, '#E4002B', 'H', 'H&M', 'Fashion')}
   ${row(238, '#0B57A4', 'T', 'Tesco Clubcard', 'Groceries')}

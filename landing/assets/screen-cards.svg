@@ -13,7 +13,12 @@
     
   <rect x="0" y="0" width="390" height="844" fill="#f4f3fa"/>
   <rect x="0" y="0" width="390" height="120" fill="url(#brand)"/>
-  <text x="26" y="96" font-family="Arial" font-size="26" font-weight="800" fill="#ffffff">My Cards</text>
+  <!-- Branded header: logo chip + "Cards Central" wordmark, matching the
+       in-app HeaderLogo (which replaced the old plain "My Cards" title). -->
+  <rect x="26" y="70" width="34" height="34" rx="8" fill="#ffffff"/>
+  <text x="43" y="94" font-family="Arial" font-size="20" font-weight="800" fill="#4338CA" text-anchor="middle">C</text>
+  <text x="72" y="96" font-family="Arial" font-size="24" font-weight="800" fill="#ffffff">Cards Central</text>
+
 
   
     <rect x="26" y="150" width="338" height="76" rx="16" fill="#ffffff" stroke="#e7e4f0"/>
