@@ -23,16 +23,21 @@ appId: com.cardscentral.app
     visible:
       id: "shop-search-input"
     timeout: 5000
-- scrollUntilVisible:
-    element:
+# Select Tesco via search (avoids the Android grid scroll/tap race).
+- tapOn:
+    id: "shop-search-input"
+- inputText: "Tesco"
+- extendedWaitUntil:
+    visible:
       id: "shop-select-tesco"
-    direction: DOWN
+    timeout: 5000
+- hideKeyboard
 - tapOn:
     id: "shop-select-tesco"
 - extendedWaitUntil:
     visible:
       id: "card-number-input"
-    timeout: 5000
+    timeout: 10000
 - tapOn:
     id: "card-number-input"
 - inputText: "1234567890123"

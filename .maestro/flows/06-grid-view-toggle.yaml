@@ -19,16 +19,24 @@ appId: com.cardscentral.app
       id: "shop-search-input"
     timeout: 5000
 
-- scrollUntilVisible:
-    element:
+# Select Tesco via the search box rather than scrolling the grid. On the
+# Android emulator, `scrollUntilVisible` can leave the tile at the very edge of
+# the viewport with the scroll still settling, so the following `tapOn` lands on
+# a mid-animation frame and never navigates (the `card-number-input` wait then
+# times out). Filtering by text puts a single, fully on-screen tile at the top,
+# which removes the scroll/tap race.
+- tapOn:
+    id: "shop-search-input"
+- inputText: "Tesco"
+- extendedWaitUntil:
+    visible:
       id: "shop-select-tesco"
-    direction: DOWN
+    timeout: 5000
+- hideKeyboard
 - tapOn:
     id: "shop-select-tesco"
 # Selecting a shop navigates to the card-details screen. Wait for that
-# navigation to finish before interacting — scrollUntilVisible does not wait
-# for a screen transition and would otherwise scroll past the (already
-# top-of-screen) input before it has rendered.
+# navigation to finish before interacting.
 - extendedWaitUntil:
     visible:
       id: "card-number-input"
