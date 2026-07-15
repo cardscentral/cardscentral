@@ -20,7 +20,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const LANGUAGE_STORAGE_KEY = storageKey('language');
 
 
-const APP_VERSION = '1.0.0';
+const APP_VERSION = '1.1.0';
+
 // Release notes for the current version on GitHub. Tags follow the `vX.Y.Z`
 // convention created by the release workflow.
 const RELEASE_NOTES_URL = `https://github.com/cardscentral/cardscentral/releases/tag/v${APP_VERSION}`;
