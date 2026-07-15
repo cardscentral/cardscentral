@@ -125,7 +125,8 @@ make e2e-web           # build, serve dist/, and run the whole suite
 make e2e-web-ui        # interactive UI mode
 ```
 
-The web specs (`e2e-web/`) are numbered to match the Maestro flows (`.maestro/flows/`), so the shared UI logic is covered on both sides. Run `make help` to see all available targets. For CI/deploy details, see **[CONTRIBUTING.md](CONTRIBUTING.md)**.
+The web specs (`e2e-web/`) are numbered to match the Maestro flows (`.maestro/flows/`), so the shared UI logic is covered on both sides. Run `make help` to see all available targets. For CI/deploy details, see **[CONTRIBUTING.md](CONTRIBUTING.md)**; for cutting a versioned release, see **[RELEASING.md](RELEASING.md)**.
+
 
 ## Tech Stack
 

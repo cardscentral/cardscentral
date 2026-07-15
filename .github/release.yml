@@ -1,0 +1,41 @@
+# Configures GitHub's auto-generated release notes.
+# Used by "Generate release notes" in the UI and `gh release create --generate-notes`.
+# PRs are grouped into the categories below based on their labels.
+# See: https://docs.github.com/en/repositories/releasing-projects-on-github/automatically-generated-release-notes
+changelog:
+  exclude:
+    labels:
+      - ignore-for-release
+      - dependencies
+    authors:
+      - dependabot
+  categories:
+    - title: 🚀 Features
+      labels:
+        - feature
+        - enhancement
+    - title: 🐛 Bug Fixes
+      labels:
+        - bug
+        - fix
+    - title: 🏪 New & Updated Shops
+      labels:
+        - shop
+        - shops
+    - title: 🌐 Translations
+      labels:
+        - i18n
+        - translation
+    - title: 📝 Documentation
+      labels:
+        - documentation
+        - docs
+    - title: 🧰 Maintenance
+      labels:
+        - chore
+        - refactor
+        - ci
+        - test
+    - title: Other Changes
+      labels:
+        - "*"

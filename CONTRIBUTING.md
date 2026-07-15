@@ -172,10 +172,8 @@ Specs live in `e2e-web/` and are numbered to match the Maestro flows in `.maestr
 - **CI** runs on every push and PR to `main` (typecheck + E2E suites).
 - **Web / PWA** is published as an installable Progressive Web App on GitHub Pages from the [`cardscentral/cardscentral.github.io`](https://github.com/cardscentral/cardscentral.github.io) repo: QA (`/qa/`) refreshes on every push to `main`, and Production (`/app/`) plus the landing page redeploy when a GitHub Release is published.
 
-```bash
-git tag v1.2.3 && git push origin v1.2.3
-gh release create v1.2.3 --generate-notes
-```
+Cutting a versioned release (tags, native store builds, and the prod web deploy) is a maintainer task — see **[RELEASING.md](RELEASING.md)** for the full checklist.
+
 
 ## Questions?
 
