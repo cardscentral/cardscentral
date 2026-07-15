@@ -111,12 +111,21 @@ const linking: LinkingOptions<RootStackParamList> = {
 
     screens: {
 
-      // The tab navigator lives at the root; we intentionally don't give the
-      // individual tabs their own URLs (restoring a deep tab URL on reload was
-      // brittle). The value of linking here is a browser-history entry per
-      // pushed stack screen so Back/Forward work.
-      Main: '',
+      // The tab navigator lives at the root. Each tab gets its own path so a
+      // deep tab URL (e.g. /settings) survives a page refresh / direct load:
+      //   Cards    → base root ('')
+      //   Settings → /settings
+      // Without these, getPathFromState still appends the tab name to the URL
+      // but getStateFromPath can't map it back, so a refresh on /Settings
+      // silently fell back to the first (Cards) tab.
+      Main: {
+        screens: {
+          Cards: '',
+          Settings: 'settings',
+        },
+      },
       AddCard: 'add',
+
       CardDetails: 'card-details',
       EditCard: 'edit/:cardId',
       CardDetail: 'card/:cardId',
