@@ -196,35 +196,26 @@ jobs:
       # chain to avoid disturbing it.
 
 
-      # The simulator occasionally races on a cold app relaunch/navigation
-      # transition (e.g. an `extendedWaitUntil` on `cards-list-screen` times out
-      # even though the screen renders moments later); these are environment
-      # timing flakes, not app regressions, and they surface intermittently on
-      # different flows per run. Retry the whole suite once on failure — a
-      # transient flake self-heals on the rerun, while a genuine failure fails
-      # both attempts and breaks the build. (The pinned/cached Maestro CLI has no
-      # `--retry-if-failed` flag, so we retry at the shell level instead.)
+      # NOTE: do NOT wrap this in a whole-suite retry. Flows 02–08 are stateful
+      # (02 adds the card that 03/04/05 view/edit/delete, and 05 deletes it), so
+      # rerunning the suite on failure without clearing app state leaves a
+      # leftover card that breaks the second attempt's 02–05 chain. Any per-flow
+      # flakiness is handled inside the flows via `extendedWaitUntil`.
       - name: Run Maestro E2E Tests
         run: |
-          run_suite() {
-            maestro test \
-              .maestro/flows/01-country-selection.yaml \
-              .maestro/flows/02-add-card.yaml \
-              .maestro/flows/03-view-card-detail.yaml \
-              .maestro/flows/04-edit-card.yaml \
-              .maestro/flows/05-delete-card.yaml \
-              .maestro/flows/06-grid-view-toggle.yaml \
-              .maestro/flows/07-search-shops.yaml \
-              .maestro/flows/08-settings.yaml \
-              .maestro/flows/10-import-vouchervault.yaml \
-              .maestro/flows/12-shop-app-links.yaml \
-              .maestro/flows/14-theme.yaml \
-              --format junit --output report.xml
-          }
-          run_suite || {
-            echo "::warning::Maestro suite failed; retrying once for flakiness."
-            run_suite
-          }
+          maestro test \
+            .maestro/flows/01-country-selection.yaml \
+            .maestro/flows/02-add-card.yaml \
+            .maestro/flows/03-view-card-detail.yaml \
+            .maestro/flows/04-edit-card.yaml \
+            .maestro/flows/05-delete-card.yaml \
+            .maestro/flows/06-grid-view-toggle.yaml \
+            .maestro/flows/07-search-shops.yaml \
+            .maestro/flows/08-settings.yaml \
+            .maestro/flows/10-import-vouchervault.yaml \
+            .maestro/flows/12-shop-app-links.yaml \
+            .maestro/flows/14-theme.yaml \
+            --format junit --output report.xml
 
 
 

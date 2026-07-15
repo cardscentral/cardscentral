@@ -28,10 +28,22 @@ appId: com.cardscentral.app
     visible:
       id: "shop-search-input"
     timeout: 5000
-- scrollUntilVisible:
-    element:
+
+# Select H&M via the search box rather than scrolling the grid. On the Android
+# emulator, `scrollUntilVisible` can leave the H&M tile at the very edge of the
+# viewport with the scroll still settling, so the following `tapOn` lands on the
+# wrong spot / a mid-animation frame and never navigates to the card-details
+# screen (the `card-number-input` wait then times out). Filtering by text puts a
+# single, fully on-screen H&M tile at the top — the same reliable path flow 07
+# uses — which removes the scroll/tap race.
+- tapOn:
+    id: "shop-search-input"
+- inputText: "H&M"
+- extendedWaitUntil:
+    visible:
       id: "shop-select-hm"
-    direction: DOWN
+    timeout: 5000
+- hideKeyboard
 - tapOn:
     id: "shop-select-hm"
 

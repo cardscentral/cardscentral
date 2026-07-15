@@ -177,15 +177,13 @@ jobs:
             # continuations get mangled (Maestro then sees a literal `\` flow
             # path: "Flow path does not exist: …/\").
 
-            # The emulator occasionally races on a cold navigation transition
-            # (e.g. an `extendedWaitUntil` on `card-number-input` times out even
-            # though the screen renders moments later); these are environment
-            # timing flakes, not app regressions, and they surface intermittently
-            # on different flows per run. Retry the whole suite once on failure —
-            # a transient flake self-heals on the rerun, while a genuine failure
-            # fails both attempts and breaks the build. (The pinned/cached Maestro
-            # CLI has no `--retry-if-failed` flag, so we retry at the shell level.)
-            maestro test .maestro/flows/01-country-selection.yaml .maestro/flows/02-add-card.yaml .maestro/flows/03-view-card-detail.yaml .maestro/flows/04-edit-card.yaml .maestro/flows/05-delete-card.yaml .maestro/flows/06-grid-view-toggle.yaml .maestro/flows/07-search-shops.yaml .maestro/flows/08-settings.yaml .maestro/flows/10-import-vouchervault.yaml .maestro/flows/12-shop-app-links.yaml .maestro/flows/14-theme.yaml --format junit --output report.xml || { echo "::warning::Maestro suite failed; retrying once for flakiness."; maestro test .maestro/flows/01-country-selection.yaml .maestro/flows/02-add-card.yaml .maestro/flows/03-view-card-detail.yaml .maestro/flows/04-edit-card.yaml .maestro/flows/05-delete-card.yaml .maestro/flows/06-grid-view-toggle.yaml .maestro/flows/07-search-shops.yaml .maestro/flows/08-settings.yaml .maestro/flows/10-import-vouchervault.yaml .maestro/flows/12-shop-app-links.yaml .maestro/flows/14-theme.yaml --format junit --output report.xml; }
+            # NOTE: do NOT wrap this in a whole-suite retry. Flows 02–08 are
+            # stateful (02 adds the card that 03/04/05 view/edit/delete, and 05
+            # deletes it), so rerunning the suite on failure without clearing app
+            # state leaves a leftover card that breaks the second attempt's 02–05
+            # chain. Per-flow flakiness is handled inside the flows via
+            # `extendedWaitUntil`.
+            maestro test .maestro/flows/01-country-selection.yaml .maestro/flows/02-add-card.yaml .maestro/flows/03-view-card-detail.yaml .maestro/flows/04-edit-card.yaml .maestro/flows/05-delete-card.yaml .maestro/flows/06-grid-view-toggle.yaml .maestro/flows/07-search-shops.yaml .maestro/flows/08-settings.yaml .maestro/flows/10-import-vouchervault.yaml .maestro/flows/12-shop-app-links.yaml .maestro/flows/14-theme.yaml --format junit --output report.xml
 
 
 
