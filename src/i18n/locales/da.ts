@@ -66,6 +66,11 @@ const da: TranslationMap = {
   aboutSection: 'Om',
   version: 'Version',
   appTagline: 'Cards Central – Alle dine loyalitetskort ét sted.',
+    appearanceSection: 'Udseende',
+    theme: 'Tema',
+    themeSystem: 'System',
+    themeLight: 'Lyst',
+    themeDark: 'Mørkt',
 };
 
 export default da;

@@ -66,6 +66,11 @@ const ro: TranslationMap = {
   aboutSection: 'Despre',
   version: 'Versiune',
   appTagline: 'Cards Central – Cardurile tale de fidelitate într-un singur loc.',
+    appearanceSection: 'Aspect',
+    theme: 'Temă',
+    themeSystem: 'Sistem',
+    themeLight: 'Luminos',
+    themeDark: 'Întunecat',
 };
 
 export default ro;

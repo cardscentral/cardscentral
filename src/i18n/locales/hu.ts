@@ -66,6 +66,11 @@ const hu: TranslationMap = {
   aboutSection: 'Névjegy',
   version: 'Verzió',
   appTagline: 'Cards Central – A hűségkártyáid egy helyen.',
+    appearanceSection: 'Megjelenés',
+    theme: 'Téma',
+    themeSystem: 'Rendszer',
+    themeLight: 'Világos',
+    themeDark: 'Sötét',
 };
 
 export default hu;

@@ -66,6 +66,11 @@ const th: TranslationMap = {
   aboutSection: 'เกี่ยวกับ',
   version: 'เวอร์ชัน',
   appTagline: 'Cards Central – บัตรสะสมแต้มของคุณในที่เดียว',
+  appearanceSection: 'ลักษณะที่ปรากฏ',
+  theme: 'ธีม',
+  themeSystem: 'ระบบ',
+  themeLight: 'สว่าง',
+  themeDark: 'มืด',
 };
 
 export default th;

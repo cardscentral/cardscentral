@@ -66,6 +66,11 @@ const de: TranslationMap = {
   aboutSection: 'Über',
   version: 'Version',
   appTagline: 'Cards Central – Deine Kundenkarten an einem Ort.',
+    appearanceSection: 'Darstellung',
+    theme: 'Design',
+    themeSystem: 'System',
+    themeLight: 'Hell',
+    themeDark: 'Dunkel',
 };
 
 export default de;

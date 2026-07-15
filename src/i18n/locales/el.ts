@@ -66,6 +66,11 @@ const el: TranslationMap = {
   aboutSection: 'Σχετικά',
   version: 'Έκδοση',
   appTagline: 'Cards Central – Όλες οι κάρτες πιστότητάς σου σε ένα μέρος.',
+    appearanceSection: 'Εμφάνιση',
+    theme: 'Θέμα',
+    themeSystem: 'Σύστημα',
+    themeLight: 'Φωτεινό',
+    themeDark: 'Σκούρο',
 };
 
 export default el;

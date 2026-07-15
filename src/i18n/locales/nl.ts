@@ -66,6 +66,11 @@ const nl: TranslationMap = {
   aboutSection: 'Over',
   version: 'Versie',
   appTagline: 'Cards Central – Al je klantenkaarten op één plek.',
+    appearanceSection: 'Weergave',
+    theme: 'Thema',
+    themeSystem: 'Systeem',
+    themeLight: 'Licht',
+    themeDark: 'Donker',
 };
 
 export default nl;

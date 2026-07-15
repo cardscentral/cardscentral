@@ -66,6 +66,11 @@ const sv: TranslationMap = {
   aboutSection: 'Om',
   version: 'Version',
   appTagline: 'Cards Central – Alla dina lojalitetskort på ett ställe.',
+    appearanceSection: 'Utseende',
+    theme: 'Tema',
+    themeSystem: 'System',
+    themeLight: 'Ljust',
+    themeDark: 'Mörkt',
 };
 
 export default sv;

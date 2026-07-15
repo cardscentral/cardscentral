@@ -66,6 +66,11 @@ const cs: TranslationMap = {
   aboutSection: 'O aplikaci',
   version: 'Verze',
   appTagline: 'Cards Central – Tvoje věrnostní karty na jednom místě.',
+  appearanceSection: 'Vzhled',
+  theme: 'Motiv',
+  themeSystem: 'Systém',
+  themeLight: 'Světlý',
+  themeDark: 'Tmavý',
 };
 
 export default cs;

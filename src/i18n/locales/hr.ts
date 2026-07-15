@@ -66,6 +66,11 @@ const hr: TranslationMap = {
   aboutSection: 'O aplikaciji',
   version: 'Verzija',
   appTagline: 'Cards Central – Sve tvoje kartice vjernosti na jednom mjestu.',
+    appearanceSection: 'Izgled',
+    theme: 'Tema',
+    themeSystem: 'Sustav',
+    themeLight: 'Svijetla',
+    themeDark: 'Tamna',
 };
 
 export default hr;

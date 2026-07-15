@@ -66,6 +66,11 @@ const ru: TranslationMap = {
   aboutSection: 'О приложении',
   version: 'Версия',
   appTagline: 'Cards Central – Все твои карты лояльности в одном месте.',
+  appearanceSection: 'Оформление',
+  theme: 'Тема',
+  themeSystem: 'Системная',
+  themeLight: 'Светлая',
+  themeDark: 'Тёмная',
 };
 
 export default ru;

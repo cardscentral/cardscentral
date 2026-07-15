@@ -66,6 +66,11 @@ const ja: TranslationMap = {
   aboutSection: 'アプリについて',
   version: 'バージョン',
   appTagline: 'Cards Central – ポイントカードを一か所に。',
+  appearanceSection: '外観',
+  theme: 'テーマ',
+  themeSystem: 'システム',
+  themeLight: 'ライト',
+  themeDark: 'ダーク',
 };
 
 export default ja;

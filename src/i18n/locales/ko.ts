@@ -66,6 +66,11 @@ const ko: TranslationMap = {
   aboutSection: '정보',
   version: '버전',
   appTagline: 'Cards Central – 멤버십 카드를 한곳에.',
+  appearanceSection: '화면 모드',
+  theme: '테마',
+  themeSystem: '시스템',
+  themeLight: '라이트',
+  themeDark: '다크',
 };
 
 export default ko;

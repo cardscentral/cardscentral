@@ -66,6 +66,11 @@ const fi: TranslationMap = {
   aboutSection: 'Tietoja',
   version: 'Versio',
   appTagline: 'Cards Central – Kaikki kanta-asiakaskorttisi yhdessä paikassa.',
+    appearanceSection: 'Ulkoasu',
+    theme: 'Teema',
+    themeSystem: 'Järjestelmä',
+    themeLight: 'Vaalea',
+    themeDark: 'Tumma',
 };
 
 export default fi;

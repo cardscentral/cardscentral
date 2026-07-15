@@ -66,6 +66,11 @@ const zh: TranslationMap = {
   aboutSection: '关于',
   version: '版本',
   appTagline: 'Cards Central – 会员卡集中管理。',
+  appearanceSection: '外观',
+  theme: '主题',
+  themeSystem: '系统',
+  themeLight: '浅色',
+  themeDark: '深色',
 };
 
 export default zh;
