@@ -126,8 +126,12 @@ const linking: LinkingOptions<RootStackParamList> = {
       },
       AddCard: 'add',
 
-      CardDetails: 'card-details',
+      // shopId is part of the path so this screen survives a refresh / direct
+      // load (it's required to render the shop; without it in the URL a reload
+      // showed "Shop not found").
+      CardDetails: 'card-details/:shopId',
       EditCard: 'edit/:cardId',
+
       CardDetail: 'card/:cardId',
       ScanBarcode: 'scan',
       Import: 'import',

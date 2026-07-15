@@ -53,8 +53,13 @@ export function AddCardScreen() {
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.content}
+      testID="add-card-screen"
+    >
       {/* Search Bar */}
+
       <Text style={styles.mainTitle}>{t('selectShop')}</Text>
       <TextInput
         style={styles.searchInput}

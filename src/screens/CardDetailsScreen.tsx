@@ -68,15 +68,20 @@ export function CardDetailsScreen() {
 
   if (!shop) {
     return (
-      <View style={styles.container}>
+      <View style={styles.container} testID="card-details-screen">
         <Text>Shop not found</Text>
       </View>
     );
   }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.content}
+      testID="card-details-screen"
+    >
       {/* Selected Shop Header */}
+
       <View style={styles.shopHeader}>
         <ShopIcon brand={shop.brand} shopId={shop.id} name={shop.name} size={48} />
         <Text style={styles.shopName}>{shop.name}</Text>

@@ -70,8 +70,13 @@ export function EditCardScreen() {
   const shop = getShopById(card.shopId);
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.content}
+      testID="edit-card-screen"
+    >
       {/* Shop Info (read-only) */}
+
       {shop && (
         <View style={styles.shopInfo}>
           <ShopIcon brand={shop.brand} size={48} />
