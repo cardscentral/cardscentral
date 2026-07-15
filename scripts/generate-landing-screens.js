@@ -110,7 +110,8 @@ const bc = frame(`
   <!-- Barcode card -->
   <rect x="26" y="286" width="${W - 52}" height="220" rx="18" fill="#ffffff" stroke="#e7e4f0"/>
   <g transform="translate(${W / 2 - 120}, 320)">${barcode(0, 0, 240, 110)}</g>
-  <text x="${W / 2}" y="470" font-family="monospace" font-size="18" fill="#1e1b2e" text-anchor="middle">2901 4567 8901</text>
+  <text x="${W / 2}" y="470" font-family="monospace" font-size="18" fill="#1e1b2e" text-anchor="middle">1111 1111 1111</text>
+
 
   <!-- "App available" info banner (matches CardDetailScreen) -->
   <rect x="26" y="528" width="${W - 52}" height="70" rx="12" fill="#EAF3FF" stroke="#B9D8FF"/>
@@ -138,7 +139,8 @@ const add = frame(`
   <text x="82" y="216" font-family="Arial" font-size="16" font-weight="700" fill="#1e1b2e">H&amp;M</text>
   <text x="30" y="280" font-family="Arial" font-size="13" font-weight="700" fill="#8b869c">CARD NUMBER</text>
   <rect x="26" y="292" width="${W - 52}" height="56" rx="14" fill="#ffffff" stroke="#e7e4f0"/>
-  <text x="42" y="326" font-family="monospace" font-size="16" fill="#1e1b2e">2901 4567 8901</text>
+  <text x="42" y="326" font-family="monospace" font-size="16" fill="#1e1b2e">1111 1111 1111</text>
+
   <text x="30" y="390" font-family="Arial" font-size="13" font-weight="700" fill="#8b869c">NICKNAME (OPTIONAL)</text>
   <rect x="26" y="402" width="${W - 52}" height="56" rx="14" fill="#ffffff" stroke="#e7e4f0"/>
   <rect x="26" y="${H - 120}" width="${W - 52}" height="58" rx="16" fill="url(#brand)"/>
