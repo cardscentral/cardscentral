@@ -1,4 +1,23 @@
-import { device, element, by, expect } from 'detox';
+import { device, element, by, expect, waitFor } from 'detox';
+
+/**
+ * Fresh installs now open on the country-selection screen (there is no
+ * persisted country yet). Every test starts from a reloaded RN instance, so we
+ * pick a country here to land on the cards list before asserting anything.
+ *
+ * Mirrors the web E2E `selectCountrySK` helper in e2e-web/helpers.ts.
+ */
+async function bootToCardsList() {
+  await device.reloadReactNative();
+  // Country selection is the first screen on a clean slate.
+  await waitFor(element(by.id('country-SK')))
+    .toBeVisible()
+    .withTimeout(10000);
+  await element(by.id('country-SK')).tap();
+  await waitFor(element(by.id('cards-list-screen')))
+    .toBeVisible()
+    .withTimeout(10000);
+}
 
 describe('Cards Central - Card Management', () => {
   beforeAll(async () => {
@@ -6,13 +25,13 @@ describe('Cards Central - Card Management', () => {
   });
 
   beforeEach(async () => {
-    await device.reloadReactNative();
+    await bootToCardsList();
   });
 
   describe('Empty State', () => {
     it('should show empty state when no cards exist', async () => {
-      await expect(element(by.text('No Cards Yet'))).toBeVisible();
-      await expect(element(by.text('Tap the + button to add your first loyalty card'))).toBeVisible();
+      // Text is localized (i18n), so assert on the stable testID instead.
+      await expect(element(by.id('empty-state'))).toBeVisible();
     });
 
     it('should show add card button', async () => {
@@ -137,8 +156,10 @@ describe('Cards Central - Card Management', () => {
   describe('Settings', () => {
     it('should show settings screen', async () => {
       await element(by.text('Settings')).tap();
-      await expect(element(by.text('Premium Feature'))).toBeVisible();
-      await expect(element(by.text('Free Plan'))).toBeVisible();
+      await expect(element(by.id('settings-screen'))).toBeVisible();
+      // General section with country/language rows is always present.
+      await expect(element(by.id('settings-country'))).toBeVisible();
+      await expect(element(by.id('settings-language'))).toBeVisible();
     });
   });
 });
