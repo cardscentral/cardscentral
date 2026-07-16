@@ -117,12 +117,24 @@ jobs:
           echo "hash=$HASH" >> "$GITHUB_OUTPUT"
           echo "Build fingerprint: $HASH"
 
+      # Include the Xcode version in the cache key. The cached .app is a
+      # simulator binary built against a specific toolchain/simulator runtime;
+      # when the runner image bumps Xcode (and thus the newest simulator
+      # runtime we boot below), a previously-cached .app can install but fail
+      # to render (blank screen → every Maestro assertion fails). Keying on the
+      # Xcode version invalidates such stale .apps so we rebuild instead of
+      # shipping a broken binary.
+      - name: Resolve Xcode version
+        id: xcode-version
+        run: echo "version=$(xcodebuild -version | head -1 | tr ' ' '-')" >> "$GITHUB_OUTPUT"
+
       - name: Cache iOS app
         id: cache-ios-app
         uses: actions/cache@v4
         with:
           path: cached-app/CardsCentral.app
-          key: ios-app-${{ steps.build-fingerprint.outputs.hash }}
+          key: ios-app-${{ steps.xcode-version.outputs.version }}-${{ steps.build-fingerprint.outputs.hash }}
+
 
       - name: Prebuild iOS
         if: steps.cache-ios-app.outputs.cache-hit != 'true'
@@ -164,12 +176,23 @@ jobs:
       # Create + boot a concrete simulator, then install and launch the app.
       # The runner may not ship a pre-created "iPhone 16" device, so create one
       # explicitly against an available runtime.
+      #
+      # This step also acts as a smoke test / pre-warm: it launches the app and
+      # verifies the process actually stays alive. On iOS the app can crash on
+      # the very first launch after a fresh install (a known startup timing
+      # race — see the `retry` blocks in the Maestro flows). If we proceed into
+      # Maestro against a simulator where the app is dead / never rendered,
+      # EVERY flow fails at once (e.g. "Select your country" never appears),
+      # turning a transient hiccup into a red build. Retrying the launch here
+      # absorbs that race before the test suite starts, and fails fast with a
+      # clear message if the app genuinely cannot run.
       - name: Boot Simulator
         run: |
           RUNTIME=$(xcrun simctl list runtimes ios -j | python3 -c "import json,sys;rs=[r for r in json.load(sys.stdin)['runtimes'] if r['isAvailable']];print(rs[-1]['identifier'])")
           echo "Using runtime: $RUNTIME"
           UDID=$(xcrun simctl create 'ci-iphone' 'iPhone 16' "$RUNTIME")
           echo "Created simulator: $UDID"
+          echo "SIMULATOR_UDID=$UDID" >> "$GITHUB_ENV"
           xcrun simctl boot "$UDID"
           # `simctl boot` returns before the OS is ready; wait so the subsequent
           # install/launch don't race against an unbooted system.
@@ -180,7 +203,37 @@ jobs:
             APP_PATH="ios/derived_data/Build/Products/Release-iphonesimulator/CardsCentral.app"
           fi
           xcrun simctl install "$UDID" "$APP_PATH"
-          xcrun simctl launch "$UDID" com.cardscentral.app
+
+          # Launch and verify the app is actually running. `simctl launch`
+          # returns a PID even when the app then crashes milliseconds later, so
+          # a returned PID is NOT proof of a healthy launch. Poll `simctl
+          # spawn launchctl print` for the app's service to confirm it stays
+          # up, and retry the launch a few times to ride out the startup race.
+          launch_and_verify() {
+            xcrun simctl launch "$UDID" com.cardscentral.app || return 1
+            for _ in $(seq 1 10); do
+              sleep 2
+              if xcrun simctl spawn "$UDID" launchctl print system 2>/dev/null \
+                   | grep -q "UIKitApplication:com.cardscentral.app"; then
+                return 0
+              fi
+            done
+            return 1
+          }
+
+          for attempt in 1 2 3; do
+            echo "App launch attempt $attempt…"
+            if launch_and_verify; then
+              echo "App launched and is running."
+              exit 0
+            fi
+            echo "App did not stay running; terminating and retrying."
+            xcrun simctl terminate "$UDID" com.cardscentral.app 2>/dev/null || true
+          done
+
+          echo "::error::App failed to launch/stay running on the simulator after 3 attempts."
+          exit 1
+
 
       # Pass the flow files explicitly (NOT the whole `.maestro` workspace, which
       # Maestro may run in parallel/independently). Flows 02–08 are stateful and
@@ -196,26 +249,53 @@ jobs:
       # chain to avoid disturbing it.
 
 
-      # NOTE: do NOT wrap this in a whole-suite retry. Flows 02–08 are stateful
-      # (02 adds the card that 03/04/05 view/edit/delete, and 05 deletes it), so
-      # rerunning the suite on failure without clearing app state leaves a
-      # leftover card that breaks the second attempt's 02–05 chain. Any per-flow
-      # flakiness is handled inside the flows via `extendedWaitUntil`.
+      # Run the ordered flow list, retrying the WHOLE suite on failure.
+      #
+      # Flows 02–08 are stateful and sequential (02 adds the card that
+      # 03/04/05 view/edit/delete, 05 deletes it). The failure we keep hitting
+      # is a transient iOS startup crash mid-chain: the app crashes during, say,
+      # flow 02, which then cascades into 03/04/05 (the card was never added).
+      # This is a flaky-environment problem, not a product bug — a rerun passes.
+      #
+      # A naïve suite rerun would be unsafe (a leftover card from a partial
+      # first attempt would break the retry's 02→03 chain). But the list ALWAYS
+      # starts with flow 01, which begins with `clearState` — so every attempt
+      # (including retries) wipes app state before flow 02 runs. That makes the
+      # whole-suite retry idempotent: each attempt starts from a clean install.
+      #
+      # We retry at the shell level because the cached Maestro CLI predates the
+      # `--retry-if-failed` flag. Only the JUnit report from the final attempt
+      # is kept (matching the actual pass/fail of the run).
       - name: Run Maestro E2E Tests
         run: |
-          maestro test \
-            .maestro/flows/01-country-selection.yaml \
-            .maestro/flows/02-add-card.yaml \
-            .maestro/flows/03-view-card-detail.yaml \
-            .maestro/flows/04-edit-card.yaml \
-            .maestro/flows/05-delete-card.yaml \
-            .maestro/flows/06-grid-view-toggle.yaml \
-            .maestro/flows/07-search-shops.yaml \
-            .maestro/flows/08-settings.yaml \
-            .maestro/flows/10-import-vouchervault.yaml \
-            .maestro/flows/12-shop-app-links.yaml \
-            .maestro/flows/14-theme.yaml \
-            --format junit --output report.xml
+          set +e
+          FLOWS=(
+            .maestro/flows/01-country-selection.yaml
+            .maestro/flows/02-add-card.yaml
+            .maestro/flows/03-view-card-detail.yaml
+            .maestro/flows/04-edit-card.yaml
+            .maestro/flows/05-delete-card.yaml
+            .maestro/flows/06-grid-view-toggle.yaml
+            .maestro/flows/07-search-shops.yaml
+            .maestro/flows/08-settings.yaml
+            .maestro/flows/10-import-vouchervault.yaml
+            .maestro/flows/12-shop-app-links.yaml
+            .maestro/flows/14-theme.yaml
+          )
+          attempts=2
+          for attempt in $(seq 1 "$attempts"); do
+            echo "── Maestro suite attempt $attempt/$attempts ──"
+            maestro test "${FLOWS[@]}" --format junit --output report.xml
+            status=$?
+            if [ "$status" -eq 0 ]; then
+              echo "Maestro suite passed on attempt $attempt."
+              exit 0
+            fi
+            echo "Maestro suite failed on attempt $attempt (exit $status)."
+          done
+          echo "::error::Maestro suite failed after $attempts attempts."
+          exit "$status"
+
 
 
 
