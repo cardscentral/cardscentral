@@ -13,8 +13,10 @@ A release is driven by **a git tag**, which triggers the pipelines below
 | Trigger | Workflow | What it ships |
 |---------|----------|---------------|
 | Push a `v*` tag | [`build-deploy.yml`](.github/workflows/build-deploy.yml) | Native apps — EAS builds iOS + Android and submits to **TestFlight** and the **Play Store internal track** |
+| Push a `v*` tag | [`build-deploy.yml`](.github/workflows/build-deploy.yml) | Android **sideload APK** — a standalone `.apk` is built and attached to the tag's **GitHub Release** for installing without the Play Store |
 | Push a `v*` tag | [`deploy-web.yml`](.github/workflows/deploy-web.yml) | Web — builds the **Prod PWA** and publishes it to this repo's own Pages site at `https://cardscentral.github.io/cardscentral/app/` |
 | Push to `main` | [`deploy-web.yml`](.github/workflows/deploy-web.yml) | Web — refreshes **QA** at `https://cardscentral.github.io/cardscentral/qa/`; no tag/release needed |
+
 
 Everything runs inside this repo with the built-in `GITHUB_TOKEN` — no
 cross-repo tokens or dispatches. The **landing page** is not built here: its
@@ -118,5 +120,47 @@ fix on `main`, then repeat the steps above with the next PATCH version
   uses the built-in `GITHUB_TOKEN` to publish to this repo's own `gh-pages`
   branch. **Forks** without the EAS secrets simply skip the native build/submit
   jobs — no failures.
+
+## Distribution channels
+
+Each platform has a "store" channel and, where it makes sense, a "no-store"
+fallback:
+
+| Platform | Store channel | No-store fallback |
+|----------|---------------|-------------------|
+| Android  | Play Store (internal → public) | **Sideload APK** attached to the GitHub Release |
+| iOS      | App Store / TestFlight | **PWA** — Safari → *Add to Home Screen* |
+| Web      | — | The PWA is the primary channel |
+
+### Android sideload APK
+
+- The Play Store build is an **App Bundle (`.aab`)**, which cannot be installed
+  directly. The `release-apk` job in
+  [`build-deploy.yml`](.github/workflows/build-deploy.yml) therefore does a
+  separate `eas build --profile production-apk` (see the `production-apk`
+  profile in [`eas.json`](eas.json), which sets `android.buildType: apk`),
+  waits for it, and attaches `cardscentral-<tag>.apk` to the tag's GitHub
+  Release with `gh release upload`.
+- **Signing:** the APK is signed with the project's own upload key (via EAS
+  managed credentials), **not** Google Play's re-signing key. Keep this key
+  stable across releases so sideload users can update in place. Note that a
+  sideloaded APK and a Play Store install are signed differently and cannot be
+  updated over one another — that's expected.
+- **Forks** without EAS credentials skip this job like the other native jobs.
+
+### Why there's no iOS sideload artifact
+
+There is intentionally **no `.ipa`/`.dmg`** on the GitHub Release:
+
+- `.dmg` is a macOS desktop format and unrelated to iOS.
+- `.ipa` is the iOS analog of an APK, but Apple does not allow free sideloading.
+  An `.ipa` can only be installed via the App Store/TestFlight, an ad-hoc
+  profile limited to pre-registered device UDIDs, an enterprise certificate, or
+  third-party re-signing tools (AltStore/Sideloadly) that re-sign with the
+  user's own Apple ID every 7 days. None of these work as a public
+  download-and-install artifact.
+- So iOS ships via **TestFlight/App Store**, and the **PWA** is the no-store
+  fallback for iPhone/iPad users.
+
 
 

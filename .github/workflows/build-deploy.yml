@@ -132,3 +132,59 @@ jobs:
         env:
           EXPO_ANDROID_KEYSTORE_PASSWORD: ${{ secrets.EXPO_ANDROID_KEYSTORE_PASSWORD }}
           EXPO_ANDROID_KEY_PASSWORD: ${{ secrets.EXPO_ANDROID_KEY_PASSWORD }}
+
+  release-apk:
+    name: Attach sideloadable APK to GitHub Release
+    runs-on: ubuntu-latest
+    # Only on tag pushes: build a standalone APK (the store build is an .aab,
+    # which can't be sideloaded) and upload it to the tag's GitHub Release so
+    # users can install without the Play Store.
+    if: startsWith(github.ref, 'refs/tags/')
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup EAS CLI
+        run: npm install -g eas-cli
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Prebuild Android
+        run: npx expo prebuild --platform android --clean
+
+      - name: Build APK (EAS) and wait for it
+        run: |
+          eas build \
+            --platform android \
+            --profile production-apk \
+            --non-interactive \
+            --wait \
+            --output cardscentral-${{ github.ref_name }}.apk
+
+      - name: Upload APK to GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Ensure a release exists for this tag, then attach the APK.
+          # --clobber lets re-runs replace an already-uploaded asset.
+          gh release create "${{ github.ref_name }}" \
+            --title "${{ github.ref_name }}" \
+            --generate-notes || true
+          gh release upload "${{ github.ref_name }}" \
+            "cardscentral-${{ github.ref_name }}.apk" \
+            --clobber
+
