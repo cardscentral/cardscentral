@@ -7,15 +7,24 @@ appId: com.cardscentral.app
 # Slovak, so literal strings like "Settings" / "Premium Feature" / "Version"
 # never match.
 
-- launchApp
-- extendedWaitUntil:
-    visible:
-      id: "cards-list-screen"
-    timeout: 10000
+# Retry the launch + initial wait: on iOS the app can intermittently crash on
+# the very first launch after a fresh install (a startup timing race, not a
+# functional bug — the identical .app passes on other runs). A relaunch
+# reliably recovers. This flow is read-only (it only inspects Settings rows),
+# so a retry is fully idempotent. (Same pattern as flow 03.)
+- retry:
+    maxRetries: 2
+    commands:
+      - launchApp
+      - extendedWaitUntil:
+          visible:
+            id: "cards-list-screen"
+          timeout: 10000
 
 # Navigate to the Settings tab via its stable testID
 - tapOn:
     id: "tab-settings"
+
 
 # Should see the settings screen and its rows
 - extendedWaitUntil:

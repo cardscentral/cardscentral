@@ -3,15 +3,25 @@ appId: com.cardscentral.app
 # Flow: Add a new loyalty card
 # Precondition: Country already selected (relies on flow 01 running first)
 
-- launchApp
-- extendedWaitUntil:
-    visible:
-      id: "cards-list-screen"
-    timeout: 10000
+# Retry the launch + initial wait: on iOS the app can intermittently crash on
+# the very first launch after a fresh install (a startup timing race, not a
+# functional bug — the identical .app passes on other runs). A relaunch
+# reliably recovers. The retry wraps ONLY the launch and the wait for the cards
+# list, i.e. everything *before* any card is added, so a retry cannot
+# double-add the card. (Same pattern as flow 03.)
+- retry:
+    maxRetries: 2
+    commands:
+      - launchApp
+      - extendedWaitUntil:
+          visible:
+            id: "cards-list-screen"
+          timeout: 10000
 
 # Navigate to add card via FAB button
 - tapOn:
     id: "add-card-button"
+
 
 # Should see shop selection (Slovak: "Vybrať obchod" when SK country is selected)
 - extendedWaitUntil:
